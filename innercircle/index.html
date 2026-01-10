@@ -1253,8 +1253,8 @@ function renderPaginationButtons() {
 
 // [NEW] 특급보고서 GitHub에서 최신 파일 가져오기
 async function loadSpecialReport() {
-    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/innercircle/contents/special_report';
-    const NETLIFY_BASE_URL = 'https://innermember.netlify.app/special_report/';
+    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/special_report';
+    const NETLIFY_BASE_URL = 'https://kfpcmember.netlify.app/innercircle/special_report/';
     
     try {
         const response = await fetch(GITHUB_API_URL);
@@ -1298,8 +1298,8 @@ async function loadSpecialReport() {
 
 // [NEW] 이슈브리핑 GitHub에서 최신 파일 가져오기
 async function loadIssueBriefing() {
-    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/innercircle/contents/issue_briefing';
-    const NETLIFY_BASE_URL = 'https://innermember.netlify.app/issue_briefing/';
+    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/issue_briefing';
+    const NETLIFY_BASE_URL = 'https://kfpcmember.netlify.app/innercircle/issue_briefing/';
     
     try {
         const response = await fetch(GITHUB_API_URL);
@@ -1343,8 +1343,8 @@ async function loadIssueBriefing() {
 
 // [NEW] GitHub에서 자료실 데이터 가져오기
 async function loadGitHubArchives() {
-    const GITHUB_API_BASE = 'https://api.github.com/repos/kfpc0808/innercircle/contents/';
-    const NETLIFY_BASE = 'https://innermember.netlify.app/';
+    const GITHUB_API_BASE = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/';
+    const NETLIFY_BASE = 'https://kfpcmember.netlify.app/innercircle/';
     
     // 로딩 표시
     const container = document.getElementById('archive-list');
