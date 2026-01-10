@@ -828,7 +828,7 @@
                 
                 // 이너서클 회원인지 확인
                 if (userData.type !== '컨설턴트') {
-                    alert('이너서클 회원만 접근 가능합니다.');
+                    alert('컨설턴트 회원만 접근 가능합니다.');
                     window.location.href = '/';
                     return;
                 }
@@ -1417,7 +1417,7 @@ async function loadNotices() {
             method: 'POST',
             body: JSON.stringify({ 
                 action: 'getNotices', 
-                target: '이너서클'
+                target: '컨설턴트'
             })
         });
         
