@@ -116,12 +116,16 @@
 
         <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
             
-<div id="inner-notice-box" class="hidden bg-slate-800/80 rounded-xl border-l-4 border-amber-500 overflow-hidden relative transition-all duration-300">
+<div id="inner-notice-box" class="hidden bg-slate-800/80 rounded-xl border-l-4 border-amber-500 overflow-hidden relative transition-all duration-300 mb-6">
                 <div class="p-5 pb-2">
                     <div class="flex items-start gap-4">
                         <div class="p-1 shrink-0"><i class="fas fa-bell text-amber-400 text-xl animate-pulse"></i></div>
                         <div class="w-full relative">
-                            <span class="text-amber-500 text-xs font-bold uppercase tracking-wider mb-1 block">Notice</span>
+                            <div class="flex items-center justify-between mb-1">
+                                <span class="text-amber-500 text-xs font-bold uppercase tracking-wider">Notice</span>
+                                <span id="notice-yearmonth" class="text-slate-500 text-xs font-bold"></span>
+                            </div>
+                            <h4 id="notice-title" class="text-white font-bold text-base mb-2"></h4>
                             
                             <div id="notice-content-wrapper" class="relative max-h-[3.6rem] overflow-hidden transition-[max-height] duration-500 ease-in-out">
                                 <p id="notice-text" class="text-white text-sm sm:text-base leading-relaxed benefit-text whitespace-pre-line"></p>
@@ -132,9 +136,14 @@
                     </div>
                 </div>
 
-                <button id="notice-toggle-btn" onclick="toggleNotice()" class="w-full py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold transition-colors flex items-center justify-center gap-1">
-                    <span>더 보기</span> <i class="fas fa-chevron-down"></i>
-                </button>
+                <div class="flex border-t border-slate-700">
+                    <button id="notice-toggle-btn" onclick="toggleNotice()" class="flex-1 py-2 bg-slate-700/50 hover:bg-slate-700 text-slate-400 hover:text-white text-xs font-bold transition-colors flex items-center justify-center gap-1">
+                        <span>더 보기</span> <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <button onclick="openNoticeHistory()" class="flex-1 py-2 bg-amber-600/20 hover:bg-amber-600/40 text-amber-400 hover:text-amber-300 text-xs font-bold transition-colors flex items-center justify-center gap-1 border-l border-slate-700">
+                        <i class="fas fa-history"></i> <span>지난 공지사항</span>
+                    </button>
+                </div>
             </div>
 
 <div id="support-status-box" class="hidden bg-indigo-900/40 rounded-xl p-5 border border-indigo-500/30 relative mb-8">
@@ -804,7 +813,6 @@
             const sessionData = sessionStorage.getItem('loggedInUser');
             
             if (!sessionData) {
-                // 로그인 안 됨 → 메인 로그인 페이지로 리다이렉트
                 alert('로그인이 필요합니다.');
                 window.location.href = '/';
                 return;
@@ -848,46 +856,8 @@ const supportBox = document.getElementById('support-status-box');
                 supportBox.classList.add('hidden');
             }
             
-            // 공지사항 (Inner_Notice)
-const noticeBox = document.getElementById('inner-notice-box');
-            const noticeText = document.getElementById('notice-text');
-            const noticeWrapper = document.getElementById('notice-content-wrapper');
-            const noticeGradient = document.getElementById('notice-gradient');
-            const noticeBtn = document.getElementById('notice-toggle-btn');
-            
-            let finalNotice = "";
-            if(user.innerNotice && user.innerNotice.trim() !== "") {
-                finalNotice = user.innerNotice;
-            } else if (user.notice && user.notice.trim() !== "") {
-                finalNotice = user.notice;
-            }
-
-            if(finalNotice) {
-                noticeBox.classList.remove('hidden');
-                noticeText.innerHTML = linkify(finalNotice);
-
-                // [중요] 텍스트 렌더링 후 높이 계산을 위해 잠깐 지연
-                setTimeout(() => {
-                    // 실제 텍스트 높이가 래퍼(약 3.6rem ~ 60px)보다 큰지 확인
-                    // scrollHeight가 clientHeight보다 크면 내용이 잘린 것임
-                    if (noticeText.scrollHeight > 60) { 
-                        // 내용이 길면: 접기 상태 유지 (초기화)
-                        noticeWrapper.classList.add('max-h-[3.6rem]');
-                        noticeGradient.classList.remove('hidden');
-                        noticeBtn.classList.remove('hidden');
-                        noticeBtn.innerHTML = '<span>더 보기</span> <i class="fas fa-chevron-down"></i>';
-                        noticeBox.classList.remove('pb-5'); // 버튼 있을 땐 하단 패딩 제거
-                    } else {
-                        // 내용이 짧으면: 그냥 다 보여주고 버튼/그라데이션 숨김
-                        noticeWrapper.classList.remove('max-h-[3.6rem]');
-                        noticeGradient.classList.add('hidden');
-                        noticeBtn.classList.add('hidden');
-                        noticeBox.classList.add('pb-5'); // 버튼 없을 땐 하단 패딩 추가
-                    }
-                }, 50);
-            } else {
-                noticeBox.classList.add('hidden');
-            }
+            // [NEW] 공지사항 로드 (Notice 시트에서)
+            loadNotices();
 
             // 전문위원 홈페이지 정보
             const icmId = user.icmId || "(미등록)";
@@ -1253,8 +1223,8 @@ function renderPaginationButtons() {
 
 // [NEW] 특급보고서 GitHub에서 최신 파일 가져오기
 async function loadSpecialReport() {
-    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/special_report';
-    const NETLIFY_BASE_URL = 'https://kfpcmember.netlify.app/innercircle/special_report/';
+    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/innercircle/contents/special_report';
+    const NETLIFY_BASE_URL = 'https://innermember.netlify.app/special_report/';
     
     try {
         const response = await fetch(GITHUB_API_URL);
@@ -1298,8 +1268,8 @@ async function loadSpecialReport() {
 
 // [NEW] 이슈브리핑 GitHub에서 최신 파일 가져오기
 async function loadIssueBriefing() {
-    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/issue_briefing';
-    const NETLIFY_BASE_URL = 'https://kfpcmember.netlify.app/innercircle/issue_briefing/';
+    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/innercircle/contents/issue_briefing';
+    const NETLIFY_BASE_URL = 'https://innermember.netlify.app/issue_briefing/';
     
     try {
         const response = await fetch(GITHUB_API_URL);
@@ -1343,8 +1313,8 @@ async function loadIssueBriefing() {
 
 // [NEW] GitHub에서 자료실 데이터 가져오기
 async function loadGitHubArchives() {
-    const GITHUB_API_BASE = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/';
-    const NETLIFY_BASE = 'https://kfpcmember.netlify.app/innercircle/';
+    const GITHUB_API_BASE = 'https://api.github.com/repos/kfpc0808/innercircle/contents/';
+    const NETLIFY_BASE = 'https://innermember.netlify.app/';
     
     // 로딩 표시
     const container = document.getElementById('archive-list');
@@ -1428,6 +1398,145 @@ function parseFileName(fileName) {
     };
 }
 
+// =============================================
+// [NEW] 공지사항 관련 함수들
+// =============================================
+let allNotices = []; // 전체 공지사항 저장
+
+// 공지사항 로드
+async function loadNotices() {
+    try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify({ 
+                action: 'getNotices', 
+                target: '이너서클'
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.success && data.notices && data.notices.length > 0) {
+            allNotices = data.notices;
+            
+            // 최신 공지사항 표시
+            const latest = allNotices[0];
+            showLatestNotice(latest);
+        } else {
+            // 공지사항이 없으면 박스 숨김
+            document.getElementById('inner-notice-box').classList.add('hidden');
+        }
+    } catch (error) {
+        console.error('공지사항 로드 실패:', error);
+        document.getElementById('inner-notice-box').classList.add('hidden');
+    }
+}
+
+// 최신 공지사항 표시
+function showLatestNotice(notice) {
+    const noticeBox = document.getElementById('inner-notice-box');
+    const yearMonthEl = document.getElementById('notice-yearmonth');
+    const titleEl = document.getElementById('notice-title');
+    const textEl = document.getElementById('notice-text');
+    const wrapper = document.getElementById('notice-content-wrapper');
+    const gradient = document.getElementById('notice-gradient');
+    const toggleBtn = document.getElementById('notice-toggle-btn');
+    
+    // 연월 표시 (2026-01 → 2026년 1월)
+    const ym = notice.yearMonth;
+    const ymDisplay = ym ? `${ym.slice(0,4)}년 ${parseInt(ym.slice(5,7))}월` : '';
+    yearMonthEl.textContent = ymDisplay;
+    
+    // 제목
+    titleEl.textContent = notice.title;
+    
+    // 내용
+    textEl.innerHTML = linkify(notice.content || '');
+    
+    // 박스 표시
+    noticeBox.classList.remove('hidden');
+    
+    // 내용 길이에 따라 더보기 버튼 표시 여부
+    setTimeout(() => {
+        if (textEl.scrollHeight > 60) {
+            wrapper.classList.add('max-h-[3.6rem]');
+            gradient.classList.remove('hidden');
+            toggleBtn.classList.remove('hidden');
+            toggleBtn.innerHTML = '<span>더 보기</span> <i class="fas fa-chevron-down"></i>';
+        } else {
+            wrapper.classList.remove('max-h-[3.6rem]');
+            gradient.classList.add('hidden');
+            toggleBtn.classList.add('hidden');
+        }
+    }, 50);
+}
+
+// 지난 공지사항 모달 열기
+function openNoticeHistory() {
+    const modal = document.getElementById('notice-history-modal');
+    const content = document.getElementById('notice-history-content');
+    
+    modal.classList.remove('hidden');
+    
+    if (allNotices.length === 0) {
+        content.innerHTML = '<div class="text-center text-slate-400 py-10"><i class="fas fa-inbox text-4xl mb-3"></i><p>공지사항이 없습니다.</p></div>';
+        return;
+    }
+    
+    // 공지 목록 렌더링
+    let html = '<div class="space-y-3">';
+    allNotices.forEach((notice, index) => {
+        const ym = notice.yearMonth;
+        const ymDisplay = ym ? `${ym.slice(0,4)}년 ${parseInt(ym.slice(5,7))}월` : '';
+        const isLatest = index === 0;
+        
+        html += `
+            <div onclick="showNoticeDetail(${index})" class="bg-slate-800 hover:bg-slate-700 rounded-xl p-4 cursor-pointer transition-all border border-slate-700 hover:border-amber-500/50">
+                <div class="flex items-center justify-between mb-1">
+                    <span class="text-amber-500 text-xs font-bold">${ymDisplay}</span>
+                    ${isLatest ? '<span class="bg-amber-500 text-slate-900 text-[10px] font-bold px-2 py-0.5 rounded-full">최신</span>' : ''}
+                </div>
+                <h4 class="text-white font-bold">${notice.title}</h4>
+            </div>
+        `;
+    });
+    html += '</div>';
+    
+    content.innerHTML = html;
+}
+
+// 공지사항 상세 보기
+function showNoticeDetail(index) {
+    const notice = allNotices[index];
+    const content = document.getElementById('notice-history-content');
+    
+    const ym = notice.yearMonth;
+    const ymDisplay = ym ? `${ym.slice(0,4)}년 ${parseInt(ym.slice(5,7))}월` : '';
+    
+    content.innerHTML = `
+        <div>
+            <button onclick="openNoticeHistory()" class="text-amber-500 hover:text-amber-400 text-sm font-bold mb-4 flex items-center gap-1">
+                <i class="fas fa-arrow-left"></i> 목록으로
+            </button>
+            
+            <div class="bg-slate-800 rounded-xl p-6 border border-slate-700">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-amber-500 text-xs font-bold">${ymDisplay}</span>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-4">${notice.title}</h3>
+                <div class="text-slate-300 text-sm leading-relaxed whitespace-pre-line benefit-text">
+                    ${linkify(notice.content || '')}
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+// 지난 공지사항 모달 닫기
+function closeNoticeHistory() {
+    document.getElementById('notice-history-modal').classList.add('hidden');
+}
+
 // 로그아웃 함수
 function logout() {
     sessionStorage.removeItem('loggedInUser');
@@ -1435,5 +1544,29 @@ function logout() {
 }
 
     </script>
+
+    <!-- 지난 공지사항 모달 -->
+    <div id="notice-history-modal" class="fixed inset-0 bg-black/80 z-50 hidden flex items-center justify-center p-4">
+        <div class="bg-slate-900 rounded-2xl w-full max-w-2xl max-h-[80vh] overflow-hidden border border-slate-700 shadow-2xl">
+            <!-- 모달 헤더 -->
+            <div class="bg-slate-800 px-6 py-4 border-b border-slate-700 flex items-center justify-between">
+                <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fas fa-history text-amber-500"></i> 지난 공지사항
+                </h3>
+                <button onclick="closeNoticeHistory()" class="text-slate-400 hover:text-white text-xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <!-- 공지 목록 / 상세 내용 -->
+            <div id="notice-history-content" class="p-6 overflow-y-auto max-h-[60vh]">
+                <div class="text-center text-slate-400 py-10">
+                    <i class="fas fa-circle-notch fa-spin text-2xl mb-2"></i>
+                    <p>공지사항을 불러오는 중...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
