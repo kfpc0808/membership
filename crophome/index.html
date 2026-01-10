@@ -827,7 +827,7 @@
                 const userData = JSON.parse(sessionData);
                 
                 // 이너서클 회원인지 확인
-                if (userData.type !== '이너서클') {
+                if (userData.type !== '기업') {
                     alert('이너서클 회원만 접근 가능합니다.');
                     window.location.href = '/';
                     return;
