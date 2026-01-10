@@ -83,39 +83,8 @@
 </head>
 <body class="antialiased selection:bg-amber-500 selection:text-slate-900">
 
-    <!-- 1. 로그인 화면 -->
-    <div id="login-section" class="min-h-screen flex items-center justify-center bg-slate-950 p-4 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-amber-600/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
-        <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-blue-900/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none"></div>
-
-        <div class="bg-slate-900/80 backdrop-blur-md p-10 rounded-2xl shadow-2xl w-full max-w-md border border-slate-700 relative z-10">
-            <div class="text-center mb-10">
-                <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-400 to-amber-700 text-slate-900 rounded-full mb-6 text-3xl shadow-lg shadow-amber-500/20">
-                    <i class="fas fa-crown"></i>
-                </div>
-                <h1 class="text-3xl font-black text-white mb-2 tracking-tight">Inner Circle</h1>
-                <p class="text-slate-400 text-sm font-bold tracking-widest uppercase">Premium Membership Login</p>
-            </div>
-            <div class="space-y-6">
-                <div>
-                    <label class="block text-xs font-bold text-amber-500 uppercase tracking-wider mb-2 ml-1">Name</label>
-                    <input type="text" id="login-name" placeholder="성명" class="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all outline-none font-bold placeholder-slate-700">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-amber-500 uppercase tracking-wider mb-2 ml-1">Password</label>
-                    <input type="password" id="login-pw" placeholder="비밀번호" class="w-full px-5 py-4 rounded-xl bg-slate-950 border border-slate-700 text-white focus:border-amber-500 focus:ring-1 focus:ring-amber-500 transition-all outline-none font-bold placeholder-slate-700" onkeypress="if(event.key === 'Enter') handleLogin()">
-                </div>
-                <button onclick="handleLogin()" class="w-full btn-gold py-4 rounded-xl transition-all flex justify-center items-center gap-2 mt-4 text-lg">
-                    <span>입 장 하 기</span> <i class="fas fa-arrow-right"></i>
-                </button>
-                <p id="login-msg" class="text-center text-red-400 text-sm mt-4 font-bold min-h-[24px]"></p>
-                <div id="loading" class="hidden text-center text-amber-500 mt-2 font-bold text-sm"><i class="fas fa-circle-notch fa-spin mr-2"></i> 멤버십 확인 중...</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- 2. 메인 대시보드 -->
-    <div id="dashboard-section" class="hidden min-h-screen pb-20 bg-slate-900">
+    <!-- 메인 대시보드 -->
+    <div id="dashboard-section" class="min-h-screen pb-20 bg-slate-900">
         <!-- 헤더 -->
         <header class="glass-header sticky top-0 z-50">
             <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex justify-between items-center">
@@ -138,7 +107,7 @@
 <button onclick="openPwModal()" class="hidden sm:flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-sm font-bold px-3">
                          <i class="fas fa-key"></i> 비번변경
                     </button>
-                    <button onclick="location.reload()" class="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-sm font-bold px-3">
+                    <button onclick="logout()" class="flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-sm font-bold px-3">
                         <span class="hidden sm:inline">로그아웃</span> <i class="fas fa-sign-out-alt text-lg"></i>
                     </button>
                 </div>
@@ -825,67 +794,46 @@
 
         let globalArchives = [];
         let currentUserInfo = null;
-        let isFirstLogin = false;  // [NEW] 최초 로그인 여부
+        let isFirstLogin = false;
+        let loginIdForPwChange = "";
 
-let loginIdForPwChange = "";
-
-        async function handleLogin() {
-            const name = document.getElementById('login-name').value.trim();
-
-window.loginIdForPwChange = name;
-
-            const pw = document.getElementById('login-pw').value.trim();
-            const msg = document.getElementById('login-msg');
-            const loading = document.getElementById('loading');
-
-            if(!name || !pw) { msg.innerText = "정보를 모두 입력해주세요."; return; }
-            msg.innerText = "";
-            loading.classList.remove('hidden');
-
-            try {
-                const response = await fetch(APPS_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({ action: 'login', name: name, pw: pw, source: 'inner' })
-                });
-                const data = await response.json();
-
-                if(data.success) {
-                    // [보안 체크] 이너서클 권한 확인 (콤마 분리 후 확인)
-                    const userTypes = data.user.type.split(',').map(s => s.trim());
-                    if (!userTypes.includes("이너서클")) {
-                        msg.innerText = "이너서클 회원만 접근 가능한 페이지입니다.";
-                        return;
-                    }
-
-                    currentUserInfo = data.user;
-                    globalArchives = data.archives;
-
-const storageKey = 'visited_' + data.user.id; 
-                    
-                    if (!localStorage.getItem(storageKey)) {
-                        // [수정] 최초 로그인 - 비밀번호 변경 필수
-                        isFirstLogin = true;
-                        alert("환영합니다! \n\n[필수] 최초 로그인하셨습니다. \n보안을 위해 비밀번호를 반드시 변경해주세요.\n\n※ 비밀번호 변경 전까지 서비스 이용이 제한됩니다.");
-                        openPwModal(); 
-                        // localStorage 설정은 비밀번호 변경 완료 후에 진행
-                    } else {
-                        // 기존 사용자 - 바로 대시보드 표시
-                        showDashboard();
-                    }
-
-                } else {
-                    msg.innerText = data.message;
-                }
-            } catch(e) {
-                msg.innerText = "로그인 오류가 발생했습니다.";
-            } finally {
-                loading.classList.add('hidden');
+        // ========================================
+        // 페이지 로드 시 세션 체크
+        // ========================================
+        document.addEventListener('DOMContentLoaded', function() {
+            const sessionData = sessionStorage.getItem('loggedInUser');
+            
+            if (!sessionData) {
+                // 로그인 안 됨 → 메인 로그인 페이지로 리다이렉트
+                alert('로그인이 필요합니다.');
+                window.location.href = '/';
+                return;
             }
-        }
+            
+            try {
+                const userData = JSON.parse(sessionData);
+                
+                // 이너서클 회원인지 확인
+                if (userData.type !== '이너서클') {
+                    alert('이너서클 회원만 접근 가능합니다.');
+                    window.location.href = '/';
+                    return;
+                }
+                
+                // 사용자 정보 설정
+                currentUserInfo = userData.userInfo;
+                loginIdForPwChange = userData.name;
+                
+                // 대시보드 표시
+                showDashboard();
+                
+            } catch (e) {
+                console.error('세션 파싱 오류:', e);
+                window.location.href = '/';
+            }
+        });
 
         function showDashboard() {
-            document.getElementById('login-section').classList.add('hidden');
-            document.getElementById('dashboard-section').classList.remove('hidden');
             window.scrollTo(0,0);
 
             const user = currentUserInfo;
@@ -1305,8 +1253,8 @@ function renderPaginationButtons() {
 
 // [NEW] 특급보고서 GitHub에서 최신 파일 가져오기
 async function loadSpecialReport() {
-    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/innercircle/contents/special_report';
-    const NETLIFY_BASE_URL = 'https://innermember.netlify.app/special_report/';
+    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/special_report';
+    const NETLIFY_BASE_URL = 'https://kfpcmember.netlify.app/innercircle/special_report/';
     
     try {
         const response = await fetch(GITHUB_API_URL);
@@ -1350,8 +1298,8 @@ async function loadSpecialReport() {
 
 // [NEW] 이슈브리핑 GitHub에서 최신 파일 가져오기
 async function loadIssueBriefing() {
-    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/innercircle/contents/issue_briefing';
-    const NETLIFY_BASE_URL = 'https://innermember.netlify.app/issue_briefing/';
+    const GITHUB_API_URL = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/issue_briefing';
+    const NETLIFY_BASE_URL = 'https://kfpcmember.netlify.app/innercircle/issue_briefing/';
     
     try {
         const response = await fetch(GITHUB_API_URL);
@@ -1395,8 +1343,8 @@ async function loadIssueBriefing() {
 
 // [NEW] GitHub에서 자료실 데이터 가져오기
 async function loadGitHubArchives() {
-    const GITHUB_API_BASE = 'https://api.github.com/repos/kfpc0808/innercircle/contents/';
-    const NETLIFY_BASE = 'https://innermember.netlify.app/';
+    const GITHUB_API_BASE = 'https://api.github.com/repos/kfpc0808/membership/contents/innercircle/';
+    const NETLIFY_BASE = 'https://kfpcmember.netlify.app/innercircle/';
     
     // 로딩 표시
     const container = document.getElementById('archive-list');
@@ -1478,6 +1426,12 @@ function parseFileName(fileName) {
         date: new Date().toISOString().slice(0, 10),
         title: nameWithoutExt
     };
+}
+
+// 로그아웃 함수
+function logout() {
+    sessionStorage.removeItem('loggedInUser');
+    window.location.href = '/';
 }
 
     </script>
