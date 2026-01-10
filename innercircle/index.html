@@ -123,7 +123,12 @@
                         <div class="w-full relative">
                             <div class="flex items-center justify-between mb-1">
                                 <span class="text-amber-500 text-xs font-bold uppercase tracking-wider">Notice</span>
-                                <span id="notice-yearmonth" class="text-slate-500 text-xs font-bold"></span>
+                                <div class="flex items-center gap-2">
+                                    <button id="notice-fold-btn" onclick="toggleNotice()" class="hidden text-amber-400 hover:text-amber-300 text-xs font-bold flex items-center gap-1">
+                                        <span>접기</span> <i class="fas fa-chevron-up"></i>
+                                    </button>
+                                    <span id="notice-yearmonth" class="text-slate-500 text-xs font-bold"></span>
+                                </div>
                             </div>
                             <h4 id="notice-title" class="text-white font-bold text-base mb-2"></h4>
                             
@@ -1194,19 +1199,21 @@ function renderPaginationButtons() {
             const wrapper = document.getElementById('notice-content-wrapper');
             const gradient = document.getElementById('notice-gradient');
             const btn = document.getElementById('notice-toggle-btn');
+            const foldBtn = document.getElementById('notice-fold-btn'); // 타이틀 옆 접기 버튼
             const isExpanded = wrapper.classList.contains('max-h-[3.6rem]'); // 현재 접혀있는지 확인
 
             if (isExpanded) {
                 // 펼치기
                 wrapper.classList.remove('max-h-[3.6rem]'); // 높이 제한 해제
-                // wrapper.style.maxHeight = wrapper.scrollHeight + "px"; // 부드러운 애니메이션 원하면 이 방식 사용 (선택사항)
                 gradient.classList.add('hidden'); // 그라데이션 숨김
                 btn.innerHTML = '<span>접기</span> <i class="fas fa-chevron-up"></i>';
+                foldBtn.classList.remove('hidden'); // 타이틀 옆 접기 버튼 표시
             } else {
                 // 다시 접기
                 wrapper.classList.add('max-h-[3.6rem]');
                 gradient.classList.remove('hidden');
                 btn.innerHTML = '<span>더 보기</span> <i class="fas fa-chevron-down"></i>';
+                foldBtn.classList.add('hidden'); // 타이틀 옆 접기 버튼 숨김
             }
         }
 
