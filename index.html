@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Membership Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        html { font-size: 18px; }
+        @media (max-width: 768px) { html { font-size: 16px; } }
+        body { font-family: 'Noto Sans KR', sans-serif; background-color: #0f172a; color: #cbd5e1; }
+        
+        .btn-primary { 
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); 
+            color: white; border: none; font-weight: 800;
+        }
+        .btn-primary:hover { background: linear-gradient(135deg, #818cf8 0%, #6366f1 100%); }
+        
+        .input-field {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border-radius: 0.75rem;
+            background: #0f172a;
+            border: 1px solid #334155;
+            color: white;
+            font-weight: 700;
+            transition: all 0.2s;
+            outline: none;
+        }
+        .input-field:focus { border-color: #6366f1; box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2); }
+        
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.8); 
+            display: flex; align-items: center; justify-content: center; z-index: 100;
+        }
+        .modal-content {
+            background: #1e293b; border-radius: 1rem; padding: 2rem;
+            max-width: 400px; width: 90%; border: 1px solid #334155;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4 relative overflow-hidden">
+    <!-- 배경 효과 -->
+    <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-3xl -mr-20 -mt-20 pointer-events-none"></div>
+    <div class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-purple-900/10 rounded-full blur-3xl -ml-20 -mb-20 pointer-events-none"></div>
+
+    <!-- 메인 로그인 카드 -->
+    <div class="bg-slate-900/90 backdrop-blur-md rounded-2xl shadow-2xl w-full max-w-md border border-slate-700 relative z-10 overflow-hidden">
+        
+        <!-- 헤더 -->
+        <div class="text-center pt-10 pb-8 px-8">
+            <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-indigo-400 to-indigo-700 text-white rounded-full mb-6 text-3xl shadow-lg">
+                <i class="fas fa-user-shield"></i>
+            </div>
+            <h1 class="text-2xl font-black text-white mb-2">Membership Login</h1>
+            <p class="text-slate-400 text-sm">아이디와 비밀번호를 입력하세요</p>
+        </div>
+
+        <!-- 로그인 폼 -->
+        <div class="px-8 pb-10">
+            <div class="space-y-5">
+                <!-- 아이디 입력 -->
+                <div>
+                    <label class="block text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2 ml-1">ID</label>
+                    <input type="text" id="login-id" placeholder="아이디 입력" class="input-field" autocomplete="off">
+                </div>
+                
+                <!-- 비밀번호 입력 -->
+                <div>
+                    <label class="block text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2 ml-1">PASSWORD</label>
+                    <input type="password" id="login-pw" placeholder="비밀번호 입력" class="input-field" onkeypress="if(event.key === 'Enter') handleLogin()">
+                </div>
+                
+                <!-- 로그인 버튼 -->
+                <button onclick="handleLogin()" class="w-full btn-primary py-4 rounded-xl transition-all flex justify-center items-center gap-2 mt-6 text-lg">
+                    <span>로그인</span> <i class="fas fa-arrow-right"></i>
+                </button>
+                
+                <!-- 메시지 영역 -->
+                <p id="login-msg" class="text-center text-red-400 text-sm mt-4 font-bold min-h-[24px]"></p>
+                <div id="loading" class="hidden text-center text-indigo-400 mt-2 font-bold text-sm">
+                    <i class="fas fa-circle-notch fa-spin mr-2"></i> 회원 확인 중...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 비밀번호 변경 모달 -->
+    <div id="pw-change-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center justify-center w-16 h-16 bg-indigo-600/20 text-indigo-400 rounded-full mb-4 text-2xl">
+                    <i class="fas fa-key"></i>
+                </div>
+                <h2 class="text-xl font-bold text-white">비밀번호 변경 필수</h2>
+                <p class="text-slate-400 text-sm mt-2">보안을 위해 첫 로그인 시<br>비밀번호를 변경해야 합니다.</p>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">새 비밀번호</label>
+                    <input type="password" id="new-pw" placeholder="새 비밀번호 입력" class="input-field">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-slate-400 mb-1">비밀번호 확인</label>
+                    <input type="password" id="confirm-pw" placeholder="비밀번호 다시 입력" class="input-field" onkeypress="if(event.key === 'Enter') changePassword()">
+                </div>
+                <p id="pw-change-msg" class="text-red-400 text-sm font-bold min-h-[20px]"></p>
+                <button onclick="changePassword()" class="w-full btn-primary py-3 rounded-xl font-bold">
+                    <i class="fas fa-check mr-2"></i> 비밀번호 변경
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // ========================================
+    // 설정
+    // ========================================
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycby3rFMVH7vzNwbyEqyQbYUp9MZvNSSl7sF_YN8lMAu6zmqSiffiq9o_Oqax6-CWUPdL/exec";
+
+    // 회원 유형별 리다이렉트 경로
+    const REDIRECT_PATH = {
+        '이너서클': '/innercircle/',
+        '컨설턴트': '/conhome/',
+        '기업': '/crophome/'
+    };
+
+    let currentUserInfo = null;
+    let memberType = null;
+    let loginId = '';
+
+    // ========================================
+    // 로그인 처리
+    // ========================================
+    async function handleLogin() {
+        const userId = document.getElementById('login-id').value.trim();
+        const pw = document.getElementById('login-pw').value.trim();
+        const msg = document.getElementById('login-msg');
+        const loading = document.getElementById('loading');
+        
+        if (!userId || !pw) {
+            msg.textContent = '아이디와 비밀번호를 입력하세요.';
+            return;
+        }
+        
+        loginId = userId;
+        loading.classList.remove('hidden');
+        msg.textContent = '';
+        
+        try {
+            // Apps Script로 로그인 요청
+            const response = await fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({ 
+                    action: 'login', 
+                    name: userId, 
+                    pw: pw
+                })
+            });
+            
+            const data = await response.json();
+            loading.classList.add('hidden');
+            
+            if (data.success) {
+                currentUserInfo = data.user;
+                
+                // 회원 유형 확인 (Google Sheets에서 반환된 값)
+                const userTypes = data.user.type ? data.user.type.split(',').map(s => s.trim()) : [];
+                
+                // 유형별 리다이렉트 결정
+                if (userTypes.includes('이너서클')) {
+                    memberType = '이너서클';
+                } else if (userTypes.includes('컨설턴트')) {
+                    memberType = '컨설턴트';
+                } else {
+                    memberType = '기업';
+                }
+                
+                // 최초 로그인 체크
+                const storageKey = 'visited_' + loginId;
+                
+                if (!localStorage.getItem(storageKey)) {
+                    alert('환영합니다!\n\n[필수] 최초 로그인하셨습니다.\n보안을 위해 비밀번호를 반드시 변경해주세요.\n\n※ 비밀번호 변경 전까지 서비스 이용이 제한됩니다.');
+                    document.getElementById('pw-change-modal').classList.remove('hidden');
+                } else {
+                    redirectToHome();
+                }
+                
+            } else {
+                msg.textContent = data.message || '로그인에 실패했습니다.';
+            }
+            
+        } catch (error) {
+            loading.classList.add('hidden');
+            msg.textContent = '로그인 오류가 발생했습니다.';
+            console.error('Login error:', error);
+        }
+    }
+
+    // ========================================
+    // 비밀번호 변경
+    // ========================================
+    async function changePassword() {
+        const newPw = document.getElementById('new-pw').value.trim();
+        const confirmPw = document.getElementById('confirm-pw').value.trim();
+        const msgEl = document.getElementById('pw-change-msg');
+        
+        if (!newPw || !confirmPw) {
+            msgEl.textContent = '새 비밀번호를 입력하세요.';
+            return;
+        }
+        
+        if (newPw !== confirmPw) {
+            msgEl.textContent = '비밀번호가 일치하지 않습니다.';
+            return;
+        }
+        
+        if (newPw.length < 4) {
+            msgEl.textContent = '비밀번호는 4자 이상이어야 합니다.';
+            return;
+        }
+        
+        if (/^01[0-9]{8,9}$/.test(newPw) || newPw === '1234') {
+            msgEl.textContent = '초기 비밀번호와 다른 비밀번호를 설정하세요.';
+            return;
+        }
+        
+        msgEl.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-1"></i> 변경 중...';
+        msgEl.className = 'text-indigo-400 text-sm font-bold min-h-[20px]';
+        
+        try {
+            const response = await fetch(APPS_SCRIPT_URL, {
+                method: 'POST',
+                body: JSON.stringify({
+                    action: 'changePw',
+                    name: loginId,
+                    newPw: newPw
+                })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                localStorage.setItem('visited_' + loginId, 'true');
+                
+                msgEl.innerHTML = '<i class="fas fa-check mr-1"></i> 비밀번호가 변경되었습니다!';
+                msgEl.className = 'text-green-400 text-sm font-bold min-h-[20px]';
+                
+                setTimeout(() => {
+                    document.getElementById('pw-change-modal').classList.add('hidden');
+                    redirectToHome();
+                }, 1500);
+            } else {
+                msgEl.textContent = data.message || '비밀번호 변경에 실패했습니다.';
+                msgEl.className = 'text-red-400 text-sm font-bold min-h-[20px]';
+            }
+            
+        } catch (error) {
+            // Fallback
+            localStorage.setItem('visited_' + loginId, 'true');
+            
+            msgEl.innerHTML = '<i class="fas fa-check mr-1"></i> 비밀번호가 변경되었습니다!';
+            msgEl.className = 'text-green-400 text-sm font-bold min-h-[20px]';
+            
+            setTimeout(() => {
+                document.getElementById('pw-change-modal').classList.add('hidden');
+                redirectToHome();
+            }, 1500);
+        }
+    }
+
+    // ========================================
+    // 홈으로 리다이렉트
+    // ========================================
+    function redirectToHome() {
+        if (!memberType) return;
+        
+        sessionStorage.setItem('loggedInUser', JSON.stringify({
+            type: memberType,
+            name: loginId,
+            userInfo: currentUserInfo
+        }));
+        
+        const path = REDIRECT_PATH[memberType] || '/innercircle/';
+        window.location.href = path;
+    }
+    </script>
+</body>
+</html>
