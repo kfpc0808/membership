@@ -131,6 +131,7 @@
     let currentUserInfo = null;
     let memberType = null;
     let loginId = '';
+    let currentPassword = ''; // [추가] 현재 비밀번호 저장
 
     // ========================================
     // 로그인 처리
@@ -147,6 +148,7 @@
         }
         
         loginId = userId;
+        currentPassword = pw; // [추가] 비밀번호 저장 (변경 시 필요)
         loading.classList.remove('hidden');
         msg.textContent = '';
         
@@ -201,7 +203,7 @@
     }
 
     // ========================================
-    // 비밀번호 변경
+    // 비밀번호 변경 (Apps Script 호환)
     // ========================================
     async function changePassword() {
         const newPw = document.getElementById('new-pw').value.trim();
@@ -232,12 +234,15 @@
         msgEl.className = 'text-indigo-400 text-sm font-bold min-h-[20px]';
         
         try {
+            // [수정] Apps Script 형식에 맞게 요청
             const response = await fetch(APPS_SCRIPT_URL, {
                 method: 'POST',
                 body: JSON.stringify({
-                    action: 'changePw',
+                    action: 'changePassword',  // [수정] changePw → changePassword
                     name: loginId,
-                    newPw: newPw
+                    currentPw: currentPassword, // [추가] 현재 비밀번호
+                    newPw: newPw,
+                    source: memberType === '기업' ? 'corp' : 'member'
                 })
             });
             
@@ -245,6 +250,9 @@
             
             if (data.success) {
                 localStorage.setItem('visited_' + loginId, 'true');
+                
+                // [추가] 현재 비밀번호 업데이트 (다음 로그인용)
+                currentPassword = newPw;
                 
                 msgEl.innerHTML = '<i class="fas fa-check mr-1"></i> 비밀번호가 변경되었습니다!';
                 msgEl.className = 'text-green-400 text-sm font-bold min-h-[20px]';
@@ -259,16 +267,9 @@
             }
             
         } catch (error) {
-            // Fallback
-            localStorage.setItem('visited_' + loginId, 'true');
-            
-            msgEl.innerHTML = '<i class="fas fa-check mr-1"></i> 비밀번호가 변경되었습니다!';
-            msgEl.className = 'text-green-400 text-sm font-bold min-h-[20px]';
-            
-            setTimeout(() => {
-                document.getElementById('pw-change-modal').classList.add('hidden');
-                redirectToHome();
-            }, 1500);
+            msgEl.textContent = '비밀번호 변경 중 오류가 발생했습니다.';
+            msgEl.className = 'text-red-400 text-sm font-bold min-h-[20px]';
+            console.error('Password change error:', error);
         }
     }
 
