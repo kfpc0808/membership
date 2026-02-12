@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JARVIA Admin</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+:root{--primary:#1B3A5C;--primary-lt:#2E5A88;--primary-dk:#0F2440;--accent:#2E86AB;--accent-lt:#48A6CB;--accent-glow:rgba(46,134,171,.15);--success:#27AE60;--warning:#F39C12;--danger:#E74C3C;--bg:#F7F9FC;--bg-card:#FFF;--text:#2C3E50;--text-lt:#7F8C8D;--border:#E1E8EE;--border-lt:#F0F3F6;--shadow:0 2px 12px rgba(27,58,92,.08);--shadow-lg:0 8px 32px rgba(27,58,92,.12);--radius:10px;--radius-lg:16px;--tr:.25s cubic-bezier(.4,0,.2,1);--font:'Noto Sans KR',-apple-system,BlinkMacSystemFont,sans-serif;--font-d:'Poppins','Noto Sans KR',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth;overflow-x:hidden}body{font-family:var(--font);background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+.header{position:fixed;top:0;left:0;right:0;z-index:100;background:var(--primary-dk);border-bottom:1px solid rgba(255,255,255,.08);overflow:hidden}.header-inner{max-width:1400px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;overflow:hidden}.logo{text-decoration:none;display:flex;align-items:baseline;gap:8px}.logo-text{font-family:var(--font-d);font-size:24px;font-weight:800;color:#fff;letter-spacing:-.5px}.logo-sub{font-size:11px;color:rgba(255,255,255,.5);font-weight:300}.header-nav{display:flex;align-items:center;gap:8px}.btn-h{background:none;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.8);padding:6px 14px;border-radius:6px;cursor:pointer;font-size:13px;transition:var(--tr);font-family:var(--font)}.btn-h:hover{background:rgba(255,255,255,.1);color:#fff}.btn-h-logout{border-color:rgba(231,76,60,.4);color:rgba(231,76,60,.8)}.btn-h-logout:hover{background:rgba(231,76,60,.15);color:#E74C3C}.hdr-name{color:rgba(255,255,255,.9);font-size:13px;font-weight:500;padding:0 4px}
+.fg{margin-bottom:16px;flex:1}.fg label{display:block;font-size:13px;font-weight:500;color:var(--text);margin-bottom:6px}.fg label i{color:var(--danger);font-style:normal}.fg input,.fg select,.fg textarea{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:14px;font-family:var(--font);transition:var(--tr);background:#fff;color:var(--text)}.fg input:focus,.fg select:focus,.fg textarea:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}.fr{display:flex;gap:16px}
+.btn{background:var(--primary);color:#fff;border:none;padding:10px 24px;border-radius:8px;font-size:14px;font-weight:600;cursor:pointer;transition:var(--tr);font-family:var(--font)}.btn:hover{background:var(--primary-lt);transform:translateY(-1px);box-shadow:var(--shadow)}.btn:disabled{opacity:.5;cursor:not-allowed;transform:none}.btn-sec{background:#fff;color:var(--text);border:1px solid var(--border)}.btn-sec:hover{border-color:var(--primary);color:var(--primary);background:#fff}.btn-sm{padding:6px 12px;font-size:12px}.btn-danger{background:var(--danger);color:#fff;border:none;padding:6px 12px;border-radius:6px;font-size:12px;cursor:pointer}.btn-full{width:100%}.btn-success{background:var(--success)}.btn-warning{background:var(--warning);color:#333}
+.badge{display:inline-block;padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600}.badge-doc{background:#E8F5E9;color:#2E7D32}.badge-ppt{background:#FFF3E0;color:#E65100}.badge-html{background:#E3F2FD;color:#1565C0}.badge-video{background:#FCE4EC;color:#C62828}.badge-audio{background:#F3E5F5;color:#7B1FA2}.badge-brief{background:#E3F2FD;color:#1565C0}.badge-report{background:#E0F7FA;color:#00695C}.badge-closing{background:#FFF3E0;color:#E65100}.badge-closing-pdf{background:#FFEBEE;color:#C62828}.badge-closing-ppt{background:#FFF3E0;color:#E65100}.st-active{color:var(--success);font-weight:600}.st-suspended{color:var(--danger);font-weight:600}.st-expired{color:var(--danger);font-weight:600}.st-ok{color:var(--success);font-weight:600}.st-warn{color:var(--warning);font-weight:600}.st-new{background:#E3F2FD;color:#1565C0;padding:2px 8px;border-radius:4px;font-size:12px}.st-reviewing{background:#FFF3E0;color:#E65100;padding:2px 8px;border-radius:4px;font-size:12px}.st-done{background:#E8F5E9;color:#2E7D32;padding:2px 8px;border-radius:4px;font-size:12px}.st-jarvia{color:#D84315;font-weight:700}.st-inner{color:#4527A0;font-weight:700}
+.tbl{width:100%;border-collapse:collapse;font-size:13px}.tbl th{background:var(--primary);color:#fff;padding:10px 12px;text-align:left;font-weight:500;white-space:nowrap}.tbl td{padding:10px 12px;border-bottom:1px solid var(--border-lt)}.tbl tbody tr:hover{background:var(--accent-glow)}.tbl .ov{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tabs{display:flex;gap:4px;margin-bottom:20px;flex-wrap:wrap}.tab{padding:10px 20px;border:none;background:var(--border-lt);border-radius:8px 8px 0 0;cursor:pointer;font-size:14px;font-weight:500;color:var(--text-lt);transition:var(--tr);font-family:var(--font)}.tab.active{background:var(--primary);color:#fff}
+.modal{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center}.mdl-bg{position:absolute;inset:0;background:rgba(0,0,0,.5);backdrop-filter:blur(4px)}.mdl-box{position:relative;background:var(--bg-card);border-radius:var(--radius-lg);padding:32px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;overflow-x:hidden;box-shadow:var(--shadow-lg);z-index:1}.mdl-lg{max-width:720px}.mdl-x{position:absolute;top:12px;right:16px;background:none;border:none;font-size:28px;color:var(--text-lt);cursor:pointer;z-index:2}
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%);background:var(--primary-dk);color:#fff;padding:12px 28px;border-radius:8px;font-size:14px;z-index:9999;box-shadow:var(--shadow-lg)}.toast-success{background:var(--success)}.toast-error{background:var(--danger)}.toast-warning{background:var(--warning);color:#333}
+.adm-layout{display:flex;min-height:100vh;padding-top:60px;overflow-x:hidden}.sidebar{width:220px;background:var(--primary-dk);position:fixed;top:60px;left:0;bottom:0;overflow-y:auto;padding:12px 0;z-index:50;border-right:1px solid rgba(255,255,255,.05)}.side-nav{display:flex;flex-direction:column}.sn{color:rgba(255,255,255,.65);text-decoration:none;padding:10px 20px;font-size:13px;transition:var(--tr);border-left:3px solid transparent;cursor:pointer}.sn:hover{color:#fff;background:rgba(255,255,255,.05)}.sn.active{color:#fff;background:rgba(46,134,171,.15);border-left-color:var(--accent)}.adm-main{flex:1;margin-left:220px;padding:24px;min-height:calc(100vh - 60px);overflow-x:hidden;max-width:calc(100vw - 220px)}.panel{overflow-x:hidden}.panel h2{font-size:22px;font-weight:600;color:var(--primary);margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--border-lt)}.toolbar{display:flex;gap:8px;margin-bottom:16px;align-items:center;flex-wrap:wrap;max-width:100%}.toolbar input,.toolbar select{padding:8px 12px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:var(--font);min-width:0}.toolbar label{font-size:13px;color:var(--text-lt)}.form-box{background:var(--bg);padding:20px;border-radius:var(--radius);margin:16px 0;border:1px solid var(--border-lt);overflow-x:hidden}.info-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:16px;font-size:13px;overflow-wrap:break-word;word-break:break-all}.info-grid label{color:var(--text-lt);margin-right:8px}
+.dash-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px;max-width:100%}.dash-c{background:var(--bg-card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-left:4px solid var(--accent);overflow:hidden}.dash-c span{font-size:13px;color:var(--text-lt);display:block;margin-bottom:8px}.dash-c strong{font-size:28px;color:var(--primary);font-weight:700}.dash-c em{font-size:13px;color:var(--text-lt);font-style:normal}
+.hidden{display:none!important}.empty{text-align:center;padding:48px;color:var(--text-lt);font-size:15px}.mt{margin-top:16px}
+.rich-toolbar{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px;padding:8px;background:var(--border-lt);border:1px solid var(--border);border-bottom:none;border-radius:6px 6px 0 0;align-items:center}.rich-toolbar .tb-sep{color:var(--border);font-size:16px;margin:0 2px;user-select:none}.rich-editor{min-height:200px;border:1px solid var(--border);border-radius:0 0 6px 6px;padding:16px;font-size:14px;line-height:1.8;background:#fff;outline:none;overflow-y:auto}.rich-editor:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-glow)}.rich-editor img{max-width:100%;height:auto;border-radius:4px;margin:8px 0}.rich-editor h2{font-size:20px;color:var(--primary);margin:12px 0 6px}.rich-editor h3{font-size:17px;color:var(--primary-lt);margin:10px 0 4px}
+.mob-menu-btn{display:none;background:none;border:none;color:#fff;font-size:24px;cursor:pointer}
+.mob-adm-header{display:none;padding:16px 20px;background:rgba(46,134,171,.1);border-bottom:1px solid rgba(255,255,255,.08)}.mob-adm-header .mob-adm-name{color:rgba(255,255,255,.9);font-size:13px;font-weight:500;display:block;margin-bottom:10px}.mob-adm-header .mob-adm-btns{display:flex;gap:8px}.mob-adm-header .mob-adm-btns button{flex:1;padding:8px 0;border-radius:6px;font-size:13px;font-family:var(--font);cursor:pointer;transition:var(--tr)}.mob-adm-header .btn-user-page{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8)}.mob-adm-header .btn-user-page:hover{background:rgba(255,255,255,.1);color:#fff}.mob-adm-header .btn-mob-logout{background:none;border:1px solid rgba(231,76,60,.4);color:rgba(231,76,60,.8)}.mob-adm-header .btn-mob-logout:hover{background:rgba(231,76,60,.15);color:#E74C3C}
+@media(max-width:768px){.header-nav{display:none}.mob-menu-btn{display:block}.mob-adm-header{display:block}.fr{flex-direction:column;gap:0}.tbl{font-size:12px}.tbl th,.tbl td{padding:8px 6px}.mdl-box{padding:20px;width:95%}.dash-row{grid-template-columns:repeat(2,1fr)}.sidebar{display:none;position:fixed;z-index:999;width:100%}.sidebar.show{display:block}.adm-main{margin-left:0;padding:16px;max-width:100vw;overflow-x:hidden}.info-grid{grid-template-columns:1fr}.toolbar input,.toolbar select{width:100%;flex:1 1 auto}.toolbar{flex-direction:column;align-items:stretch}.panel{overflow-x:hidden}.header-inner{overflow:hidden}.tabs{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap}.tab{white-space:nowrap;flex-shrink:0}.form-box{overflow-x:hidden}.dash-c strong{font-size:22px}.rich-toolbar{gap:3px;padding:6px}.rich-toolbar .btn-sm{padding:4px 8px;font-size:11px}.rich-toolbar select{font-size:11px}.rich-editor{min-height:150px;padding:12px;font-size:13px}}
+  </style>
+</head>
+<body>
+<header class="header"><div class="header-inner"><a href="admin.html" class="logo"><span class="logo-text">JARVIA</span><span class="logo-sub">Admin</span></a><nav class="header-nav"><span id="adm-name" class="hdr-name"></span><button class="btn-h" onclick="window.open('index.html?view=1','_blank')">사용자 페이지</button><button class="btn-h btn-h-logout" onclick="admLogout()">로그아웃</button></nav><button class="mob-menu-btn" onclick="document.querySelector('.sidebar').classList.toggle('show')">☰</button></div></header>
+<div class="adm-layout">
+  <aside class="sidebar">
+    <div class="mob-adm-header" id="mob-adm-header">
+      <span class="mob-adm-name" id="mob-adm-name"></span>
+      <div class="mob-adm-btns">
+        <button class="btn-user-page" onclick="window.open('index.html?view=1','_blank')">사용자 페이지</button>
+        <button class="btn-mob-logout" onclick="admLogout()">로그아웃</button>
+      </div>
+    </div>
+    <nav class="side-nav">
+    <a class="sn active" data-p="p-dash" onclick="goPanel(this)">📊 대시보드</a>
+    <a class="sn" data-p="p-members" onclick="goPanel(this)">👥 회원관리</a>
+    <a class="sn" data-p="p-admins" onclick="goPanel(this)">🔑 관리자관리</a>
+    <a class="sn" data-p="p-contents" onclick="goPanel(this)">📁 콘텐츠관리</a>
+    <a class="sn" data-p="p-cats" onclick="goPanel(this)">🏷 카테고리관리</a>
+    <a class="sn" data-p="p-pays" onclick="goPanel(this)">💳 결제/충전관리</a>
+    <a class="sn" data-p="p-logs" onclick="goPanel(this)">📋 이용로그/정산</a>
+    <a class="sn" data-p="p-props" onclick="goPanel(this)">🤝 제휴제안함</a>
+    <a class="sn" data-p="p-notices" onclick="goPanel(this)">📢 공지사항관리</a>
+    <a class="sn" data-p="p-guide" onclick="goPanel(this)">📖 가이드관리</a>
+    <a class="sn" data-p="p-terms" onclick="goPanel(this)">📝 약관관리</a>
+    <a class="sn" data-p="p-chargeopt" onclick="goPanel(this)">⚙️ 충전금액설정</a>
+    <a class="sn" data-p="p-thumbs" onclick="goPanel(this)">🎨 썸네일설정</a>
+    <a class="sn" data-p="p-referral-set" onclick="goPanel(this)">🎯 추천설정</a>
+    <a class="sn" data-p="p-referral-status" onclick="goPanel(this)">📈 추천현황</a>
+    <a class="sn" data-p="p-upcoming" onclick="goPanel(this)">📅 게시예정콘텐츠</a>
+    <a class="sn" data-p="p-popups" onclick="goPanel(this)">🔔 팝업관리</a>
+    <a class="sn" data-p="p-pptgen" onclick="goPanel(this)">🤖 PPT생성관리</a>
+  </nav></aside>
+  <main class="adm-main">
+    <div id="p-dash" class="panel"><h2>대시보드</h2><div class="dash-row"><div class="dash-c"><span>오늘 가입</span><strong id="d-signup">0</strong></div><div class="dash-c"><span>오늘 열람</span><strong id="d-views">0</strong></div><div class="dash-c"><span>오늘 매출</span><strong id="d-rev">0</strong><em>원</em></div><div class="dash-c"><span>전체 회원</span><strong id="d-total">0</strong></div></div><div class="dash-row"><div class="dash-c" style="border-left-color:#E65100"><span>오늘 PPT 생성</span><strong id="d-pptgen">0</strong><em>건</em></div><div class="dash-c" style="border-left-color:#E65100"><span>오늘 PPT 매출</span><strong id="d-pptrev">0</strong><em>원</em></div></div></div>
+    <div id="p-members" class="panel hidden"><h2>회원관리</h2>
+      <button class="btn" onclick="showAddUser()">무료사용자 추가</button>
+      <div id="add-user-form" class="hidden form-box">
+        <div class="fr"><div class="fg"><label>이름 <i>*</i></label><input id="nu-name" required data-next="nu-loginid"></div><div class="fg"><label>아이디 <i>*</i></label><input id="nu-loginid" required data-next="nu-pw"></div></div>
+        <div class="fr"><div class="fg"><label>비밀번호 <i>*</i></label><input id="nu-pw" type="password" required data-next="nu-email-id"></div><div class="fg"><label>이메일 <i>*</i></label><div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap"><input id="nu-email-id" style="flex:1;min-width:80px" placeholder="아이디" data-next="nu-company"><span>@</span><input id="nu-email-domain" style="flex:1;min-width:80px" placeholder="직접입력"><select id="nu-email-sel" style="flex:1;min-width:100px" onchange="nuEmailSel()"><option value="">직접입력</option><option value="naver.com">naver.com</option><option value="gmail.com">gmail.com</option><option value="daum.net">daum.net</option><option value="hanmail.net">hanmail.net</option><option value="kakao.com">kakao.com</option><option value="nate.com">nate.com</option><option value="hotmail.com">hotmail.com</option></select></div></div></div>
+        <div class="fr"><div class="fg"><label>소속사</label><input id="nu-company" data-next="nu-title"></div><div class="fg"><label>직함</label><input id="nu-title" data-next="nu-ph2"></div></div>
+        <div class="fr"><div class="fg"><label>연락처</label><div style="display:flex;gap:4px;align-items:center;flex-wrap:wrap"><input id="nu-ph1" value="010" style="width:60px;text-align:center;flex-shrink:0" readonly><span>-</span><input id="nu-ph2" inputmode="numeric" pattern="[0-9]*" maxlength="4" style="width:70px;text-align:center;flex-shrink:0" placeholder="0000" data-next="nu-ph3"><span>-</span><input id="nu-ph3" inputmode="numeric" pattern="[0-9]*" maxlength="4" style="width:70px;text-align:center;flex-shrink:0" placeholder="0000" data-next="nu-start"></div></div><div class="fg"><label>이용기간</label><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap"><input id="nu-start" type="date" style="width:140px;min-width:0;flex-shrink:1" data-next="nu-end"><span>~</span><input id="nu-end" type="date" style="width:140px;min-width:0;flex-shrink:1"><label style="margin-left:8px;font-size:13px;cursor:pointer"><input type="checkbox" id="nu-unlimited" onchange="nuUnlimitedChk()"> 무제한</label></div></div></div>
+        <button class="btn" onclick="createFreeUser()">생성</button> <button class="btn btn-sec" onclick="document.getElementById('add-user-form').classList.add('hidden')">취소</button>
+      </div>
+      <div class="toolbar mt"><input id="m-search" placeholder="이름/연락처/이메일 검색..." oninput="window._mPage=1;loadMembers()"> <button class="btn btn-danger" onclick="deleteSelectedMembers()" style="margin-left:8px">선택 삭제</button></div><div class="tbl-wrap"><table class="tbl"><thead><tr><th style="width:40px"><input type="checkbox" id="m-chk-all" onchange="toggleAllMembers()"></th><th style="width:40px">No.</th><th>가입일</th><th>회원유형</th><th>이름</th><th>아이디</th><th>소속</th><th>연락처</th><th>이용만료</th><th>잔액</th><th>포인트</th><th>정기결제</th><th>상태</th><th>추천인</th><th>관리</th></tr></thead><tbody id="tb-members"></tbody></table></div><div id="m-pagination" style="display:flex;justify-content:center;align-items:center;gap:8px;margin:16px 0;flex-wrap:wrap"></div></div>
+    <div id="p-admins" class="panel hidden"><h2>관리자 관리</h2><button class="btn" id="btn-add-adm" onclick="document.getElementById('add-adm-form').classList.toggle('hidden')">관리자 추가</button><div id="add-adm-form" class="hidden form-box"><div class="fr"><div class="fg"><label>아이디</label><input id="na-id"></div><div class="fg"><label>이름</label><input id="na-name"></div><div class="fg"><label>비밀번호</label><input id="na-pw" type="password"></div></div><button class="btn" onclick="createAdmin()">생성</button> <button class="btn btn-sec" onclick="document.getElementById('add-adm-form').classList.add('hidden')">취소</button></div><div class="tbl-wrap"><table class="tbl mt"><thead><tr><th>아이디</th><th>이름</th><th>권한</th><th>마지막 로그인</th><th>상태</th><th>관리</th></tr></thead><tbody id="tb-admins"></tbody></table></div></div>
+    <div id="p-contents" class="panel hidden"><h2>콘텐츠 관리</h2><button class="btn" onclick="showCF()">콘텐츠 등록</button> <button class="btn btn-sec" onclick="syncGitHub()">🔄 GitHub 동기화</button> <button class="btn btn-sec" onclick="showBatchUpload()">📦 일괄 등록</button> <button class="btn btn-sec" onclick="toggleBulkPrice()">💰 가격 일괄변경</button>
+    <div id="bulk-price-area" class="hidden form-box" style="margin-top:12px"><h3 style="margin-bottom:12px">💰 가격 일괄변경</h3><div class="fr"><div class="fg"><label>기본 가격(원) — 영상/브리핑/오디오/보고서</label><input id="bp-default" type="number" value="2000" min="0" step="100"></div><div class="fg"><label>클로징PPT 가격(원)</label><input id="bp-closing" type="number" value="5000" min="0" step="100"></div></div><button type="button" class="btn" onclick="bulkPricePreview()">미리보기</button> <button type="button" class="btn btn-sec" onclick="bulkPriceApply()">적용</button><div id="bp-result" style="margin-top:12px;font-size:13px"></div></div>
+    <div id="sync-status" style="display:none;margin:12px 0;padding:12px;border-radius:8px;background:#f0f7ff;border:1px solid #c0d8f0;font-size:14px"></div>
+    <div id="batch-area" class="hidden form-box"><h3 style="margin-bottom:12px">📦 일괄 등록</h3>
+      <div class="tabs" style="margin-bottom:16px"><button class="tab active" onclick="switchBatchTab('audio',this)">🎧 오디오 일괄</button><button class="tab" onclick="switchBatchTab('video',this)">🎬 영상 일괄 (엑셀)</button></div>
+      <div id="batch-audio">
+        <div class="fr"><div class="fg"><label>카테고리</label><select id="ba-cat"></select></div><div class="fg"><label>가격(원)</label><input id="ba-price" type="number" value="2000" min="0" step="100"></div></div>
+        <div class="fg"><label>오디오 파일 선택 (다중)</label><input type="file" id="ba-files" accept="audio/*" multiple onchange="previewAudioFiles()"></div>
+        <div id="ba-preview" style="margin-top:12px"></div>
+        <button type="button" class="btn mt" id="ba-upload-btn" onclick="batchAudioUpload()" style="display:none">업로드 및 등록</button>
+        <div id="ba-progress" style="margin-top:12px"></div>
+      </div>
+      <div id="batch-video" style="display:none">
+        <div class="fg"><label>엑셀 파일 선택 (.xlsx) — 열 순서: 카테고리, 구분(개인/법인), 제목, URL</label><input type="file" id="bv-file" accept=".xlsx,.xls,.csv"></div>
+        <div class="fg"><label>가격(원)</label><input id="bv-price" type="number" value="2000" min="0" step="100"></div>
+        <button type="button" class="btn mt" onclick="batchVideoUpload()">엑셀에서 일괄 등록</button>
+        <div id="bv-progress" style="margin-top:12px"></div>
+      </div>
+      <button type="button" class="btn btn-sec mt" onclick="$('batch-area').classList.add('hidden')">닫기</button>
+    </div><div id="cf-area" class="hidden form-box"><form onsubmit="saveCont(event)"><input type="hidden" id="cf-id"><div class="fr"><div class="fg"><label>제목</label><input id="cf-title" required></div><div class="fg"><label>카테고리</label><select id="cf-cat"></select></div></div><div class="fr"><div class="fg"><label>유형</label><select id="cf-type" onchange="onCfTypeChange()"><option value="video">🎬 영상콘텐츠</option><option value="brief">📰 이슈브리핑</option><option value="audio">🎧 오디오</option><option value="report">📊 특급보고서</option><option value="closing">📑 클로징PPT</option></select></div><div class="fg"><label>가격(원)</label><input id="cf-price" type="number" required min="0" step="100" value="2000"></div></div><div id="cf-sub-wrap" class="fg hidden"><label>구분 (개인/법인)</label><select id="cf-subtype"><option value="">없음</option><option value="개인">개인</option><option value="법인">법인</option></select></div><div class="fg"><label id="cf-url-label">콘텐츠 URL</label><input id="cf-url" type="url" required></div><div id="cf-audio-upload" class="fg hidden"><label>오디오 파일 업로드</label><div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><input type="file" id="cf-audio-file" accept="audio/*" onchange="uploadAudio(this)"><span id="cf-audio-progress" style="font-size:13px;color:#666"></span></div></div><div id="cf-video-wrap" class="fg hidden"><label>영상 URL (클로징PPT용)</label><input id="cf-videourl" type="url" placeholder="영상 URL"></div><div id="cf-pptx-wrap" class="fg hidden"><label>PPTX 다운로드 URL (클로징PPT용)</label><input id="cf-pptxurl" type="url" placeholder="PPTX 파일 URL"></div><div class="fg"><label>썸네일 URL (선택)</label><input id="cf-thumb"></div><div class="fg"><label>요약</label><textarea id="cf-summary" rows="3"></textarea></div><div class="fr"><div class="fg"><label>정렬순서</label><input id="cf-sort" type="number" value="0"></div><div class="fg"><label>노출</label><select id="cf-active"><option value="1">노출</option><option value="0">비노출</option></select></div></div><button type="submit" class="btn">저장</button> <button type="button" class="btn btn-sec" onclick="document.getElementById('cf-area').classList.add('hidden')">취소</button></form></div><div class="toolbar mt"><input id="c-search" placeholder="제목/카테고리/유형 검색..." oninput="renderConts()"> <select id="c-type-filter" onchange="renderConts()"><option value="">전체 유형</option><option value="video">영상콘텐츠</option><option value="brief">이슈브리핑</option><option value="audio">오디오</option><option value="report">특급보고서</option><option value="closing">클로징PPT</option></select> <button class="btn-danger" onclick="delSelected()">🗑 선택삭제</button></div><div class="tbl-wrap mt"><table class="tbl"><thead><tr><th style="width:36px"><input type="checkbox" id="c-all-chk" onchange="toggleAllChk(this.checked)"></th><th style="width:40px">No</th><th>제목</th><th>카테고리</th><th>유형</th><th>구분</th><th>가격</th><th>열람수</th><th>등록일</th><th>노출</th><th>관리</th></tr></thead><tbody id="tb-conts"></tbody></table></div><div id="cont-pager" style="display:flex;justify-content:center;align-items:center;gap:8px;margin-top:12px"></div></div>
+    <div id="p-cats" class="panel hidden"><h2>카테고리 관리</h2><div class="toolbar"><input id="nc-name" placeholder="카테고리명"><button class="btn" onclick="addCat()">추가</button></div><div class="tbl-wrap"><table class="tbl mt"><thead><tr><th>카테고리명</th><th>정렬</th><th>상태</th><th>관리</th></tr></thead><tbody id="tb-cats"></tbody></table></div></div>
+    <div id="p-pays" class="panel hidden"><h2>결제/충전 관리</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th>날짜</th><th>회원</th><th>결제금액</th><th>충전크레딧</th><th>상태</th></tr></thead><tbody id="tb-pays"></tbody></table></div>
+      <h3 style="margin-top:24px;padding-top:16px;border-top:2px solid var(--border-lt)">🤖 PPT 생성 결제 내역</h3>
+      <div class="tbl-wrap mt"><table class="tbl"><thead><tr><th>날짜</th><th>회원</th><th>PT 제목</th><th>금액</th><th>결제상태</th></tr></thead><tbody id="tb-pays-pptgen"></tbody></table></div>
+    </div>
+    <div id="p-logs" class="panel hidden"><h2>이용로그 / 정산</h2><div class="toolbar"><label>기간:</label><input id="lg-from" type="date"> ~ <input id="lg-to" type="date"><button class="btn" onclick="loadLogs()">조회</button><button class="btn btn-sec" onclick="exportCSV()">CSV 다운로드</button></div><div id="lg-summary" class="dash-row mt"></div><div class="tbl-wrap mt"><table class="tbl"><thead><tr><th>날짜</th><th>회원</th><th>콘텐츠명칭</th><th>콘텐츠</th><th>차감액</th></tr></thead><tbody id="tb-logs"></tbody></table></div>
+      <h3 style="margin-top:24px;padding-top:16px;border-top:2px solid var(--border-lt)">🤖 PPT 생성 이용 로그</h3>
+      <div id="lg-pptgen-summary" class="dash-row mt"></div>
+      <div class="tbl-wrap mt"><table class="tbl"><thead><tr><th>날짜</th><th>회원</th><th>유형</th><th>PT 제목</th><th>상태</th><th>차감액</th></tr></thead><tbody id="tb-logs-pptgen"></tbody></table></div>
+    </div>
+    <div id="p-props" class="panel hidden"><h2>제휴 제안함</h2><div class="tbl-wrap"><table class="tbl"><thead><tr><th>접수일</th><th>회원</th><th>제목</th><th>상태</th><th>관리</th></tr></thead><tbody id="tb-props"></tbody></table></div></div>
+    <div id="p-notices" class="panel hidden"><h2>공지사항 관리</h2><button class="btn" onclick="showNF()">공지 등록</button><div id="nf-area" class="hidden form-box"><input type="hidden" id="nf-id"><div class="fg"><label>제목</label><input id="nf-title" required></div><div class="fg"><label>내용</label>
+      <div class="rich-toolbar" id="nf-toolbar">
+        <button type="button" class="btn btn-sm" onclick="richFmt('bold','nf-body')" title="굵게"><b>B</b></button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('italic','nf-body')" title="기울임"><i>I</i></button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('underline','nf-body')" title="밑줄"><u>U</u></button>
+        <span class="tb-sep">|</span>
+        <select onchange="richFmt('fontSize',this.value,'nf-body');this.selectedIndex=0" title="글자크기" style="padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:12px;font-family:var(--font)">
+          <option value="">크기</option><option value="1">아주작게</option><option value="2">작게</option><option value="3">보통</option><option value="4">크게</option><option value="5">아주크게</option><option value="6">매우크게</option>
+        </select>
+        <button type="button" class="btn btn-sm" onclick="richFmt('h2','nf-body')" title="대제목">H2</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('h3','nf-body')" title="소제목">H3</button>
+        <span class="tb-sep">|</span>
+        <button type="button" class="btn btn-sm" onclick="richFmt('color','nf-body')" title="글자색">🎨색상</button><input type="color" id="nf-color" value="#2E86AB" style="width:28px;height:24px;border:none;padding:0;cursor:pointer;vertical-align:middle">
+        <span class="tb-sep">|</span>
+        <button type="button" class="btn btn-sm" onclick="richFmt('justifyLeft','nf-body')" title="왼쪽정렬">⬅</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('justifyCenter','nf-body')" title="가운데정렬">⬛</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('justifyRight','nf-body')" title="오른쪽정렬">➡</button>
+        <span class="tb-sep">|</span>
+        <button type="button" class="btn btn-sm" onclick="richFmt('ul','nf-body')" title="●목록">• 목록</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('ol','nf-body')" title="숫자목록">1. 목록</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('hr','nf-body')" title="구분선">── 구분선</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('link','nf-body')" title="링크">🔗링크</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('image','nf-body')" title="이미지">🖼이미지</button>
+        <span class="tb-sep">|</span>
+        <button type="button" class="btn btn-sm" onclick="richFmt('undo','nf-body')" title="되돌리기">↩</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('redo','nf-body')" title="다시실행">↪</button>
+      </div>
+      <div id="nf-body" contenteditable="true" class="rich-editor"></div>
+    </div><div class="fg"><label>노출</label><select id="nf-active"><option value="1">노출</option><option value="0">비노출</option></select></div><div style="display:flex;gap:8px"><button type="button" class="btn" onclick="saveNotice(event)">저장</button> <button type="button" class="btn btn-sec" onclick="nfPreview()">미리보기</button> <button type="button" class="btn btn-sec" onclick="document.getElementById('nf-area').classList.add('hidden')">취소</button></div>
+    <div id="nf-preview" class="form-box mt" style="display:none"><h3 style="margin-bottom:12px">미리보기</h3><div id="nf-preview-body" style="font-size:14px;line-height:1.8"></div></div>
+    </div><div class="tbl-wrap"><table class="tbl mt"><thead><tr><th style="width:50px">No.</th><th>제목</th><th>노출</th><th>등록일</th><th>관리</th></tr></thead><tbody id="tb-notices"></tbody></table></div></div>
+    <div id="p-guide" class="panel hidden"><h2>이용 가이드 관리</h2><p style="color:#666;margin-bottom:16px">사용자 메인화면 상단의 "이용가이드" 버튼을 클릭하면 표시되는 내용입니다.</p>
+    <div class="fg"><label>제목</label><input id="gd-title" value="이용 가이드"></div>
+    <div class="fg"><label>내용</label>
+      <div class="rich-toolbar" id="gd-toolbar">
+        <button type="button" class="btn btn-sm" onclick="richFmt('bold','gd-body')" title="굵게"><b>B</b></button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('italic','gd-body')" title="기울임"><i>I</i></button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('underline','gd-body')" title="밑줄"><u>U</u></button>
+        <span class="tb-sep">|</span>
+        <select onchange="richFmt('fontSize',this.value,'gd-body');this.selectedIndex=0" title="글자크기" style="padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:12px;font-family:var(--font)">
+          <option value="">크기</option><option value="1">아주작게</option><option value="2">작게</option><option value="3">보통</option><option value="4">크게</option><option value="5">아주크게</option><option value="6">매우크게</option>
+        </select>
+        <button type="button" class="btn btn-sm" onclick="richFmt('h2','gd-body')" title="대제목">H2</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('h3','gd-body')" title="소제목">H3</button>
+        <span class="tb-sep">|</span>
+        <button type="button" class="btn btn-sm" onclick="richFmt('color','gd-body')" title="글자색">🎨색상</button><input type="color" id="gd-color" value="#2E86AB" style="width:28px;height:24px;border:none;padding:0;cursor:pointer;vertical-align:middle">
+        <span class="tb-sep">|</span>
+        <button type="button" class="btn btn-sm" onclick="richFmt('justifyLeft','gd-body')" title="왼쪽정렬">⬅</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('justifyCenter','gd-body')" title="가운데정렬">⬛</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('justifyRight','gd-body')" title="오른쪽정렬">➡</button>
+        <span class="tb-sep">|</span>
+        <button type="button" class="btn btn-sm" onclick="richFmt('ul','gd-body')" title="●목록">• 목록</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('ol','gd-body')" title="숫자목록">1. 목록</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('hr','gd-body')" title="구분선">── 구분선</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('link','gd-body')" title="링크">🔗링크</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('image','gd-body')" title="이미지">🖼이미지</button>
+        <span class="tb-sep">|</span>
+        <button type="button" class="btn btn-sm" onclick="richFmt('undo','gd-body')" title="되돌리기">↩</button>
+        <button type="button" class="btn btn-sm" onclick="richFmt('redo','gd-body')" title="다시실행">↪</button>
+      </div>
+      <div id="gd-body" contenteditable="true" class="rich-editor" style="min-height:400px"></div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px"><button type="button" class="btn" onclick="saveGuide()">저장</button><button type="button" class="btn btn-sec" onclick="gdPreview()">미리보기</button></div>
+    <div id="gd-preview" class="form-box mt" style="display:none"><h3 style="margin-bottom:12px">미리보기</h3><div id="gd-preview-body" style="font-size:14px;line-height:1.8"></div></div></div>
+    <div id="p-terms" class="panel hidden"><h2>약관 관리</h2><div class="tabs"><button class="tab active" onclick="loadTermEdit('terms_of_service',this)">이용약관</button><button class="tab" onclick="loadTermEdit('privacy_policy',this)">개인정보처리방침</button></div><form onsubmit="saveTerm(event)"><input type="hidden" id="te-type" value="terms_of_service"><div class="fg"><textarea id="te-body" rows="15" style="font-family:monospace"></textarea></div><button type="submit" class="btn">저장</button></form></div>
+    <div id="p-chargeopt" class="panel hidden"><h2>충전 금액 설정</h2><div class="toolbar"><input id="co-paid" type="number" placeholder="결제금액(원)" style="min-width:0;flex:1"><input id="co-credit" type="number" placeholder="충전크레딧(원)" style="min-width:0;flex:1"><input id="co-label" placeholder="표시텍스트" style="min-width:0;flex:1"><button class="btn" onclick="addChargeOpt()">추가</button></div><div class="tbl-wrap"><table class="tbl mt"><thead><tr><th>결제금액</th><th>충전크레딧</th><th>표시</th><th>정렬</th><th>상태</th><th>관리</th></tr></thead><tbody id="tb-copts"></tbody></table></div></div>
+    <div id="p-thumbs" class="panel hidden"><h2>유형별 썸네일 설정</h2><p style="color:#666;margin-bottom:16px">유형별 기본 썸네일 이미지를 설정하면 해당 유형의 콘텐츠에 자동 적용됩니다. 이미지 위에 콘텐츠 제목이 합성됩니다.</p><div class="form-box" id="thumb-form"><div class="fr"><div class="fg"><label>적용 범위</label><select id="th-scope" onchange="toggleThDate()"><option value="all">전체 적용</option><option value="after">특정일 이후 적용</option></select></div><div class="fg" id="th-date-wrap" style="display:none"><label>적용 시작일</label><input id="th-date" type="date"></div></div><div id="th-types"></div><button class="btn mt" onclick="saveThumbs()">저장</button></div></div>
+    <div id="p-referral-set" class="panel hidden"><h2>추천 설정</h2><p style="color:#666;margin-bottom:16px">추천 버튼이 표시될 회원유형을 선택하고, 추천 보상 포인트를 설정합니다.</p><div class="form-box"><h3>추천 가능 회원유형</h3><div style="display:flex;flex-wrap:wrap;gap:16px;margin:12px 0"><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px"><input type="checkbox" id="ref-role-jarvia" value="jarvia_member"> JARVIA멤버십</label><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px"><input type="checkbox" id="ref-role-inner" value="inner_circle"> 이너서클</label><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px"><input type="checkbox" id="ref-role-user" value="user"> 일반회원</label><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px"><input type="checkbox" id="ref-role-free" value="free_user"> 무료회원</label><label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:14px"><input type="checkbox" id="ref-role-branch" value="branch_manager"> 지사장</label></div><h3 class="mt">추천 보상 포인트</h3><div class="fr" style="margin:12px 0"><div class="fg"><label>보상 포인트(P)</label><input id="ref-reward" type="number" value="50000" min="0" step="1000"></div></div><button class="btn mt" onclick="saveRefSet()">저장</button></div></div>
+    <div id="p-referral-status" class="panel hidden"><h2>추천 현황</h2>
+      <div class="toolbar"><label>기간:</label><input id="rs-from" type="date"> ~ <input id="rs-to" type="date"><button class="btn" onclick="loadRefStatus()">조회</button><button class="btn btn-sec" onclick="setRefPeriod('today')">오늘</button><button class="btn btn-sec" onclick="setRefPeriod('week')">이번주</button><button class="btn btn-sec" onclick="setRefPeriod('month')">이번달</button><button class="btn btn-sec" onclick="setRefPeriod('all')">전체</button></div>
+      <div id="rs-summary" class="dash-row mt"></div>
+      <h3 class="mt">추천자별 현황</h3>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>추천자</th><th>아이디</th><th>추천 인원</th><th>누적 포인트</th><th>현재 포인트</th></tr></thead><tbody id="tb-ref-summary"></tbody></table></div>
+      <h3 class="mt">추천 상세 내역</h3>
+      <div class="tbl-wrap"><table class="tbl"><thead><tr><th>일시</th><th>추천자</th><th>피추천자</th><th>변경유형</th><th>지급 포인트</th></tr></thead><tbody id="tb-ref-detail"></tbody></table></div>
+    </div>
+    <div id="p-upcoming" class="panel hidden"><h2>게시예정 콘텐츠 관리</h2><button class="btn" onclick="showUF()">게시예정 등록</button><div id="uf-area" class="hidden form-box"><input type="hidden" id="uf-id"><div class="fr"><div class="fg"><label>게시예정일</label><input id="uf-date" type="date" required></div><div class="fg"><label>카테고리</label><select id="uf-cat"><option value="클로징PPT">클로징PPT</option><option value="특급보고서">특급보고서</option><option value="이슈브리핑">이슈브리핑</option><option value="영상콘텐츠">영상콘텐츠</option><option value="오디오">오디오</option></select></div></div><div class="fr"><div class="fg"><label>구분</label><select id="uf-field"><option value="개인">개인</option><option value="법인">법인</option></select></div><div class="fg"><label>제목</label><input id="uf-title" required></div></div><div class="fr"><div class="fg"><label>영상</label><select id="uf-video"><option value="">-</option><option value="O">O</option></select></div><div class="fg"><label>오디오</label><select id="uf-audio"><option value="">-</option><option value="O">O</option></select></div><div class="fg"><label>HTML</label><select id="uf-html"><option value="">-</option><option value="O">O</option></select></div><div class="fg"><label>PDF</label><select id="uf-pdf"><option value="">-</option><option value="O">O</option></select></div><div class="fg"><label>PPT</label><select id="uf-ppt"><option value="">-</option><option value="O">O</option></select></div></div><button class="btn" onclick="saveUpcoming()">저장</button> <button type="button" class="btn btn-sec" onclick="document.getElementById('uf-area').classList.add('hidden')">취소</button></div><div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table class="tbl mt" style="min-width:700px;table-layout:fixed;border-collapse:collapse"><thead><tr><th style="text-align:center;width:100px">게시예정일</th><th style="text-align:center;width:90px">카테고리</th><th style="text-align:center;width:50px">구분</th><th style="text-align:left">제목</th><th style="text-align:center;width:40px">영상</th><th style="text-align:center;width:40px">오디오</th><th style="text-align:center;width:40px">HTML</th><th style="text-align:center;width:40px">PDF</th><th style="text-align:center;width:40px">PPT</th><th style="text-align:center;width:130px">관리</th></tr></thead><tbody id="tb-upcoming"></tbody></table></div></div>
+    <div id="p-popups" class="panel hidden"><h2>팝업 관리</h2><p style="color:#666;margin-bottom:16px">회원 유형별 로그인 팝업을 관리합니다. 회원이 로그인하면 해당 유형 팝업 + 공통 팝업이 표시됩니다.</p>
+      <div class="tabs" id="popup-tabs">
+        <button class="tab active" onclick="switchPopupTab('common',this)">공통(전체)</button>
+        <button class="tab" onclick="switchPopupTab('free_user',this)">무료회원</button>
+        <button class="tab" onclick="switchPopupTab('user',this)">일반회원</button>
+        <button class="tab" onclick="switchPopupTab('jarvia_member',this)">JARVIA멤버십</button>
+        <button class="tab" onclick="switchPopupTab('inner_circle',this)">이너서클</button>
+        <button class="tab" onclick="switchPopupTab('branch_manager',this)">지사장</button>
+      </div>
+      <div id="popup-edit-area" class="form-box">
+        <div class="fr"><div class="fg"><label>제목</label><input id="pp-title"></div><div class="fg"><label>노출</label><select id="pp-active"><option value="1">노출</option><option value="0">비노출</option></select></div></div>
+        <div class="fr"><div class="fg"><label>게시시작일</label><input id="pp-start" type="date"></div><div class="fg"><label>게시만료일</label><input id="pp-end" type="date"></div></div>
+        <div class="fg"><label>내용 (리치 에디터)</label>
+          <div class="rich-toolbar">
+            <button type="button" class="btn btn-sm" onclick="richFmt('bold','pp-body')" title="굵게"><b>B</b></button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('italic','pp-body')" title="기울임"><i>I</i></button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('underline','pp-body')" title="밑줄"><u>U</u></button>
+            <span class="tb-sep">|</span>
+            <select onchange="richFmt('fontSize',this.value,'pp-body');this.selectedIndex=0" style="padding:4px 6px;border:1px solid var(--border);border-radius:4px;font-size:12px;font-family:var(--font)">
+              <option value="">크기</option><option value="1">아주작게</option><option value="2">작게</option><option value="3">보통</option><option value="4">크게</option><option value="5">아주크게</option><option value="6">매우크게</option>
+            </select>
+            <button type="button" class="btn btn-sm" onclick="richFmt('h2','pp-body')" title="대제목">H2</button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('h3','pp-body')" title="소제목">H3</button>
+            <span class="tb-sep">|</span>
+            <button type="button" class="btn btn-sm" onclick="richFmt('color','pp-body')" title="글자색">🎨색상</button><input type="color" id="pp-color" value="#2E86AB" style="width:28px;height:24px;border:none;padding:0;cursor:pointer;vertical-align:middle">
+            <span class="tb-sep">|</span>
+            <button type="button" class="btn btn-sm" onclick="richFmt('justifyLeft','pp-body')" title="왼쪽정렬">⬅</button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('justifyCenter','pp-body')" title="가운데정렬">⬛</button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('justifyRight','pp-body')" title="오른쪽정렬">➡</button>
+            <span class="tb-sep">|</span>
+            <button type="button" class="btn btn-sm" onclick="richFmt('ul','pp-body')" title="●목록">• 목록</button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('ol','pp-body')" title="숫자목록">1. 목록</button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('hr','pp-body')" title="구분선">── 구분선</button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('link','pp-body')" title="링크">🔗링크</button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('image','pp-body')" title="이미지">🖼이미지</button>
+            <span class="tb-sep">|</span>
+            <button type="button" class="btn btn-sm" onclick="richFmt('undo','pp-body')" title="되돌리기">↩</button>
+            <button type="button" class="btn btn-sm" onclick="richFmt('redo','pp-body')" title="다시실행">↪</button>
+          </div>
+          <div id="pp-body" contenteditable="true" class="rich-editor"></div>
+        </div>
+        <div style="display:flex;gap:8px"><button class="btn" onclick="savePopup()">저장</button><button class="btn btn-sec" onclick="ppPreview()">미리보기</button><button class="btn btn-danger" onclick="deletePopup()">삭제</button></div>
+        <div id="pp-preview" class="form-box mt" style="display:none"><h3 style="margin-bottom:12px">미리보기</h3><div id="pp-preview-body" style="font-size:14px;line-height:1.8"></div></div>
+        <div id="pp-status" style="margin-top:12px;font-size:13px;color:var(--text-lt)"></div>
+      </div>
+    </div>
+    <!-- ═══ PPT 생성 관리 ═══ -->
+    <div id="p-pptgen" class="panel hidden"><h2>🤖 PPT 생성 관리</h2>
+      <div class="dash-row" id="pptgen-dash">
+        <div class="dash-c"><span>오늘 생성</span><strong id="pg-today">0</strong><em>건</em></div>
+        <div class="dash-c"><span>오늘 매출</span><strong id="pg-rev">0</strong><em>원</em></div>
+        <div class="dash-c"><span>전체 완료</span><strong id="pg-total">0</strong><em>건</em></div>
+        <div class="dash-c"><span>실패/환불</span><strong id="pg-fail">0</strong><em>건</em></div>
+      </div>
+      <div class="toolbar">
+        <label>기간:</label><input id="pg-from" type="date"> ~ <input id="pg-to" type="date">
+        <select id="pg-status-filter"><option value="">전체 상태</option><option value="completed">완료</option><option value="processing">생성중</option><option value="pending">대기</option><option value="failed">실패</option></select>
+        <button class="btn" onclick="loadPptGenAdmin()">조회</button>
+        <button class="btn btn-sec" onclick="exportPptGenCSV()">CSV 다운로드</button>
+      </div>
+      <div class="tbl-wrap mt"><table class="tbl"><thead><tr>
+        <th>생성일시</th><th>회원</th><th>유형</th><th>PT 제목</th><th>상태</th><th>비용</th><th>결제상태</th><th>잔여일</th></tr></thead>
+        <tbody id="tb-pptgen"></tbody>
+      </table></div>
+    </div>
+  </main>
+</div>
+<div id="mdl-member" class="modal hidden"><div class="mdl-bg" onclick="closeM('mdl-member')"></div><div class="mdl-box mdl-lg"><button class="mdl-x" onclick="closeM('mdl-member')">×</button><div id="member-inner"></div></div></div>
+<div id="mdl-prop" class="modal hidden"><div class="mdl-bg" onclick="closeM('mdl-prop')"></div><div class="mdl-box mdl-lg"><button class="mdl-x" onclick="closeM('mdl-prop')">×</button><div id="prop-inner"></div></div></div>
+<div id="toast" class="toast hidden"></div>
+
+<script type="module">
+import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import{getAuth,onAuthStateChanged,signOut,createUserWithEmailAndPassword}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import{getFirestore,collection,doc,getDoc,getDocs,setDoc,updateDoc,deleteDoc,query,where,orderBy,limit,runTransaction,serverTimestamp,increment,Timestamp,deleteField}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import{getStorage,ref as stRef,uploadBytesResumable,getDownloadURL}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js';
+
+const FC={apiKey:"AIzaSyCf7CsUTgfIWY-RW_mvTJOhczDtk1xM9sA",authDomain:"kfpc-company-support-project.firebaseapp.com",projectId:"kfpc-company-support-project",storageBucket:"kfpc-company-support-project.firebasestorage.app",messagingSenderId:"1012609333373",appId:"1:1012609333373:web:7b6c207c81ff10d156d914",measurementId:"G-CMW6QQ470G"};
+const app=initializeApp(FC);
+const auth=getAuth(app);
+const db=getFirestore(app,'javia-db');
+const storage=getStorage(app);
+
+const $=id=>document.getElementById(id);
+const gid=()=>Date.now().toString(36)+Math.random().toString(36).substr(2,9);
+const fmt=n=>(n||0).toLocaleString('ko-KR');
+const fdate=t=>{if(!t)return'-';const d=t.toDate?t.toDate():new Date(t);return d.toLocaleDateString('ko-KR');};
+const fdatetime=t=>{if(!t)return'-';const d=t.toDate?t.toDate():new Date(t);return d.toLocaleDateString('ko-KR')+' '+d.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'});};
+const esc=s=>{if(!s)return'';const d=document.createElement('div');d.textContent=s;return d.innerHTML;};
+let _tt;function toast(m,t=''){const e=$('toast');e.textContent=m;e.className='toast'+(t?' toast-'+t:'');e.classList.remove('hidden');clearTimeout(_tt);_tt=setTimeout(()=>e.classList.add('hidden'),3000);}
+function openM(id){$(id).classList.remove('hidden');}
+function closeM(id){$(id).classList.add('hidden');}
+function typeBadge(t,action){const l={video:'영상콘텐츠',brief:'이슈브리핑',audio:'오디오',report:'특급보고서',closing:'클로징PPT',doc:'문서',ppt:'PPT',html:'HTML'};if(t==='closing'&&action==='ppt_download')return`<span class="badge badge-closing-ppt">클로징PPT</span>`;if(t==='closing'&&action==='view')return`<span class="badge badge-closing-pdf">클로징PDF</span>`;return`<span class="badge badge-${t}">${l[t]||t}</span>`;}
+function expiryStatus(m){
+  if(m.expiresAt==='unlimited')return{text:'무제한',cls:'st-ok',short:'무제한'};
+  if(!m.expiresAt)return{text:'미설정',cls:'st-warn',short:'미설정'};
+  const exp=m.expiresAt.toDate?m.expiresAt.toDate():new Date(m.expiresAt);
+  const startSrc=m.startsAt||m.createdAt;
+  const start=startSrc?(startSrc.toDate?startSrc.toDate():new Date(startSrc)):null;
+  const now=new Date(),diff=Math.ceil((exp-now)/(1000*60*60*24));
+  const startStr=start?fdate(startSrc):'';const endStr=fdate(m.expiresAt);
+  if(diff<0)return{text:startStr+'~'+endStr+' (만료)',cls:'st-expired',short:'만료'};
+  if(diff<=7)return{text:startStr+'~'+endStr+' ('+diff+'일 남음)',cls:'st-warn',short:diff+'일'};
+  return{text:startStr+'~'+endStr+' ('+diff+'일 남음)',cls:'st-ok',short:diff+'일'};
+}
+function showAddUser(){document.getElementById('add-user-form').classList.toggle('hidden');if(!$('nu-start').value)initNuDates();}
+
+let admUser=null,admData=null;
+
+onAuthStateChanged(auth,async u=>{
+  if(!u||!u.email||!u.email.endsWith('@javia-admin.internal')){window.location.href='index.html';return;}
+  admUser=u;
+  const lid=u.email.replace('@javia-admin.internal','');
+  const snap=await getDocs(query(collection(db,'admins'),where('loginId','==',lid),limit(1)));
+  if(snap.empty){window.location.href='index.html';return;}
+  admData=snap.docs[0].data();
+  $('adm-name').textContent=(admData.name||admData.loginId)+' ('+({superadmin:'총괄',admin:'관리자'}[admData.role]||admData.role)+')';
+  if($('mob-adm-name'))$('mob-adm-name').textContent=$('adm-name').textContent;
+  loadDash();
+});
+
+async function admLogout(){await signOut(auth);window.location.href='index.html';}
+
+function goPanel(el){
+  document.querySelectorAll('.sn').forEach(a=>a.classList.remove('active'));el.classList.add('active');
+  document.querySelectorAll('.panel').forEach(p=>p.classList.add('hidden'));$(el.dataset.p).classList.remove('hidden');
+  document.querySelector('.sidebar').classList.remove('show');
+  const ld={'p-dash':loadDash,'p-members':loadMembers,'p-admins':loadAdmins,'p-contents':loadConts,'p-cats':loadCats,'p-pays':loadPaysAll,'p-logs':loadLogsAll,'p-props':loadProps,'p-notices':loadNoticesAdm,'p-guide':loadGuide,'p-terms':()=>loadTermEdit('terms_of_service'),'p-chargeopt':loadChargeOpts,'p-thumbs':loadThumbs,'p-referral-set':loadRefSet,'p-referral-status':loadRefStatus,'p-upcoming':loadUpcomingAdm,'p-popups':loadPopups,'p-pptgen':loadPptGenAdmin};
+  if(ld[el.dataset.p])ld[el.dataset.p]();
+}
+
+// ═══ DASHBOARD ═══
+async function loadDash(){
+  const today=new Date();today.setHours(0,0,0,0);const tTs=Timestamp.fromDate(today);
+  const su=await getDocs(query(collection(db,'users'),where('createdAt','>=',tTs)));$('d-signup').textContent=su.size;
+  const vw=await getDocs(query(collection(db,'view_logs'),where('createdAt','>=',tTs)));$('d-views').textContent=vw.size;
+  const ch=await getDocs(query(collection(db,'payments'),where('status','==','paid'),where('createdAt','>=',tTs)));
+  let rev=0;ch.forEach(d=>rev+=(d.data().paidAmount||0));$('d-rev').textContent=fmt(rev);
+  let totalUsers=0;
+  try{
+    const tt1=await getDocs(query(collection(db,'users'),where('role','==','free_user')));
+    const tt2=await getDocs(query(collection(db,'users'),where('role','==','user')));
+    totalUsers=tt1.size+tt2.size;
+  }catch(e){
+    const allU=await getDocs(collection(db,'users'));
+    totalUsers=allU.docs.filter(d=>{const r=d.data().role;return r==='free_user'||r==='user'||r==='jarvia_member'||r==='inner_circle'||r==='branch_manager';}).length;
+  }
+  $('d-total').textContent=totalUsers;
+  // PPT 생성 통계
+  try{
+    const pgSnap=await getDocs(query(collection(db,'pptgen_jobs'),where('createdAt','>=',tTs)));
+    let pgCount=0,pgRev=0;
+    pgSnap.forEach(d=>{const j=d.data();pgCount++;if(j.paymentStatus==='confirmed')pgRev+=(j.genPrice||0);});
+    $('d-pptgen').textContent=pgCount;$('d-pptrev').textContent=fmt(pgRev);
+  }catch(e){$('d-pptgen').textContent='-';$('d-pptrev').textContent='-';}
+}
+
+// ═══ MEMBERS ═══
+async function loadMembers(){
+  const s=($('m-search')?.value||'').toLowerCase();
+  let list=[];
+  try{
+    const snap1=await getDocs(query(collection(db,'users'),where('role','==','free_user'),orderBy('createdAt','desc')));
+    const snap2=await getDocs(query(collection(db,'users'),where('role','==','user'),orderBy('createdAt','desc')));
+    list=[...snap1.docs,...snap2.docs].map(d=>({id:d.id,...d.data()}));
+  }catch(e){
+    console.warn('복합 인덱스 없음, 전체 조회 fallback:',e.message);
+    const snapAll=await getDocs(collection(db,'users'));
+    list=snapAll.docs.map(d=>({id:d.id,...d.data()})).filter(m=>m.role==='free_user'||m.role==='user'||m.role==='jarvia_member'||m.role==='inner_circle'||m.role==='branch_manager');
+    list.sort((a,b)=>{const at=a.createdAt?.toDate?a.createdAt.toDate():new Date(0);const bt=b.createdAt?.toDate?b.createdAt.toDate():new Date(0);return bt-at;});
+  }
+  if(s)list=list.filter(m=>(m.name||'').toLowerCase().includes(s)||(m.phone||'').includes(s)||(m.email||'').toLowerCase().includes(s)||(m.loginId||'').toLowerCase().includes(s));
+  const roleLabel=r=>({free_user:'무료회원',user:'일반회원',jarvia_member:'JARVIA멤버십',inner_circle:'이너서클',branch_manager:'지사장'}[r]||r);
+  const roleClass=r=>({free_user:'st-active',user:'st-ok',jarvia_member:'st-jarvia',inner_circle:'st-inner',branch_manager:'st-inner'}[r]||'');
+  const regFeeIcon=m=>m.role==='jarvia_member'?(m.regFeePaid?' ✅입금확인':' ❌미확인'):'';
+  const refName=rc=>{if(!rc)return'-';const f=list.find(x=>x.referralCode===rc);return f?esc(f.name):rc;};
+  if(!window._mPage)window._mPage=1;const perPage=10;const totalPages=Math.max(1,Math.ceil(list.length/perPage));if(window._mPage>totalPages)window._mPage=totalPages;const startIdx=(window._mPage-1)*perPage;const pageList=list.slice(startIdx,startIdx+perPage);
+  $('tb-members').innerHTML=pageList.length?pageList.map((m,i)=>{const no=startIdx+i+1;const es=expiryStatus(m);return`<tr><td><input type="checkbox" class="m-chk" value="${m.id}"></td><td style="text-align:center">${no}</td><td>${fdate(m.createdAt)}</td><td><span class="${roleClass(m.role)}">${roleLabel(m.role)}</span>${regFeeIcon(m)}</td><td>${esc(m.name)}</td><td>${esc(m.loginId||'')}</td><td>${esc(m.company||'')}</td><td>${esc(m.phone||'')}</td><td><span class="${es.cls}">${es.text}</span></td><td>${fmt(m.balance)}원</td><td>${fmt(m.point||0)}P</td><td>${m.role==='jarvia_member'?fmt(m.monthlyFee||50000)+'원':'-'}</td><td><span class="st-${m.status}">${m.status==='active'?'정상':'정지'}</span></td><td>${refName(m.referredBy)}</td><td><button class="btn btn-sm" onclick="showMember('${m.id}')">수정</button></td></tr>`;}).join(''):'<tr><td colspan="15" class="tc">등록된 회원이 없습니다.</td></tr>';
+  let pgHtml='';if(totalPages>1){pgHtml+='<button class="btn btn-sm btn-sec" '+(window._mPage<=1?'disabled':'')+' onclick="window._mPage=1;loadMembers()">«</button>';pgHtml+='<button class="btn btn-sm btn-sec" '+(window._mPage<=1?'disabled':'')+' onclick="window._mPage--;loadMembers()">‹</button>';for(let p=1;p<=totalPages;p++){if(p===1||p===totalPages||Math.abs(p-window._mPage)<=2){pgHtml+='<button class="btn btn-sm'+(p===window._mPage?' btn-primary':' btn-sec')+'" onclick="window._mPage='+p+';loadMembers()">'+p+'</button>';}else if(Math.abs(p-window._mPage)===3){pgHtml+='<span style="padding:0 4px">…</span>';}}pgHtml+='<button class="btn btn-sm btn-sec" '+(window._mPage>=totalPages?'disabled':'')+' onclick="window._mPage++;loadMembers()">›</button>';pgHtml+='<button class="btn btn-sm btn-sec" '+(window._mPage>=totalPages?'disabled':'')+' onclick="window._mPage='+totalPages+';loadMembers()">»</button>';pgHtml+='<span style="margin-left:12px;font-size:13px;color:#888">총 '+list.length+'명</span>';}else if(list.length){pgHtml='<span style="font-size:13px;color:#888">총 '+list.length+'명</span>';}
+  $('m-pagination').innerHTML=pgHtml;
+  if($('m-chk-all'))$('m-chk-all').checked=false;
+}
+
+async function showMember(uid){
+  const d=await getDoc(doc(db,'users',uid));if(!d.exists()){toast('회원 정보를 찾을 수 없습니다.','error');return;}const m=d.data();
+  const es=expiryStatus(m);
+  let vlDocs=[],txDocs=[],pgDocs=[];
+  try{const vlSnap=await getDocs(query(collection(db,'view_logs'),where('userId','==',uid),orderBy('createdAt','desc'),limit(20)));vlDocs=vlSnap.docs;}catch(e){try{const all=await getDocs(query(collection(db,'view_logs'),where('userId','==',uid)));vlDocs=all.docs.sort((a,b)=>(b.data().createdAt?.toMillis?.()??0)-(a.data().createdAt?.toMillis?.()??0)).slice(0,20);}catch(e2){}}
+  try{const txSnap=await getDocs(query(collection(db,'transactions'),where('userId','==',uid),orderBy('createdAt','desc'),limit(20)));txDocs=txSnap.docs;}catch(e){try{const all=await getDocs(query(collection(db,'transactions'),where('userId','==',uid)));txDocs=all.docs.sort((a,b)=>(b.data().createdAt?.toMillis?.()??0)-(a.data().createdAt?.toMillis?.()??0)).slice(0,20);}catch(e2){}}
+  try{const pgSnap=await getDocs(query(collection(db,'pptgen_jobs'),where('userId','==',uid),orderBy('createdAt','desc'),limit(20)));pgDocs=pgSnap.docs;}catch(e){try{const all=await getDocs(query(collection(db,'pptgen_jobs'),where('userId','==',uid)));pgDocs=all.docs.sort((a,b)=>(b.data().createdAt?.toMillis?.()??0)-(a.data().createdAt?.toMillis?.()??0)).slice(0,20);}catch(e2){}}
+  // 추천인 이름 조회
+  let refByName='-';
+  if(m.referredBy){try{const rs=await getDocs(query(collection(db,'users'),where('referralCode','==',m.referredBy),limit(1)));if(!rs.empty)refByName=rs.docs[0].data().name||m.referredBy;}catch(e){refByName=m.referredBy;}}
+  // PPT 생성 내역 HTML 미리 생성
+  const _pgStMap={pending:'⏳ 대기',processing:'🔄 생성중',completed:'✅ 완료',failed:'❌ 실패'};
+  const _pgPayMap={hold:'🟡 대기',confirmed:'🟢 확정',refunded:'🔵 환불'};
+  const pgHtml=pgDocs.map(d=>{const j=d.data();const tp=j.clientType==='personal'?'👤 개인':'🏢 기업';const title=j.formData?.ptTitle||'-';const cost=j.genPrice>0?fmt(j.genPrice)+'원':'무료';return'<tr><td>'+fdatetime(j.createdAt)+'</td><td>'+tp+'</td><td class="ov">'+esc(title)+'</td><td>'+(_pgStMap[j.status]||j.status)+'</td><td style="text-align:right">'+cost+'</td><td>'+(_pgPayMap[j.paymentStatus]||j.paymentStatus||'-')+'</td></tr>';}).join('')||'<tr><td colspan="6" class="tc">내역 없음</td></tr>';
+  $('member-inner').innerHTML=`<h2>${esc(m.name)} 회원 수정</h2>
+    <div class="info-grid"><div><label>아이디:</label>${esc(m.loginId)}</div><div><label>소속:</label>${esc(m.company||'')}</div><div><label>직함:</label>${esc(m.title||'')}</div><div><label>연락처:</label>${esc(m.phone||'')}</div><div><label>이메일:</label>${esc(m.email||'')}</div><div><label>상태:</label><span class="st-${m.status}">${m.status==='active'?'정상':'정지'}</span></div><div><label>잔액:</label><strong style="color:var(--accent);font-size:18px">${fmt(m.balance)}원</strong></div><div><label>포인트:</label><strong style="color:var(--success);font-size:18px">${fmt(m.point||0)}P</strong></div><div><label>이용만료:</label><span class="${es.cls}" style="font-weight:600">${es.text}</span></div><div><label>가입일:</label>${fdate(m.createdAt)}</div><div><label>마지막 로그인:</label>${fdatetime(m.lastLoginAt)}</div><div><label>추천코드:</label>${esc(m.referralCode||'-')}</div><div><label>추천인:</label><strong style="color:var(--primary)">${esc(refByName)}</strong></div><div><label>추천포인트:</label><strong style="color:var(--success)">${fmt(m.referralPoints||0)}P</strong></div></div>
+    <div style="margin:16px 0;display:flex;gap:8px"><button class="btn btn-sm" onclick="toggleStatus('${uid}','${m.status}')">${m.status==='active'?'정지하기':'해제하기'}</button></div>
+    <h3>회원 정보 수정</h3>
+    <div class="fr" style="margin:12px 0"><div class="fg"><label>이름</label><input id="ed-name-${uid}" value="${esc(m.name||'')}"></div><div class="fg"><label>회원유형</label><select id="ed-role-${uid}" onchange="(function(sel){var jArea=document.getElementById('jarvia-area-${uid}');if(jArea)jArea.style.display=sel.value==='jarvia_member'?'':'none';var expArea=document.getElementById('exp-section-${uid}');if(expArea)expArea.style.display=(sel.value==='user'||sel.value==='jarvia_member'||sel.value==='inner_circle'||sel.value==='branch_manager')?'none':'';})(this)"><option value="user" ${m.role==='user'?'selected':''}>일반회원 (유료)</option><option value="free_user" ${m.role==='free_user'?'selected':''}>무료회원</option><option value="jarvia_member" ${m.role==='jarvia_member'?'selected':''}>JARVIA멤버십</option><option value="inner_circle" ${m.role==='inner_circle'?'selected':''}>이너서클멤버십</option><option value="branch_manager" ${m.role==='branch_manager'?'selected':''}>지사장</option></select></div><button class="btn btn-sm" style="align-self:end" onclick="updateMemberInfo('${uid}')">저장</button></div>
+    <div id="jarvia-area-${uid}" style="${m.role==='jarvia_member'?'':'display:none'}"><h3>JARVIA멤버십 설정</h3>
+    <div class="fr" style="margin:12px 0"><div class="fg"><label>등록비 입금확인</label><select id="ed-regfee-${uid}"><option value="unpaid" ${m.regFeePaid!==true?'selected':''}>미확인</option><option value="paid" ${m.regFeePaid===true?'selected':''}>입금확인</option></select></div><div class="fg"><label>월 정기결제 금액(원)</label><input id="ed-monthly-${uid}" type="number" value="${m.monthlyFee||50000}" min="0" step="1000"></div><button class="btn btn-sm" style="align-self:end" onclick="updateJarviaMember('${uid}')">저장</button></div></div>
+    <div class="fr" style="margin:0 0 16px"><div class="fg"><label>새 비밀번호</label><input id="ed-pw-${uid}" type="password" placeholder="변경 시에만 입력"></div><button class="btn btn-sm btn-warning" style="align-self:end" onclick="changeMemberPw('${uid}','${esc(m.email)}')">비밀번호 변경</button></div>
+    <div id="exp-section-${uid}" style="${m.role==='user'||m.role==='jarvia_member'||m.role==='inner_circle'||m.role==='branch_manager'?'display:none':''}"><h3>이용기간 설정</h3>
+    <div class="fr" style="margin:12px 0 16px"><div class="fg"><label>시작일</label><input id="expstart-${uid}" type="date" value="${(function(){var s=m.startsAt||m.createdAt;if(!s)return '';var d=s.toDate?s.toDate():new Date(s);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})()}"></div><div class="fg"><label>만료일</label><input id="expdate-${uid}" type="date" value="${(function(){if(!m.expiresAt||m.expiresAt==='unlimited')return '';var d=m.expiresAt.toDate?m.expiresAt.toDate():new Date(m.expiresAt);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')})()}"></div><label style="align-self:end;font-size:13px;cursor:pointer;margin-bottom:8px"><input type="checkbox" id="exp-unlim-${uid}" ${m.expiresAt==='unlimited'?'checked':''} onchange="var ds=$('expstart-'+this.dataset.uid);var de=$('expdate-'+this.dataset.uid);if(this.checked){de.disabled=true;de.value='';}else{de.disabled=false;}" data-uid="${uid}"> 무제한</label><button class="btn btn-sm btn-success" style="align-self:end" onclick="setExpPeriod('${uid}')">적용</button></div></div>
+    <h3>잔액 조정</h3><div class="fr" style="margin-bottom:16px"><div class="fg"><label>금액(+/-)</label><input id="adj-amt-${uid}" type="number" placeholder="5000"></div><div class="fg"><label>사유(필수)</label><input id="adj-memo-${uid}" placeholder="사유 입력"></div><button class="btn btn-sm" style="align-self:end" onclick="doAdjust('${uid}')">조정</button></div>
+    <h3>포인트 조정</h3><div class="fr" style="margin-bottom:16px"><div class="fg"><label>포인트(+/-)</label><input id="adj-pt-${uid}" type="number" placeholder="5000"></div><div class="fg"><label>사유(필수)</label><input id="adj-ptmemo-${uid}" placeholder="사유 입력"></div><button class="btn btn-sm btn-success" style="align-self:end" onclick="doAdjustPoint('${uid}')">조정</button></div>
+    <h3>이용 내역(최근 20건)</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>날짜</th><th>콘텐츠ID</th><th>차감액</th></tr></thead><tbody>${vlDocs.map(d=>{const l=d.data();return`<tr><td>${fdatetime(l.createdAt)}</td><td class="ov">${l.contentId}</td><td>${l.price>0?fmt(l.price)+'원':'무료'}</td></tr>`;}).join('')||'<tr><td colspan="3" class="tc">내역 없음</td></tr>'}</tbody></table></div>
+    <h3 class="mt">트랜잭션(최근 20건)</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>날짜</th><th>유형</th><th>금액</th><th>잔액</th><th>포인트</th><th>메모</th></tr></thead><tbody>${txDocs.map(d=>{const t=d.data();return`<tr><td>${fdatetime(t.createdAt)}</td><td>${t.type}</td><td style="color:${t.amount>=0?'var(--success)':'var(--danger)'}"> ${t.amount>=0?'+':''}${fmt(t.amount)}원</td><td>${t.balanceAfter!=null?fmt(t.balanceAfter)+'원':'-'}</td><td>${t.pointAfter!=null?fmt(t.pointAfter)+'P':'-'}</td><td>${esc(t.memo||'')}</td></tr>`;}).join('')||'<tr><td colspan="6" class="tc">내역 없음</td></tr>'}</tbody></table></div>
+    <h3 class="mt">🤖 PPT 생성 내역(최근 20건)</h3><div class="tbl-wrap"><table class="tbl"><thead><tr><th>날짜</th><th>유형</th><th>PT 제목</th><th>상태</th><th>비용</th><th>결제상태</th></tr></thead><tbody>${pgHtml}</tbody></table></div>`;
+  openM('mdl-member');
+}
+
+async function toggleStatus(uid,cur){const ns=cur==='active'?'suspended':'active';if(!confirm('회원을 '+(ns==='suspended'?'정지':'해제')+'하시겠습니까?'))return;await updateDoc(doc(db,'users',uid),{status:ns,updatedAt:serverTimestamp()});toast('상태 변경 완료','success');closeM('mdl-member');loadMembers();}
+
+async function updateMemberInfo(uid){
+  const name=$('ed-name-'+uid).value.trim();
+  const role=$('ed-role-'+uid).value;
+  if(!name)return toast('이름을 입력하세요.','error');
+  if(!['user','free_user','jarvia_member','inner_circle','branch_manager'].includes(role))return toast('올바른 회원유형을 선택하세요.','error');
+  try{
+    // 기존 역할 확인 (jarvia_member 변경 감지용)
+    const prevDoc=await getDoc(doc(db,'users',uid));const prevRole=prevDoc.exists()?prevDoc.data().role:'';
+    const updateData={name,role,updatedAt:serverTimestamp()};
+    if(role==='user'||role==='inner_circle'||role==='free_user'||role==='branch_manager'){updateData.expiresAt=deleteField();}
+    await updateDoc(doc(db,'users',uid),updateData);
+    // JARVIA멤버십으로 새로 변경된 경우 → 추천인에게 포인트 지급
+    if(role!==prevRole&&role==='jarvia_member'&&prevRole!=='jarvia_member'){
+      let rwdPts=50000;
+      try{const rs=await getDoc(doc(db,'settings','referral_settings'));if(rs.exists()&&rs.data().rewardPoints)rwdPts=rs.data().rewardPoints;}catch(e){}
+      const userData=prevDoc.data();
+      if(userData.referredBy){
+        try{
+          const refSnap=await getDocs(query(collection(db,'users'),where('referralCode','==',userData.referredBy),limit(1)));
+          if(!refSnap.empty){
+            const refDoc=refSnap.docs[0];const refUid=refDoc.id;
+            const txId='ref_'+Date.now().toString(36)+Math.random().toString(36).substr(2,5);
+            await runTransaction(db,async tx=>{
+              const rd=(await tx.get(doc(db,'users',refUid))).data();
+              const newPt=(rd.point||0)+rwdPts;
+              tx.update(doc(db,'users',refUid),{referralPoints:increment(rwdPts),point:increment(rwdPts),updatedAt:serverTimestamp()});
+              tx.set(doc(db,'transactions',txId),{txId,userId:refUid,type:'referral_reward',amount:rwdPts,pointAfter:newPt,memo:name+'님 '+({free_user:'무료회원',user:'일반회원',jarvia_member:'JARVIA멤버십',inner_circle:'이너서클',branch_manager:'지사장'}[role]||role)+' 가입 추천보상',createdAt:serverTimestamp()});
+            });
+            toast('추천인 '+refDoc.data().name+'에게 '+fmt(rwdPts)+'P 지급 완료','success');
+          }
+        }catch(re){console.error('추천 포인트 지급 오류:',re);toast('추천 포인트 지급 오류: '+re.message,'error');}
+      }
+    }
+    toast('회원 정보 수정 완료','success');closeM('mdl-member');loadMembers();
+  }catch(e){toast('수정 실패: '+e.message,'error');}
+}
+
+async function changeMemberPw(uid,email){
+  const pw=$('ed-pw-'+uid).value;
+  if(!pw)return toast('새 비밀번호를 입력하세요.','error');
+  if(pw.length<6)return toast('비밀번호는 6자 이상이어야 합니다.','error');
+  if(!confirm('비밀번호를 변경하시겠습니까?'))return;
+  try{
+    const {getAuth:gA,signInWithEmailAndPassword:sI,updatePassword:uP}=await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js');
+    // Admin SDK 없이 클라이언트에서 비밀번호 변경은 제한적이므로 비밀번호 재설정 이메일 발송
+    const {sendPasswordResetEmail:sR}=await import('https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js');
+    await sR(auth,email);
+    toast('비밀번호 재설정 이메일이 '+email+'로 발송되었습니다.','success');
+  }catch(e){toast('발송 실패: '+e.message,'error');}
+}
+
+function toggleAllMembers(){const ck=$('m-chk-all').checked;document.querySelectorAll('.m-chk').forEach(c=>c.checked=ck);}
+async function deleteSelectedMembers(){
+  const checks=[...document.querySelectorAll('.m-chk:checked')];
+  if(!checks.length)return toast('삭제할 회원을 선택하세요.','error');
+  if(!confirm(checks.length+'명의 회원을 삭제하시겠습니까?\n(Firebase Auth 계정은 유지되며, Firestore 데이터만 삭제됩니다.)'))return;
+  let cnt=0;
+  for(const ck of checks){
+    try{await deleteDoc(doc(db,'users',ck.value));cnt++;}catch(e){console.error('삭제 실패:',ck.value,e);}
+  }
+  toast(cnt+'명 삭제 완료','success');loadMembers();
+}
+
+async function doAdjust(uid){
+  const amt=parseInt($('adj-amt-'+uid).value),memo=$('adj-memo-'+uid).value.trim();
+  if(isNaN(amt)||amt===0)return toast('금액을 입력하세요.','error');if(!memo)return toast('사유를 입력하세요.','error');
+  try{const uRef=doc(db,'users',uid);
+    await runTransaction(db,async tx=>{const ud=(await tx.get(uRef)).data();const nb=ud.balance+amt;if(nb<0)throw new Error('잔액이 음수가 됩니다.');tx.update(uRef,{balance:nb,updatedAt:serverTimestamp()});const tid=gid();tx.set(doc(db,'transactions',tid),{txId:tid,userId:uid,type:'admin_adjust',amount:amt,balanceAfter:nb,refType:'admin',refId:admUser.uid,memo,createdAt:serverTimestamp()});});
+    toast('잔액 조정 완료','success');closeM('mdl-member');loadMembers();
+  }catch(e){toast('조정 실패: '+e.message,'error');}
+}
+async function doAdjustPoint(uid){
+  const amt=parseInt($('adj-pt-'+uid).value),memo=$('adj-ptmemo-'+uid).value.trim();
+  if(isNaN(amt)||amt===0)return toast('포인트를 입력하세요.','error');if(!memo)return toast('사유를 입력하세요.','error');
+  try{const uRef=doc(db,'users',uid);
+    await runTransaction(db,async tx=>{const ud=(await tx.get(uRef)).data();const np=(ud.point||0)+amt;if(np<0)throw new Error('포인트가 음수가 됩니다.');tx.update(uRef,{point:np,updatedAt:serverTimestamp()});const tid=gid();tx.set(doc(db,'transactions',tid),{txId:tid,userId:uid,type:'admin_point_adjust',amount:amt,pointAfter:np,refType:'admin',refId:admUser.uid,memo,createdAt:serverTimestamp()});});
+    toast('포인트 조정 완료','success');closeM('mdl-member');loadMembers();
+  }catch(e){toast('조정 실패: '+e.message,'error');}
+}
+
+// ═══ FREE USER CREATION & PERIOD MANAGEMENT ═══
+function nuEmailSel(){const v=$('nu-email-sel').value;$('nu-email-domain').value=v;$('nu-email-domain').readOnly=!!v;if(!v)$('nu-email-domain').focus();}
+function getNuEmail(){const id=($('nu-email-id')?.value||'').trim(),dm=($('nu-email-domain')?.value||'').trim();return id&&dm?id+'@'+dm:'';}
+function getNuPhone(){const p1=($('nu-ph1')?.value||'010'),p2=($('nu-ph2')?.value||'').trim(),p3=($('nu-ph3')?.value||'').trim();return p2&&p3?p1+'-'+p2+'-'+p3:p2||p3?p1+'-'+p2+'-'+p3:'';}
+function nuUnlimitedChk(){const ck=$('nu-unlimited').checked;$('nu-start').disabled=ck;$('nu-end').disabled=ck;if(ck){$('nu-start').value='';$('nu-end').value='';}}
+function initNuDates(){const today=new Date().toISOString().split('T')[0];$('nu-start').value=today;const d30=new Date(Date.now()+30*24*60*60*1000).toISOString().split('T')[0];$('nu-end').value=d30;}
+
+async function createFreeUser(){
+  const name=$('nu-name').value.trim(),loginId=$('nu-loginid').value.trim(),pw=$('nu-pw').value;
+  const email=getNuEmail(),phone=getNuPhone();
+  const company=$('nu-company')?.value.trim()||'',title=$('nu-title')?.value.trim()||'';
+  const isUnlimited=$('nu-unlimited').checked;
+  const startVal=$('nu-start').value,endVal=$('nu-end').value;
+  if(!name||!loginId||!pw||!email)return toast('필수항목(이름,아이디,비밀번호,이메일)을 입력하세요.','error');
+  if(pw.length<6)return toast('비밀번호 6자 이상','error');
+  if(!isUnlimited&&(!startVal||!endVal))return toast('이용기간(시작일/종료일)을 선택하세요.','error');
+  if(!isUnlimited&&startVal>endVal)return toast('종료일이 시작일보다 앞설 수 없습니다.','error');
+  const idChk=await getDocs(query(collection(db,'users'),where('loginId','==',loginId),limit(1)));
+  if(!idChk.empty)return toast('이미 사용 중인 아이디','error');
+  try{
+    const secondApp=initializeApp(FC,'tempUser'+Date.now());
+    const secondAuth=getAuth(secondApp);
+    const cred=await createUserWithEmailAndPassword(secondAuth,email,pw);
+    const uid=cred.user.uid;
+    await signOut(secondAuth);
+    let startsAt=null,expiresAt='unlimited';
+    if(!isUnlimited){
+      const sd=new Date(startVal);sd.setHours(0,0,0,0);
+      const ed=new Date(endVal);ed.setHours(23,59,59,999);
+      startsAt=Timestamp.fromDate(sd);expiresAt=Timestamp.fromDate(ed);
+    }
+    await setDoc(doc(db,'users',uid),{
+      userId:uid,name,company,title,phone,email,address:'',loginId,
+      role:'free_user',status:'active',balance:0,startsAt,expiresAt,
+      createdBy:admUser.uid,lastLoginAt:null,
+      createdAt:serverTimestamp(),updatedAt:serverTimestamp()
+    });
+    const periodTxt=isUnlimited?'무제한':startVal+'~'+endVal;
+    toast('무료사용자 생성 완료 (아이디: '+loginId+', '+periodTxt+')','success');
+    document.getElementById('add-user-form').classList.add('hidden');
+    ['nu-name','nu-loginid','nu-pw','nu-email-id','nu-email-domain','nu-company','nu-title','nu-ph2','nu-ph3'].forEach(id=>{const el=$(id);if(el){el.value='';el.readOnly=false;}});
+    $('nu-email-sel').value='';$('nu-unlimited').checked=false;nuUnlimitedChk();initNuDates();
+    loadMembers();
+  }catch(e){
+    if(e.code==='auth/email-already-in-use')toast('이미 Auth에 존재하는 이메일','error');
+    else toast('생성 실패: '+e.message,'error');
+  }
+}
+
+async function setExpPeriod(uid){
+  const isUnlim=$('exp-unlim-'+uid).checked;
+  const startVal=$('expstart-'+uid).value;
+  const endVal=$('expdate-'+uid).value;
+  if(!isUnlim&&!endVal)return toast('만료일을 선택하세요','error');
+  const updateData={updatedAt:serverTimestamp()};
+  if(startVal){const sd=new Date(startVal);sd.setHours(0,0,0,0);updateData.startsAt=Timestamp.fromDate(sd);}
+  if(isUnlim){updateData.expiresAt='unlimited';}
+  else{const ed=new Date(endVal);ed.setHours(23,59,59,999);updateData.expiresAt=Timestamp.fromDate(ed);}
+  await updateDoc(doc(db,'users',uid),updateData);
+  toast('이용기간 변경 완료','success');closeM('mdl-member');loadMembers();
+}
+
+// ═══ ADMINS ═══
+async function loadAdmins(){
+  const snap=await getDocs(query(collection(db,'admins'),orderBy('createdAt','desc')));
+  $('tb-admins').innerHTML=snap.docs.map(d=>{const a=d.data();const isSA=a.role==='superadmin';return`<tr><td>${esc(a.loginId)}</td><td>${esc(a.name||'')}</td><td>${a.role==='superadmin'?'총괄관리자':'관리자'}</td><td>${fdatetime(a.lastLoginAt)}</td><td><span class="st-${a.status}">${a.status==='active'?'정상':'정지'}</span></td><td>${!isSA&&admData?.role==='superadmin'?`<button class="btn btn-sm btn-danger" onclick="delAdmin('${d.id}')">삭제</button>`:'-'}</td></tr>`;}).join('');
+  $('btn-add-adm').style.display=admData?.role==='superadmin'?'':'none';
+}
+
+async function createAdmin(){
+  const lid=$('na-id').value.trim(),name=$('na-name').value.trim(),pw=$('na-pw').value;
+  if(!lid||!name||!pw)return toast('모든 항목을 입력하세요.','error');
+  if(pw.length<6)return toast('비밀번호 6자 이상','error');
+  const ex=await getDocs(query(collection(db,'admins'),where('loginId','==',lid),limit(1)));
+  if(!ex.empty)return toast('이미 존재하는 아이디','error');
+  try{
+    const secondApp=initializeApp(FC,'tempAdmin'+Date.now());
+    const secondAuth=getAuth(secondApp);
+    const email=lid+'@javia-admin.internal';
+    await createUserWithEmailAndPassword(secondAuth,email,pw);
+    await signOut(secondAuth);
+    const id=gid();
+    await setDoc(doc(db,'admins',id),{adminId:id,loginId:lid,name,role:'admin',status:'active',createdBy:admUser.uid,lastLoginAt:null,createdAt:serverTimestamp()});
+    toast('관리자 추가 완료 (아이디: '+lid+')','success');
+    $('add-adm-form').classList.add('hidden');$('na-id').value='';$('na-name').value='';$('na-pw').value='';loadAdmins();
+  }catch(e){
+    if(e.code==='auth/email-already-in-use')toast('이미 Auth에 존재하는 계정입니다.','error');
+    else toast('생성 실패: '+e.message,'error');
+  }
+}
+
+async function delAdmin(docId){if(!confirm('삭제하시겠습니까?'))return;await deleteDoc(doc(db,'admins',docId));toast('삭제 완료','success');loadAdmins();}
+
+// ═══ CONTENTS ═══
+let _allConts=[],_contCatMap={},_contPage=1;const CONT_PER=10;
+async function loadConts(){
+  const catSnap=await getDocs(query(collection(db,'categories'),orderBy('sortOrder')));const cats=catSnap.docs.map(d=>d.data());_contCatMap={};cats.forEach(c=>_contCatMap[c.categoryId]=c.name);
+  $('cf-cat').innerHTML=cats.map(c=>`<option value="${c.categoryId}">${esc(c.name)}</option>`).join('');
+  if($('ba-cat'))$('ba-cat').innerHTML=$('cf-cat').innerHTML;
+  const cSnap=await getDocs(query(collection(db,'contents'),orderBy('createdAt','desc')));
+  _allConts=cSnap.docs.map(d=>d.data());renderConts();
+}
+function renderConts(){
+  const s=($('c-search').value||'').toLowerCase();const tf=$('c-type-filter').value;
+  const typeNames={video:'영상콘텐츠',brief:'이슈브리핑',audio:'오디오',report:'특급보고서',closing:'클로징PPT'};
+  let list=_allConts;
+  if(tf)list=list.filter(c=>c.type===tf);
+  if(s)list=list.filter(c=>(c.title||'').toLowerCase().includes(s)||(_contCatMap[c.categoryId]||'').toLowerCase().includes(s)||(typeNames[c.type]||'').includes(s));
+  const total=list.length,pages=Math.max(1,Math.ceil(total/CONT_PER));
+  if(_contPage>pages)_contPage=pages;
+  const start=(_contPage-1)*CONT_PER,paged=list.slice(start,start+CONT_PER);
+  $('tb-conts').innerHTML=paged.length?paged.map((c,i)=>`<tr><td><input type="checkbox" class="c-chk" value="${c.contentId}"></td><td>${start+i+1}</td><td class="ov">${esc(c.title)}</td><td>${esc(_contCatMap[c.categoryId]||'')}</td><td>${typeBadge(c.type)}</td><td>${c.subType||'-'}</td><td>${fmt(c.price)}원</td><td>${c.viewCount||0}</td><td>${fdate(c.createdAt)}</td><td>${c.isActive?'<span class="st-active">노출</span>':'<span class="st-suspended">비노출</span>'}</td><td><button class="btn btn-sm" onclick="editCont('${c.contentId}')">수정</button> <button class="btn-danger" onclick="delCont('${c.contentId}')">삭제</button></td></tr>`).join(''):'<tr><td colspan="11" class="tc">검색 결과가 없습니다.</td></tr>';
+  if($('c-all-chk'))$('c-all-chk').checked=false;
+  let pg=`<span style="font-size:13px;color:#666">총 ${total}건</span> `;
+  if(pages>1){pg+=`<button class="btn btn-sm" onclick="contPg(1)" ${_contPage===1?'disabled':''}>«</button>`;pg+=`<button class="btn btn-sm" onclick="contPg(${_contPage-1})" ${_contPage===1?'disabled':''}>‹</button>`;const st=Math.max(1,_contPage-5),en=Math.min(pages,_contPage+4);for(let i=st;i<=en;i++)pg+=`<button class="btn btn-sm" onclick="contPg(${i})" style="${i===_contPage?'background:var(--accent);color:#fff;font-weight:700':''}">${i}</button>`;pg+=`<button class="btn btn-sm" onclick="contPg(${_contPage+1})" ${_contPage===pages?'disabled':''}>›</button>`;pg+=`<button class="btn btn-sm" onclick="contPg(${pages})" ${_contPage===pages?'disabled':''}>»</button>`;}
+  $('cont-pager').innerHTML=pg;
+}
+function contPg(p){_contPage=p;renderConts();}
+function toggleAllChk(v){document.querySelectorAll('.c-chk').forEach(cb=>cb.checked=v);}
+async function delSelected(){const ids=[...document.querySelectorAll('.c-chk:checked')].map(cb=>cb.value);if(!ids.length)return toast('선택된 항목이 없습니다.','error');if(!confirm(`${ids.length}개 콘텐츠를 삭제하시겠습니까?`))return;for(const id of ids){await deleteDoc(doc(db,'contents',id));}toast(`${ids.length}개 삭제 완료`,'success');loadConts();}
+function showCF(){$('batch-area').classList.add('hidden');$('bulk-price-area').classList.add('hidden');$('cf-area').classList.remove('hidden');$('cf-id').value='';document.querySelector('#cf-area form').reset();$('cf-price').value='2000';onCfTypeChange();}
+function onCfTypeChange(){const t=$('cf-type').value;const labels={video:'영상 URL',brief:'HTML URL (GitHub)',audio:'오디오 파일 URL',report:'HTML URL (GitHub)',closing:'PDF URL'};$('cf-url-label').textContent=labels[t]||'콘텐츠 URL';$('cf-sub-wrap').classList.remove('hidden');$('cf-video-wrap').classList.toggle('hidden',t!=='closing');$('cf-pptx-wrap').classList.toggle('hidden',t!=='closing'&&t!=='report');$('cf-audio-upload').classList.toggle('hidden',t!=='audio');if(t==='audio'){$('cf-url').removeAttribute('required');}else{$('cf-url').setAttribute('required','');}document.querySelector('#cf-pptx-wrap label').textContent=t==='report'?'PPTX 다운로드 URL (특급보고서용)':'PPTX 다운로드 URL (클로징PPT용)';}
+async function uploadAudio(input){
+  const file=input.files[0];if(!file)return;
+  if(!file.type.startsWith('audio/')){toast('오디오 파일만 업로드 가능합니다.','error');input.value='';return;}
+  if(file.size>50*1024*1024){toast('파일 크기는 50MB 이하만 가능합니다.','error');input.value='';return;}
+  const prog=$('cf-audio-progress');prog.textContent='업로드 중... 0%';
+  const ext=file.name.split('.').pop()||'mp3';
+  const path='audio/'+Date.now()+'_'+file.name.replace(/[^a-zA-Z0-9가-힣._-]/g,'');
+  const sRef=stRef(storage,path);
+  const task=uploadBytesResumable(sRef,file,{contentType:file.type});
+  task.on('state_changed',function(snap){
+    const pct=Math.round(snap.bytesTransferred/snap.totalBytes*100);
+    prog.textContent='업로드 중... '+pct+'%';
+  },function(err){
+    prog.textContent='업로드 실패: '+err.message;toast('업로드 실패: '+err.message,'error');
+  },async function(){
+    const url=await getDownloadURL(task.snapshot.ref);
+    $('cf-url').value=url;
+    prog.textContent='✅ 업로드 완료';prog.style.color='var(--success)';
+    toast('오디오 파일 업로드 완료','success');
+  });
+}
+async function editCont(cid){const d=await getDoc(doc(db,'contents',cid));if(!d.exists())return;const c=d.data();$('cf-id').value=cid;$('cf-title').value=c.title;$('cf-cat').value=c.categoryId;$('cf-type').value=c.type;$('cf-price').value=c.price;$('cf-url').value=c.url;$('cf-thumb').value=c.thumbnailUrl||'';$('cf-summary').value=c.summary||'';$('cf-sort').value=c.sortOrder||0;$('cf-active').value=c.isActive?'1':'0';$('cf-subtype').value=c.subType||'';$('cf-videourl').value=c.videoUrl||'';$('cf-pptxurl').value=c.pptxUrl||'';onCfTypeChange();$('cf-area').classList.remove('hidden');}
+async function delCont(cid){if(!confirm('이 콘텐츠를 삭제하시겠습니까?'))return;await deleteDoc(doc(db,'contents',cid));toast('콘텐츠 삭제 완료','success');loadConts();}
+function toFileUrl(u){if(!u)return u;const m=u.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/main\/(.+)$/);if(!m)return u;return u.toLowerCase().endsWith('.html')?`https://${m[1]}.github.io/${m[2]}/${m[3]}`:`https://raw.githubusercontent.com/${m[1]}/${m[2]}/main/${m[3]}`;}
+async function saveCont(e){
+  e.preventDefault();const cid=$('cf-id').value||gid();const tp=$('cf-type').value;
+  const data={contentId:cid,title:$('cf-title').value.trim(),categoryId:$('cf-cat').value,type:tp,price:parseInt($('cf-price').value)||0,url:toFileUrl($('cf-url').value.trim()),thumbnailUrl:toFileUrl($('cf-thumb').value.trim())||null,summary:$('cf-summary').value.trim(),sortOrder:parseInt($('cf-sort').value)||0,isActive:$('cf-active').value==='1',updatedAt:serverTimestamp()};
+  data.subType=$('cf-subtype').value||null;
+  if(tp==='closing'){data.videoUrl=$('cf-videourl').value.trim()||null;data.pptxUrl=toFileUrl($('cf-pptxurl').value.trim())||null;}
+  if(tp==='report'){data.pptxUrl=toFileUrl($('cf-pptxurl').value.trim())||null;}
+  if(!$('cf-id').value){data.viewCount=0;data.createdAt=serverTimestamp();}
+  await setDoc(doc(db,'contents',cid),data,{merge:true});toast('콘텐츠 저장 완료','success');$('cf-area').classList.add('hidden');loadConts();
+}
+
+// ═══ GITHUB SYNC ═══
+const GH_REPO='kfpc0808/membership';
+const GH_BASE='innercircle';
+const FOLDER_TYPE_MAP={'issue_briefing':'brief','special_report':'report','closing_ppt':'closing'};
+async function syncGitHub(){
+  if(!confirm('GitHub 저장소에서 신규 파일을 동기화합니다.\n진행하시겠습니까?'))return;
+  const ss=$('sync-status');ss.style.display='block';ss.textContent='GitHub 파일 목록을 가져오는 중...';
+  try{
+    const res=await fetch(`https://api.github.com/repos/${GH_REPO}/git/trees/main?recursive=1`);
+    if(!res.ok)throw new Error('GitHub API 오류: '+res.status);
+    const data=await res.json();
+    const files=data.tree.filter(f=>f.type==='blob'&&f.path.startsWith(GH_BASE+'/')&&!f.path.endsWith('/index.html'));
+    ss.textContent=`총 ${files.length}개 파일 발견. 기존 콘텐츠와 비교 중...`;
+    const cSnap=await getDocs(collection(db,'contents'));
+    const existUrls=new Set(cSnap.docs.map(d=>{const u=d.data().url||'';return u;}));
+    const existPptx=new Set(cSnap.docs.map(d=>{const u=d.data().pptxUrl||'';return u;}).filter(u=>u));
+    let added=0,skipped=0;
+    const pdfMap={};
+    const reportPdfMap={};
+    const reportPptxMap={};
+    files.forEach(f=>{
+      const ext=f.path.split('.').pop().toLowerCase();
+      const parts=f.path.replace(GH_BASE+'/','').split('/');
+      const folder=parts[0];
+      if(ext==='pptx'&&folder==='closing_ppt'){const key=f.path.replace(/\.[^.]+$/,'');pdfMap[key]=f.path;}
+      if(folder==='special_report'&&parts.length>=3&&(parts[1]==='개인'||parts[1]==='법인')){
+        const baseName=parts[parts.length-1].replace(/\.[^.]+$/,'');
+        if(ext==='pdf')reportPdfMap[baseName]={path:f.path,subType:parts[1]};
+        if(ext==='pptx')reportPptxMap[baseName]={path:f.path,subType:parts[1]};
+      }
+    });
+    for(const f of files){
+      const ext=f.path.split('.').pop().toLowerCase();
+      const parts=f.path.replace(GH_BASE+'/','').split('/');
+      const folder=parts[0];
+      if(ext==='pptx'){skipped++;continue;}
+      if(folder==='special_report'&&parts.length>=3&&(parts[1]==='개인'||parts[1]==='법인')&&ext==='pdf'){skipped++;continue;}
+      const rawUrl=ext==='html'?`https://kfpc0808.github.io/${GH_REPO.split('/')[1]}/${f.path}`:`https://raw.githubusercontent.com/${GH_REPO}/main/${f.path}`;
+      if(existUrls.has(rawUrl)){skipped++;continue;}
+      const type=FOLDER_TYPE_MAP[folder];
+      if(!type){skipped++;continue;}
+      let subType=null;
+      let fileName=parts[parts.length-1];
+      if(folder==='closing_ppt'&&parts.length>=3){subType=parts[1];}
+      if(folder==='special_report'&&parts.length>=3&&(parts[1]==='개인'||parts[1]==='법인')){subType=parts[1];}
+      const title=fileName.replace(/\.[^.]+$/,'');
+      const cid=gid();
+      const contData={contentId:cid,title,categoryId:'',type,price:1000,url:rawUrl,thumbnailUrl:null,summary:'',sortOrder:0,isActive:true,viewCount:0,createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
+      if(type==='report'||type==='closing')contData.subType=subType;
+      if(type==='report'){
+        const baseName=title;
+        const pdfInfo=reportPdfMap[baseName];
+        const pptxInfo=reportPptxMap[baseName];
+        if(pdfInfo)contData.pdfUrl=`https://raw.githubusercontent.com/${GH_REPO}/main/${pdfInfo.path}`;
+        if(pptxInfo)contData.pptxUrl=`https://raw.githubusercontent.com/${GH_REPO}/main/${pptxInfo.path}`;
+        if(!subType&&(pdfInfo||pptxInfo))contData.subType=(pdfInfo||pptxInfo).subType;
+      }
+      if(type==='closing'){
+        const pdfKey=f.path.replace(/\.[^.]+$/,'');
+        const pptxPath=pdfMap[pdfKey];
+        contData.pptxUrl=pptxPath?`https://raw.githubusercontent.com/${GH_REPO}/main/${pptxPath}`:null;
+        contData.videoUrl=null;
+      }
+      await setDoc(doc(db,'contents',cid),contData);added++;
+      ss.textContent=`동기화 중... (${added}개 추가 / ${skipped}개 건너뜀)`;
+    }
+    ss.innerHTML=`<strong>✅ 동기화 완료!</strong> 신규 ${added}개 등록 / ${skipped}개 건너뜀 (이미 등록 또는 제외)`;
+    if(added>0)loadConts();
+  }catch(err){ss.innerHTML=`<strong style="color:red">❌ 동기화 실패:</strong> ${err.message}`;console.error(err);}
+}
+
+// ═══ BATCH UPLOAD ═══
+function showBatchUpload(){$('cf-area').classList.add('hidden');$('bulk-price-area').classList.add('hidden');$('batch-area').classList.remove('hidden');}
+function switchBatchTab(tab,btn){btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');$('batch-audio').style.display=tab==='audio'?'':'none';$('batch-video').style.display=tab==='video'?'':'none';}
+// 오디오 파일 선택 시 미리보기 목록 표시
+function previewAudioFiles(){
+  const files=$('ba-files').files;
+  const prev=$('ba-preview');
+  const btn=$('ba-upload-btn');
+  if(!files.length){prev.innerHTML='';btn.style.display='none';return;}
+  let html='<div style="font-size:13px;color:var(--text-lt);margin-bottom:8px">'+files.length+'개 파일 선택됨 — 각 파일의 구분(개인/법인)을 선택한 후 업로드해 주세요.</div>';
+  html+='<div style="display:flex;gap:4px;margin-bottom:8px"><button type="button" class="btn btn-sm" onclick="baSetAll(\'개인\')">전체 → 개인</button><button type="button" class="btn btn-sm" onclick="baSetAll(\'법인\')">전체 → 법인</button><button type="button" class="btn btn-sm btn-sec" onclick="baSetAll(\'\')">전체 → 없음</button></div>';
+  html+='<div class="tbl-wrap"><table class="tbl"><thead><tr><th style="width:40px">No</th><th>파일명 (제목)</th><th style="width:100px">구분</th></tr></thead><tbody>';
+  for(let i=0;i<files.length;i++){
+    const title=files[i].name.replace(/\.[^.]+$/,'').replace(/^팟캐스트_/,'').replace(/_/g,' ');
+    html+=`<tr><td style="text-align:center">${i+1}</td><td>${esc(title)}</td><td><select id="ba-sub-${i}" style="padding:4px 8px;border:1px solid var(--border);border-radius:4px;font-size:13px"><option value="">없음</option><option value="개인">개인</option><option value="법인">법인</option></select></td></tr>`;
+  }
+  html+='</tbody></table></div>';
+  prev.innerHTML=html;
+  btn.style.display='';
+}
+function baSetAll(v){
+  const files=$('ba-files').files;
+  for(let i=0;i<files.length;i++){const sel=$('ba-sub-'+i);if(sel)sel.value=v;}
+}
+async function batchAudioUpload(){
+  const files=$('ba-files').files;if(!files.length){toast('오디오 파일을 선택하세요.','error');return;}
+  const catId=$('ba-cat').value;const price=parseInt($('ba-price').value)||1000;
+  const prog=$('ba-progress');prog.innerHTML='<div style="font-size:13px">기존 콘텐츠 확인 중...</div>';
+  const cSnap=await getDocs(collection(db,'contents'));const existUrls=new Set(cSnap.docs.map(d=>(d.data().url||'')));
+  let done=0,fail=0,dup=0;const total=files.length;prog.innerHTML='';
+  for(let i=0;i<files.length;i++){
+    const file=files[i];
+    const title=file.name.replace(/\.[^.]+$/,'').replace(/^팟캐스트_/,'').replace(/_/g,' ');
+    const subtype=($('ba-sub-'+i)?.value)||'';
+    const cleanName=file.name.replace(/[^a-zA-Z0-9가-힣._-]/g,'');
+    const isDup=[...existUrls].some(u=>u.includes(cleanName));
+    if(isDup){dup++;prog.innerHTML=`<div style="margin:4px 0;font-size:13px;color:var(--warning)">⏭ (${i+1}/${total}) ${esc(title)} - 이미 등록됨</div>`+prog.innerHTML;continue;}
+    prog.innerHTML=`<div style="margin:4px 0;font-size:13px">⏳ (${i+1}/${total}) ${esc(title)} 업로드 중...</div>`+prog.innerHTML;
+    try{
+      const path='audio/'+Date.now()+'_'+cleanName;
+      const sR=stRef(storage,path);const task=uploadBytesResumable(sR,file,{contentType:file.type});
+      await new Promise((resolve,reject)=>{task.on('state_changed',null,reject,resolve);});
+      const url=await getDownloadURL(task.snapshot.ref);existUrls.add(url);
+      const cid=gid();
+      const data={contentId:cid,title,categoryId:catId,type:'audio',price,url,thumbnailUrl:null,summary:title,sortOrder:0,isActive:true,viewCount:0,createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
+      if(subtype==='개인'||subtype==='법인')data.subType=subtype;
+      await setDoc(doc(db,'contents',cid),data);
+      done++;prog.innerHTML=`<div style="margin:4px 0;font-size:13px;color:var(--success)">✅ (${i+1}/${total}) ${esc(title)} [${subtype||'구분없음'}]</div>`+prog.innerHTML.replace(/⏳[^<]*<\/div>/,'');
+    }catch(e){fail++;prog.innerHTML=`<div style="margin:4px 0;font-size:13px;color:var(--danger)">❌ (${i+1}/${total}) ${esc(title)} - ${e.message}</div>`+prog.innerHTML.replace(/⏳[^<]*<\/div>/,'');}
+  }
+  prog.innerHTML=`<div style="margin:8px 0;font-size:14px;font-weight:600">완료! 성공 ${done}개 / 중복 ${dup}개 / 실패 ${fail}개</div>`+prog.innerHTML;
+  if(done>0)loadConts();$('ba-files').value='';$('ba-preview').innerHTML='';$('ba-upload-btn').style.display='none';
+}
+async function batchVideoUpload(){
+  const fileInput=$('bv-file');const file=fileInput.files[0];if(!file){toast('엑셀 파일을 선택하세요.','error');return;}
+  const price=parseInt($('bv-price').value)||1000;const prog=$('bv-progress');prog.innerHTML='<div style="font-size:13px">📄 엑셀 파일 읽는 중...</div>';
+  try{
+    const ab=await file.arrayBuffer();
+    const XLSX=await import('https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mjs');
+    const wb=XLSX.read(ab,{type:'array'});const ws=wb.Sheets[wb.SheetNames[0]];const rows=XLSX.utils.sheet_to_json(ws,{header:1});
+    const catSnap=await getDocs(query(collection(db,'categories'),orderBy('sortOrder')));const catMap={};catSnap.docs.forEach(d=>{const c=d.data();catMap[c.name]=c.categoryId;});
+    const cSnap=await getDocs(collection(db,'contents'));const existUrls=new Set(cSnap.docs.map(d=>(d.data().url||'')));
+    // 4열(카테고리,구분,제목,URL) 또는 3열(카테고리,제목,URL) 자동 감지
+    const firstRow=rows.find(r=>r.length>=3);
+    const is4col=firstRow&&firstRow.length>=4&&String(firstRow[3]||'').trim().startsWith('http');
+    let done=0,fail=0,skip=0,dup=0;
+    const dataRows=is4col?rows.filter(r=>r.length>=4&&r[0]&&r[2]&&r[3]):rows.filter(r=>r.length>=3&&r[0]&&r[1]&&r[2]);
+    prog.innerHTML=`<div style="font-size:13px">총 ${dataRows.length}개 행 발견 (${is4col?'4열: 카테고리/구분/제목/URL':'3열: 카테고리/제목/URL'}). 등록 중...</div>`;
+    for(let i=0;i<dataRows.length;i++){
+      const r=dataRows[i];
+      let catName,subtype,title,url;
+      if(is4col){catName=String(r[0]).trim();subtype=String(r[1]).trim();title=String(r[2]).trim();url=String(r[3]).trim();}
+      else{catName=String(r[0]).trim();subtype='';title=String(r[1]).trim();url=String(r[2]).trim();}
+      if(!url.startsWith('http')){skip++;continue;}
+      if(existUrls.has(url)){dup++;continue;}
+      const catId=catMap[catName]||'';
+      try{
+        const cid=gid();
+        const data={contentId:cid,title,categoryId:catId,type:'video',price,url,thumbnailUrl:null,summary:title,sortOrder:0,isActive:true,viewCount:0,createdAt:serverTimestamp(),updatedAt:serverTimestamp()};
+        if(subtype==='개인'||subtype==='법인')data.subType=subtype;
+        await setDoc(doc(db,'contents',cid),data);
+        done++;existUrls.add(url);
+      }catch(e){fail++;}
+      if((i+1)%10===0)prog.innerHTML=`<div style="font-size:13px">등록 중... ${i+1}/${dataRows.length}</div>`;
+    }
+    prog.innerHTML=`<div style="font-size:14px;font-weight:600">완료! 성공 ${done}개 / 중복 ${dup}개 / 실패 ${fail}개 / 건너뜀 ${skip}개</div>`;
+    if(done>0)loadConts();fileInput.value='';
+  }catch(e){prog.innerHTML=`<div style="color:var(--danger);font-size:13px">❌ 오류: ${e.message}</div>`;}
+}
+
+// ═══ CATEGORIES ═══
+async function loadCats(){const snap=await getDocs(query(collection(db,'categories'),orderBy('sortOrder')));$('tb-cats').innerHTML=snap.docs.map(d=>{const c=d.data();return`<tr><td>${esc(c.name)}</td><td>${c.sortOrder}</td><td>${c.isActive?'<span class="st-active">활성</span>':'<span class="st-suspended">비활성</span>'}</td><td><button class="btn btn-sm" onclick="toggleCat('${c.categoryId}',${c.isActive})">${c.isActive?'비활성':'활성'}</button> <button class="btn-danger" onclick="delCat('${c.categoryId}','${esc(c.name)}')">삭제</button></td></tr>`;}).join('');}
+async function addCat(){const name=$('nc-name').value.trim();if(!name)return toast('이름을 입력하세요.','error');const snap=await getDocs(collection(db,'categories'));const id=gid();await setDoc(doc(db,'categories',id),{categoryId:id,name,sortOrder:snap.size,isActive:true});$('nc-name').value='';toast('추가 완료','success');loadCats();}
+async function toggleCat(id,cur){await updateDoc(doc(db,'categories',id),{isActive:!cur});loadCats();}
+async function delCat(id,name){if(!confirm('카테고리 "'+name+'"을(를) 삭제하시겠습니까?\n\n⚠️ 해당 카테고리를 사용 중인 콘텐츠가 있으면 카테고리가 표시되지 않을 수 있습니다.'))return;await deleteDoc(doc(db,'categories',id));toast('삭제 완료','success');loadCats();}
+
+// ═══ PAYMENTS ═══
+async function loadPays(){const snap=await getDocs(query(collection(db,'payments'),orderBy('createdAt','desc'),limit(100)));const uc={};const rows=[];for(const d of snap.docs){const p=d.data();if(!uc[p.userId]){const u=await getDoc(doc(db,'users',p.userId));uc[p.userId]=u.exists()?u.data().name:p.userId;}rows.push(`<tr><td>${fdatetime(p.createdAt)}</td><td>${esc(uc[p.userId])}</td><td>${fmt(p.paidAmount)}원</td><td>${fmt(p.chargeAmount)}원</td><td>${p.status}</td></tr>`);}$('tb-pays').innerHTML=rows.join('');}
+
+// ═══ LOGS ═══
+let _logs=[],_logCT={},_logAct={};
+async function loadLogs(){
+  const constraints=[orderBy('createdAt','desc')];const f=$('lg-from').value,t=$('lg-to').value;
+  if(f)constraints.push(where('createdAt','>=',Timestamp.fromDate(new Date(f))));
+  if(t){const td=new Date(t);td.setHours(23,59,59,999);constraints.push(where('createdAt','<=',Timestamp.fromDate(td)));}
+  constraints.push(limit(500));
+  const snap=await getDocs(query(collection(db,'view_logs'),...constraints));_logs=snap.docs.map(d=>({...d.data(),_id:d.id}));
+  const uc={},cc={};_logCT={};_logAct={};let total=0;const rows=[];
+  for(const l of _logs){if(!uc[l.userId]){const u=await getDoc(doc(db,'users',l.userId));uc[l.userId]=u.exists()?u.data().name:l.userId;}if(!cc[l.contentId]){const c=await getDoc(doc(db,'contents',l.contentId));if(c.exists()){cc[l.contentId]=c.data().title;_logCT[l.contentId]=c.data().type||'';}else{cc[l.contentId]=l.contentId;_logCT[l.contentId]='';}}const act=l.action||'view';_logAct[l._id]=act;total+=(l.price||0);rows.push(`<tr><td>${fdatetime(l.createdAt)}</td><td>${esc(uc[l.userId])}</td><td>${typeBadge(_logCT[l.contentId],act)}</td><td class="ov">${esc(cc[l.contentId])}</td><td>${l.price>0?fmt(l.price)+'원':'무료'}</td></tr>`);}
+  $('lg-summary').innerHTML=`<div class="dash-c"><span>총 열람수</span><strong>${_logs.length}</strong></div><div class="dash-c"><span>총 매출</span><strong>${fmt(total)}</strong><em>원</em></div>`;$('tb-logs').innerHTML=rows.join('');
+}
+function exportCSV(){if(!_logs.length)return toast('데이터 없음','error');const typeNm={video:'영상콘텐츠',brief:'이슈브리핑',audio:'오디오',report:'특급보고서',closing:'클로징PDF'};let csv='\uFEFF날짜,사용자ID,콘텐츠명칭,콘텐츠ID,차감액\n';_logs.forEach(l=>{let tName=typeNm[_logCT[l.contentId]]||'';if(_logCT[l.contentId]==='closing'&&_logAct[l._id]==='ppt_download')tName='클로징PPT';csv+=`${fdatetime(l.createdAt)},${l.userId},${tName},${l.contentId},${l.price||0}\n`;});const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='javia_logs_'+new Date().toISOString().slice(0,10)+'.csv';a.click();}
+
+// ═══ PROPOSALS ═══
+async function loadProps(){const snap=await getDocs(query(collection(db,'partner_proposals'),orderBy('createdAt','desc')));const sl={new:'신규',reviewing:'검토중',done:'완료'};$('tb-props').innerHTML=snap.docs.map(d=>{const p=d.data();return`<tr><td>${fdate(p.createdAt)}</td><td>${esc(p.userNameSnapshot)}</td><td class="ov">${esc(p.title)}</td><td><span class="st-${p.status}">${sl[p.status]||p.status}</span></td><td><button class="btn btn-sm" onclick="showProp('${p.proposalId}')">상세</button></td></tr>`;}).join('');}
+async function showProp(pid){const d=await getDoc(doc(db,'partner_proposals',pid));if(!d.exists())return;const p=d.data();
+  let userInfo='';
+  try{const uDoc=await getDoc(doc(db,'users',p.userId));if(uDoc.exists()){const u=uDoc.data();userInfo=`<div class="info-grid" style="margin-bottom:16px"><div><label>이름:</label>${esc(u.name)}</div><div><label>아이디:</label>${esc(u.loginId||'')}</div><div><label>소속:</label>${esc(u.company||'')}</div><div><label>직함:</label>${esc(u.title||'')}</div><div><label>연락처:</label>${esc(u.phone||'')}</div><div><label>이메일:</label>${esc(u.email||'')}</div></div>`;}}catch(e){}
+  $('prop-inner').innerHTML=`<h2>${esc(p.title)}</h2><p style="color:#888;margin-bottom:16px">제안자: ${esc(p.userNameSnapshot)} | 접수일: ${fdate(p.createdAt)}</p>${userInfo}<div style="white-space:pre-wrap;word-break:break-all;line-height:1.8;padding:16px;background:var(--bg);border-radius:8px;margin-bottom:20px">${esc(p.body)}</div><div class="fg"><label>상태 변경</label><select id="ps-${pid}"><option value="new" ${p.status==='new'?'selected':''}>신규</option><option value="reviewing" ${p.status==='reviewing'?'selected':''}>검토중</option><option value="done" ${p.status==='done'?'selected':''}>완료</option></select></div><div class="fg"><label>내부 메모</label><textarea id="pm-${pid}" rows="3">${esc(p.adminMemo||'')}</textarea></div><button class="btn" onclick="updateProp('${pid}')">저장</button>`;openM('mdl-prop');}
+async function updateProp(pid){await updateDoc(doc(db,'partner_proposals',pid),{status:$('ps-'+pid).value,adminMemo:$('pm-'+pid).value.trim(),updatedAt:serverTimestamp()});toast('업데이트 완료','success');closeM('mdl-prop');loadProps();}
+
+// ═══ NOTICES ═══
+async function loadNoticesAdm(){const snap=await getDocs(query(collection(db,'notices'),orderBy('createdAt','desc')));$('tb-notices').innerHTML=snap.docs.map((d,i)=>{const n=d.data();return`<tr><td>${i+1}</td><td>${esc(n.title)}</td><td>${n.isActive?'<span class="st-active">노출</span>':'<span class="st-suspended">비노출</span>'}</td><td>${fdate(n.createdAt)}</td><td><button class="btn btn-sm" onclick="editNotice('${n.noticeId}')">수정</button></td></tr>`;}).join('');}
+function showNF(){$('nf-area').classList.remove('hidden');$('nf-id').value='';$('nf-title').value='';$('nf-body').innerHTML='';$('nf-preview').style.display='none';}
+async function editNotice(nid){const d=await getDoc(doc(db,'notices',nid));if(!d.exists())return;const n=d.data();$('nf-id').value=nid;$('nf-title').value=n.title;$('nf-body').innerHTML=n.bodyHtml||n.body||'';$('nf-active').value=n.isActive?'1':'0';$('nf-area').classList.remove('hidden');$('nf-preview').style.display='none';}
+async function saveNotice(e){if(e&&e.preventDefault)e.preventDefault();const nid=$('nf-id').value||gid();const bodyHtml=$('nf-body').innerHTML.trim();const bodyText=$('nf-body').innerText.trim();if(!$('nf-title').value.trim()||!bodyText){toast('제목과 내용을 입력하세요.','error');return;}const data={noticeId:nid,title:$('nf-title').value.trim(),body:bodyText,bodyHtml:bodyHtml,isActive:$('nf-active').value==='1',updatedAt:serverTimestamp()};if(!$('nf-id').value){data.createdBy=admUser.uid;data.createdAt=serverTimestamp();}await setDoc(doc(db,'notices',nid),data,{merge:true});toast('공지 저장 완료','success');$('nf-area').classList.add('hidden');loadNoticesAdm();}
+function nfPreview(){$('nf-preview-body').innerHTML=$('nf-body').innerHTML;$('nf-preview').style.display='block';}
+
+// ═══ RICH EDITOR (공통) ═══
+function richFmt(type,valOrTarget,target){
+  // richFmt('bold','nf-body') 또는 richFmt('fontSize','3','nf-body')
+  let editorId=target||valOrTarget;
+  let val=target?valOrTarget:null;
+  const editor=$(editorId);if(!editor)return;
+  editor.focus();
+  if(type==='bold')document.execCommand('bold',false,null);
+  else if(type==='italic')document.execCommand('italic',false,null);
+  else if(type==='underline')document.execCommand('underline',false,null);
+  else if(type==='fontSize'){if(val)document.execCommand('fontSize',false,val);}
+  else if(type==='h2')document.execCommand('formatBlock',false,'<h2>');
+  else if(type==='h3')document.execCommand('formatBlock',false,'<h3>');
+  else if(type==='color'){const colorId=editorId.replace('-body','-color');const c=$(colorId)?$(colorId).value:'#2E86AB';if(c)document.execCommand('foreColor',false,c);}
+  else if(type==='justifyLeft')document.execCommand('justifyLeft',false,null);
+  else if(type==='justifyCenter')document.execCommand('justifyCenter',false,null);
+  else if(type==='justifyRight')document.execCommand('justifyRight',false,null);
+  else if(type==='ul')document.execCommand('insertUnorderedList',false,null);
+  else if(type==='ol')document.execCommand('insertOrderedList',false,null);
+  else if(type==='hr')document.execCommand('insertHTML',false,'<hr style="border:none;border-top:1px solid #ddd;margin:12px 0">');
+  else if(type==='link'){const url=prompt('URL을 입력하세요 (예: https://...)');if(url){const txt=document.getSelection().toString()||url;document.execCommand('insertHTML',false,`<a href="${url}" target="_blank" style="color:#2E86AB;text-decoration:underline">${txt}</a>`);}}
+  else if(type==='image'){const url=prompt('이미지 URL을 입력하세요');if(url)document.execCommand('insertHTML',false,`<img src="${url}" style="max-width:100%;height:auto;border-radius:4px;margin:8px 0">`);}
+  else if(type==='undo')document.execCommand('undo',false,null);
+  else if(type==='redo')document.execCommand('redo',false,null);
+  editor.focus();
+}
+window.richFmt=richFmt;window.nfPreview=nfPreview;
+
+// ═══ TERMS ═══
+async function loadGuide(){try{const d=await getDoc(doc(db,'guide','main'));if(d.exists()){const g=d.data();$('gd-title').value=g.title||'이용 가이드';$('gd-body').innerHTML=g.bodyHtml||'';$('gd-preview').style.display='none';}else{$('gd-title').value='이용 가이드';$('gd-body').innerHTML='';$('gd-preview').style.display='none';}}catch(e){console.error('guide load fail:',e);}}
+async function saveGuide(){const data={title:$('gd-title').value.trim(),bodyHtml:$('gd-body').innerHTML,updatedBy:admUser.uid,updatedAt:serverTimestamp()};try{await setDoc(doc(db,'guide','main'),data,{merge:true});toast('가이드 저장 완료','success');}catch(e){toast('저장 실패: '+e.message,'error');}}
+function gdPreview(){$('gd-preview-body').innerHTML=$('gd-body').innerHTML;$('gd-preview').style.display='block';}
+async function loadTermEdit(type,btn){if(btn){btn.parentElement.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');}$('te-type').value=type;try{const snap=await getDocs(query(collection(db,'terms'),where('type','==',type),where('isActive','==',true),orderBy('version','desc'),limit(1)));$('te-body').value=snap.empty?'':snap.docs[0].data().content;}catch(e){console.warn('terms index fallback:',e);const snap2=await getDocs(collection(db,'terms'));const list=snap2.docs.map(d=>d.data()).filter(t=>t.type===type&&t.isActive).sort((a,b)=>(b.version||0)-(a.version||0));$('te-body').value=list.length?list[0].content:'';}}
+async function saveTerm(e){e.preventDefault();const type=$('te-type').value,content=$('te-body').value.trim();const exSnap=await getDocs(query(collection(db,'terms'),where('type','==',type),where('isActive','==',true)));let ver=1;if(!exSnap.empty){ver=(exSnap.docs[0].data().version||0)+1;for(const d of exSnap.docs)await updateDoc(d.ref,{isActive:false});}const tid=gid();await setDoc(doc(db,'terms',tid),{termId:tid,type,content,version:ver,isActive:true,updatedBy:admUser.uid,createdAt:serverTimestamp(),updatedAt:serverTimestamp()});toast('약관 저장 완료 (v'+ver+')','success');}
+
+// ═══ CHARGE OPTIONS ═══
+async function loadChargeOpts(){const snap=await getDocs(query(collection(db,'charge_options'),orderBy('sortOrder')));$('tb-copts').innerHTML=snap.docs.map(d=>{const o=d.data();return`<tr><td>${fmt(o.paidAmount)}원</td><td>${fmt(o.chargeAmount)}원</td><td>${esc(o.label||'')}</td><td>${o.sortOrder}</td><td>${o.isActive?'<span class="st-active">활성</span>':'<span class="st-suspended">비활성</span>'}</td><td><button class="btn btn-sm" onclick="toggleCO('${o.optionId}',${o.isActive})">${o.isActive?'비활성':'활성'}</button> <button class="btn btn-sm btn-danger" onclick="delCO('${o.optionId}')">삭제</button></td></tr>`;}).join('');}
+async function addChargeOpt(){const paid=parseInt($('co-paid').value),credit=parseInt($('co-credit').value),label=$('co-label').value.trim();if(!paid||!credit)return toast('금액을 입력하세요.','error');const snap=await getDocs(collection(db,'charge_options'));const id=gid();await setDoc(doc(db,'charge_options',id),{optionId:id,paidAmount:paid,chargeAmount:credit,label:label||fmt(paid)+'원',sortOrder:snap.size,isActive:true});$('co-paid').value='';$('co-credit').value='';$('co-label').value='';toast('추가 완료','success');loadChargeOpts();}
+async function toggleCO(id,cur){await updateDoc(doc(db,'charge_options',id),{isActive:!cur});loadChargeOpts();}
+async function delCO(id){if(!confirm('삭제?'))return;await deleteDoc(doc(db,'charge_options',id));toast('삭제 완료','success');loadChargeOpts();}
+
+// ═══ WINDOW EXPORTS ═══
+window.admLogout=admLogout;window.goPanel=goPanel;window.openM=openM;window.closeM=closeM;
+window.showAddUser=showAddUser;window.createFreeUser=createFreeUser;window.setExpPeriod=setExpPeriod;
+window.nuEmailSel=nuEmailSel;window.nuUnlimitedChk=nuUnlimitedChk;window.initNuDates=initNuDates;
+
+// ── Enter키: 다음 입력창 이동 ──
+document.addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&e.target.tagName==='INPUT'&&!e.target.closest('form')){
+    e.preventDefault();const nxt=e.target.dataset.next;if(nxt&&$(nxt)){$(nxt).focus();}
+  }
+  if(e.key==='Enter'&&e.target.tagName==='INPUT'&&e.target.closest('form')&&e.target.type!=='submit'){
+    e.preventDefault();const inputs=[...e.target.closest('form').querySelectorAll('input,select,textarea')];
+    const idx=inputs.indexOf(e.target);if(idx>=0&&idx<inputs.length-1)inputs[idx+1].focus();
+  }
+});
+window.loadMembers=loadMembers;window.showMember=showMember;window.toggleStatus=toggleStatus;window.doAdjust=doAdjust;window.doAdjustPoint=doAdjustPoint;window.updateMemberInfo=updateMemberInfo;window.changeMemberPw=changeMemberPw;window.updateJarviaMember=updateJarviaMember;
+async function updateJarviaMember(uid){
+  const regFee=$('ed-regfee-'+uid).value==='paid';
+  const monthlyFee=parseInt($('ed-monthly-'+uid).value)||50000;
+  try{await updateDoc(doc(db,'users',uid),{regFeePaid:regFee,monthlyFee,updatedAt:serverTimestamp()});
+    toast('JARVIA멤버십 정보 저장 완료','success');
+  }catch(e){toast('저장 실패: '+e.message,'error');}
+}
+window.toggleAllMembers=toggleAllMembers;window.deleteSelectedMembers=deleteSelectedMembers;
+window.loadAdmins=loadAdmins;window.createAdmin=createAdmin;window.delAdmin=delAdmin;
+window.showCF=showCF;window.editCont=editCont;window.delCont=delCont;window.saveCont=saveCont;window.loadConts=loadConts;window.onCfTypeChange=onCfTypeChange;window.uploadAudio=uploadAudio;window.syncGitHub=syncGitHub;window.renderConts=renderConts;window.contPg=contPg;window.toggleAllChk=toggleAllChk;window.delSelected=delSelected;
+window.showBatchUpload=showBatchUpload;window.switchBatchTab=switchBatchTab;window.previewAudioFiles=previewAudioFiles;window.baSetAll=baSetAll;window.batchAudioUpload=batchAudioUpload;window.batchVideoUpload=batchVideoUpload;
+function toggleBulkPrice(){$('cf-area').classList.add('hidden');$('batch-area').classList.add('hidden');$('bulk-price-area').classList.toggle('hidden');$('bp-result').innerHTML='';}
+async function bulkPricePreview(){
+  const dp=parseInt($('bp-default').value)||0;const cp=parseInt($('bp-closing').value)||0;
+  const snap=await getDocs(collection(db,'contents'));let lines=[];let cnt=0;
+  snap.docs.forEach(d=>{const c=d.data();const np=c.type==='closing'?cp:dp;if(c.price!==np){lines.push(`${c.type} | ${c.title} | ${fmt(c.price)}원 → ${fmt(np)}원`);cnt++;}});
+  $('bp-result').innerHTML=cnt?`<div style="max-height:300px;overflow-y:auto;background:#f9f9f9;padding:12px;border-radius:8px;white-space:pre-line;font-size:12px">${lines.join('\n')}</div><div style="margin-top:8px;font-weight:600">총 ${cnt}건 변경 예정</div>`:'<div>변경할 항목이 없습니다.</div>';
+}
+async function bulkPriceApply(){
+  const dp=parseInt($('bp-default').value)||0;const cp=parseInt($('bp-closing').value)||0;
+  if(!confirm(`기본 ${fmt(dp)}원 / 클로징PPT ${fmt(cp)}원으로 일괄 변경하시겠습니까?`))return;
+  const snap=await getDocs(collection(db,'contents'));let cnt=0;
+  for(const d of snap.docs){const c=d.data();const np=c.type==='closing'?cp:dp;if(c.price!==np){await updateDoc(doc(db,'contents',c.contentId),{price:np,updatedAt:serverTimestamp()});cnt++;}}
+  $('bp-result').innerHTML=`<div style="color:var(--success);font-weight:600">✅ ${cnt}건 가격 변경 완료!</div>`;
+  if(cnt>0)loadConts();
+}
+window.toggleBulkPrice=toggleBulkPrice;window.bulkPricePreview=bulkPricePreview;window.bulkPriceApply=bulkPriceApply;
+window.addCat=addCat;window.toggleCat=toggleCat;window.delCat=delCat;window.loadCats=loadCats;
+window.loadPays=loadPays;window.loadLogs=loadLogs;window.exportCSV=exportCSV;
+window.loadProps=loadProps;window.showProp=showProp;window.updateProp=updateProp;
+window.showNF=showNF;window.editNotice=editNotice;window.saveNotice=saveNotice;window.loadNoticesAdm=loadNoticesAdm;
+window.loadTermEdit=loadTermEdit;window.saveTerm=saveTerm;
+window.loadGuide=loadGuide;window.saveGuide=saveGuide;window.gdPreview=gdPreview;
+window.loadChargeOpts=loadChargeOpts;window.addChargeOpt=addChargeOpt;window.toggleCO=toggleCO;window.delCO=delCO;
+
+// ═══ THUMBNAIL SETTINGS ═══
+const TH_TYPES=[{key:'video',label:'🎬 영상콘텐츠'},{key:'brief',label:'📰 이슈브리핑'},{key:'audio',label:'🎧 오디오'},{key:'report',label:'📊 특급보고서'},{key:'closing',label:'📑 클로징PPT'}];
+function toggleThDate(){$('th-date-wrap').style.display=$('th-scope').value==='after'?'':'none';}
+async function loadThumbs(){
+  let data={};try{const d=await getDoc(doc(db,'settings','thumb_settings'));if(d.exists())data=d.data();}catch(e){}
+  $('th-scope').value=data.scope||'all';$('th-date').value=data.afterDate||'';toggleThDate();
+  $('th-types').innerHTML=TH_TYPES.map(t=>`<div class="fr" style="align-items:center;margin-bottom:12px"><div class="fg" style="flex:0 0 140px"><strong>${t.label}</strong></div><div class="fg"><input id="th-url-${t.key}" type="url" placeholder="이미지 URL" value="${esc(data[t.key]||'')}"></div><div class="fg" style="flex:0 0 100px">${data[t.key]?`<img src="${esc(data[t.key])}" style="height:50px;border-radius:4px">`:''}</div></div>`).join('');
+}
+async function saveThumbs(){
+  const data={scope:$('th-scope').value,afterDate:$('th-scope').value==='after'?$('th-date').value:'',updatedAt:serverTimestamp()};
+  TH_TYPES.forEach(t=>{const el=$('th-url-'+t.key);data[t.key]=el?toFileUrl(el.value.trim())||null:null;});
+  await setDoc(doc(db,'settings','thumb_settings'),data);toast('썸네일 설정 저장 완료','success');loadThumbs();
+}
+window.loadThumbs=loadThumbs;window.saveThumbs=saveThumbs;window.toggleThDate=toggleThDate;
+
+// ═══ REFERRAL STATUS ═══
+function setRefPeriod(type){
+  const now=new Date();const y=now.getFullYear(),m=now.getMonth(),d=now.getDate();
+  let from,to;
+  if(type==='today'){from=to=new Date(y,m,d);}
+  else if(type==='week'){const day=now.getDay()||7;from=new Date(y,m,d-day+1);to=new Date(y,m,d);}
+  else if(type==='month'){from=new Date(y,m,1);to=new Date(y,m,d);}
+  else{$('rs-from').value='';$('rs-to').value='';loadRefStatus();return;}
+  $('rs-from').value=from.getFullYear()+'-'+String(from.getMonth()+1).padStart(2,'0')+'-'+String(from.getDate()).padStart(2,'0');
+  $('rs-to').value=to.getFullYear()+'-'+String(to.getMonth()+1).padStart(2,'0')+'-'+String(to.getDate()).padStart(2,'0');
+  loadRefStatus();
+}
+async function loadRefStatus(){
+  try{
+    const snap=await getDocs(query(collection(db,'transactions'),where('type','==','referral_reward')));
+    const fromVal=$('rs-from').value,toVal=$('rs-to').value;
+    const fromD=fromVal?new Date(fromVal+'T00:00:00'):null;
+    const toD=toVal?new Date(toVal+'T23:59:59'):null;
+    let txList=snap.docs.map(d=>({id:d.id,...d.data()}));
+    txList.sort((a,b)=>(b.createdAt?.toMillis?.()||0)-(a.createdAt?.toMillis?.()||0));
+    if(fromD)txList=txList.filter(t=>{const td=t.createdAt?.toDate?.();return td&&td>=fromD;});
+    if(toD)txList=txList.filter(t=>{const td=t.createdAt?.toDate?.();return td&&td<=toD;});
+    const uSnap=await getDocs(collection(db,'users'));
+    const uMap={};uSnap.docs.forEach(d=>{const ud=d.data();uMap[d.id]={name:ud.name||'',loginId:ud.loginId||'',point:ud.point||0};});
+    const refMap={};
+    txList.forEach(t=>{
+      const uid=t.userId;
+      if(!refMap[uid])refMap[uid]={name:uMap[uid]?.name||'',loginId:uMap[uid]?.loginId||'',count:0,totalPts:0,currentPt:uMap[uid]?.point||0};
+      refMap[uid].count++;refMap[uid].totalPts+=t.amount||0;
+    });
+    const totalCount=txList.length;
+    const totalPts=txList.reduce((s,t)=>s+(t.amount||0),0);
+    $('rs-summary').innerHTML=`<div class="dash-card"><div class="dc-num">${totalCount}명</div><div class="dc-label">추천 성공 건수</div></div><div class="dash-card"><div class="dc-num" style="color:var(--success)">${fmt(totalPts)}P</div><div class="dc-label">지급 포인트 합계</div></div><div class="dash-card"><div class="dc-num">${Object.keys(refMap).length}명</div><div class="dc-label">추천자 수</div></div>`;
+    const refArr=Object.entries(refMap).sort((a,b)=>b[1].totalPts-a[1].totalPts);
+    $('tb-ref-summary').innerHTML=refArr.length?refArr.map(([uid,r])=>`<tr><td>${esc(r.name)}</td><td>${esc(r.loginId)}</td><td>${r.count}명</td><td style="color:var(--success);font-weight:600">${fmt(r.totalPts)}P</td><td>${fmt(r.currentPt)}P</td></tr>`).join(''):'<tr><td colspan="5" class="tc">데이터 없음</td></tr>';
+    $('tb-ref-detail').innerHTML=txList.length?txList.map(t=>{
+      const refName=uMap[t.userId]?.name||'';
+      const dt=t.createdAt?.toDate?.();
+      const dtStr=dt?dt.getFullYear()+'. '+(dt.getMonth()+1)+'. '+dt.getDate()+'. '+dt.toLocaleTimeString('ko-KR',{hour:'2-digit',minute:'2-digit'}):'';
+      return`<tr><td>${dtStr}</td><td>${esc(refName)}</td><td>${esc(t.memo||'')}</td><td>JARVIA멤버십</td><td style="color:var(--success);font-weight:600">${fmt(t.amount||0)}P</td></tr>`;
+    }).join(''):'<tr><td colspan="5" class="tc">데이터 없음</td></tr>';
+  }catch(e){console.error('추천현황 로드 실패:',e);toast('추천현황 로드 실패','error');}
+}
+window.loadRefStatus=loadRefStatus;window.setRefPeriod=setRefPeriod;
+
+// ═══ REFERRAL SETTINGS ═══
+async function loadRefSet(){
+  try{const d=await getDoc(doc(db,'settings','referral_settings'));const data=d.exists()?d.data():{};
+    const roles=data.allowedRoles||['jarvia_member'];
+    $('ref-role-jarvia').checked=roles.includes('jarvia_member');
+    $('ref-role-inner').checked=roles.includes('inner_circle');
+    $('ref-role-user').checked=roles.includes('user');
+    $('ref-role-free').checked=roles.includes('free_user');
+    $('ref-role-branch').checked=roles.includes('branch_manager');
+    $('ref-reward').value=data.rewardPoints||50000;
+  }catch(e){console.error('추천설정 로드 실패:',e);}
+}
+async function saveRefSet(){
+  const roles=[];
+  if($('ref-role-jarvia').checked)roles.push('jarvia_member');
+  if($('ref-role-inner').checked)roles.push('inner_circle');
+  if($('ref-role-user').checked)roles.push('user');
+  if($('ref-role-free').checked)roles.push('free_user');
+  if($('ref-role-branch').checked)roles.push('branch_manager');
+  if(!roles.length)return toast('최소 1개 회원유형을 선택하세요.','error');
+  const pts=parseInt($('ref-reward').value)||50000;
+  try{await setDoc(doc(db,'settings','referral_settings'),{allowedRoles:roles,rewardPoints:pts,updatedAt:serverTimestamp()});toast('추천 설정 저장 완료','success');}catch(e){toast('저장 실패: '+e.message,'error');}
+}
+window.loadRefSet=loadRefSet;window.saveRefSet=saveRefSet;
+
+// ═══ 게시예정콘텐츠 관리 ═══
+function showUF(id){
+  $('uf-area').classList.remove('hidden');$('uf-id').value=id||'';
+  if(!id){$('uf-date').value='';$('uf-cat').value='클로징PPT';$('uf-field').value='개인';$('uf-title').value='';$('uf-video').value='';$('uf-audio').value='';$('uf-html').value='';$('uf-pdf').value='';$('uf-ppt').value='';}
+}
+async function saveUpcoming(){
+  if(!$('uf-date').value||!$('uf-title').value){toast('게시예정일과 제목은 필수입니다.','error');return;}
+  const id=$('uf-id').value||doc(collection(db,'upcoming_contents')).id;
+  await setDoc(doc(db,'upcoming_contents',id),{
+    date:$('uf-date').value,category:$('uf-cat').value,field:$('uf-field').value,title:$('uf-title').value,
+    video:$('uf-video').value==='O',audio:$('uf-audio').value==='O',html:$('uf-html').value==='O',
+    pdf:$('uf-pdf').value==='O',ppt:$('uf-ppt').value==='O',
+    updatedAt:serverTimestamp()
+  });
+  toast('저장 완료','success');$('uf-area').classList.add('hidden');loadUpcomingAdm();
+}
+async function loadUpcomingAdm(){
+  const snap=await getDocs(query(collection(db,'upcoming_contents'),orderBy('date','asc')));
+  const ck=v=>v?'<span style="color:#2e86ab;font-weight:700">✓</span>':'';
+  const fmtDate=d=>(d||'').replace(/-/g,'.');
+  const catBadge=c=>{const colors={'클로징PPT':['#fce4e4','#c0392b'],'특급보고서':['#ddeef9','#1a6fa0'],'이슈브리핑':['#def5e6','#1e8449'],'영상콘텐츠':['#f0e4f7','#6c3483'],'오디오':['#fef3de','#d68910']};const cl=colors[c]||['#eee','#666'];return`<span style="display:inline-block;padding:2px 8px;border-radius:12px;font-size:11px;font-weight:600;white-space:nowrap;color:${cl[1]};background:${cl[0]}">${c}</span>`;};
+  $('tb-upcoming').innerHTML=snap.empty?'<tr><td colspan="10" style="text-align:center;padding:20px;color:#999">등록된 항목이 없습니다.</td></tr>':snap.docs.map((d,i)=>{const c=d.data();const bg=i%2===1?'background:#f8f9fa':'';return`<tr style="${bg};border-bottom:1px solid #e9ecef"><td style="text-align:center">${fmtDate(c.date)}</td><td style="text-align:center">${catBadge(c.category||'')}</td><td style="text-align:center">${c.field||''}</td><td style="text-align:left">${c.title||''}</td><td style="text-align:center">${ck(c.video)}</td><td style="text-align:center">${ck(c.audio)}</td><td style="text-align:center">${ck(c.html)}</td><td style="text-align:center">${ck(c.pdf)}</td><td style="text-align:center">${ck(c.ppt)}</td><td style="text-align:center"><div style="display:flex;gap:4px;justify-content:center;flex-wrap:nowrap"><button class="btn btn-sm" onclick="editUpcoming('${d.id}')">수정</button><button class="btn btn-sm btn-danger" onclick="delUpcoming('${d.id}')">삭제</button></div></td></tr>`;}).join('');
+}
+async function editUpcoming(id){
+  const d=await getDoc(doc(db,'upcoming_contents',id));if(!d.exists())return;
+  const c=d.data();showUF(id);
+  $('uf-date').value=c.date||'';$('uf-cat').value=c.category||'클로징PPT';$('uf-field').value=c.field||'개인';$('uf-title').value=c.title||'';
+  $('uf-video').value=c.video?'O':'';$('uf-audio').value=c.audio?'O':'';$('uf-html').value=c.html?'O':'';$('uf-pdf').value=c.pdf?'O':'';$('uf-ppt').value=c.ppt?'O':'';
+}
+async function delUpcoming(id){if(!confirm('삭제하시겠습니까?'))return;await deleteDoc(doc(db,'upcoming_contents',id));toast('삭제 완료','success');loadUpcomingAdm();}
+window.showUF=showUF;window.saveUpcoming=saveUpcoming;window.loadUpcomingAdm=loadUpcomingAdm;window.editUpcoming=editUpcoming;window.delUpcoming=delUpcoming;
+
+// ═══ 팝업관리 ═══
+let _ppTab='common';
+const _ppLabels={common:'공통(전체)',free_user:'무료회원',user:'일반회원',jarvia_member:'JARVIA멤버십',inner_circle:'이너서클',branch_manager:'지사장'};
+function switchPopupTab(role,btn){_ppTab=role;document.querySelectorAll('#popup-tabs .tab').forEach(t=>t.classList.remove('active'));if(btn)btn.classList.add('active');loadPopupData(role);}
+async function loadPopups(){loadPopupData(_ppTab);}
+async function loadPopupData(role){
+  try{const d=await getDoc(doc(db,'login_popups',role));
+    if(d.exists()){const p=d.data();$('pp-title').value=p.title||'';$('pp-body').innerHTML=p.bodyHtml||'';$('pp-active').value=p.isActive?'1':'0';$('pp-start').value=p.startDate||'';$('pp-end').value=p.endDate||'';
+      $('pp-status').innerHTML=`<span style="color:var(--success)">✓ 등록됨</span> | 대상: ${_ppLabels[role]||role} | 기간: ${p.startDate||'시작일 없음'} ~ ${p.endDate||'만료일 없음'}`;
+    }else{$('pp-title').value='';$('pp-body').innerHTML='';$('pp-active').value='1';$('pp-start').value='';$('pp-end').value='';
+      $('pp-status').innerHTML=`<span style="color:var(--text-lt)">등록된 팝업 없음 (${_ppLabels[role]||role})</span>`;}
+    $('pp-preview').style.display='none';
+  }catch(e){toast('팝업 로드 오류: '+e.message,'error');}
+}
+async function savePopup(){
+  const title=$('pp-title').value.trim();const bodyHtml=$('pp-body').innerHTML.trim();const bodyText=$('pp-body').innerText.trim();
+  if(!title||!bodyText){toast('제목과 내용을 입력하세요.','error');return;}
+  if(!$('pp-end').value){toast('게시만료일을 입력하세요.','error');return;}
+  try{await setDoc(doc(db,'login_popups',_ppTab),{title,bodyHtml,isActive:$('pp-active').value==='1',startDate:$('pp-start').value||null,endDate:$('pp-end').value,updatedBy:admUser.uid,updatedAt:serverTimestamp()});
+    toast(_ppLabels[_ppTab]+' 팝업 저장 완료','success');loadPopupData(_ppTab);
+  }catch(e){toast('저장 실패: '+e.message,'error');}
+}
+async function deletePopup(){
+  if(!confirm(_ppLabels[_ppTab]+' 팝업을 삭제하시겠습니까?'))return;
+  try{await deleteDoc(doc(db,'login_popups',_ppTab));toast('삭제 완료','success');loadPopupData(_ppTab);}catch(e){toast('삭제 실패: '+e.message,'error');}
+}
+function ppPreview(){$('pp-preview-body').innerHTML=$('pp-body').innerHTML;$('pp-preview').style.display='block';}
+window.switchPopupTab=switchPopupTab;window.loadPopups=loadPopups;window.savePopup=savePopup;window.deletePopup=deletePopup;window.ppPreview=ppPreview;
+
+// ═══ PPT 생성 관리 ═══
+let _pgList=[];
+async function loadPptGenAdmin(){
+  const tb=$('tb-pptgen');
+  tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--text-lt)">불러오는 중...</td></tr>';
+  try{
+    const constraints=[orderBy('createdAt','desc')];
+    const f=$('pg-from').value,t=$('pg-to').value;
+    if(f)constraints.push(where('createdAt','>=',Timestamp.fromDate(new Date(f))));
+    if(t){const td=new Date(t);td.setHours(23,59,59,999);constraints.push(where('createdAt','<=',Timestamp.fromDate(td)));}
+    const stFilter=$('pg-status-filter').value;
+    if(stFilter)constraints.push(where('status','==',stFilter));
+    constraints.push(limit(200));
+    const snap=await getDocs(query(collection(db,'pptgen_jobs'),...constraints));
+    _pgList=snap.docs.map(d=>({_id:d.id,...d.data()}));
+    // 사용자 이름 캐시
+    const uc={};
+    for(const j of _pgList){
+      if(!uc[j.userId]){
+        try{const u=await getDoc(doc(db,'users',j.userId));uc[j.userId]=u.exists()?u.data().name:j.userId;}
+        catch(e){uc[j.userId]=j.userId;}
+      }
+    }
+    // 대시보드 통계
+    const today=new Date();today.setHours(0,0,0,0);
+    let todayCount=0,todayRev=0,totalDone=0,totalFail=0;
+    const now=new Date();
+    for(const j of _pgList){
+      const cd=j.createdAt?.toDate?j.createdAt.toDate():null;
+      if(cd&&cd>=today){todayCount++;if(j.paymentStatus==='confirmed')todayRev+=(j.genPrice||0);}
+      if(j.status==='completed')totalDone++;
+      if(j.status==='failed')totalFail++;
+    }
+    $('pg-today').textContent=todayCount;
+    $('pg-rev').textContent=fmt(todayRev);
+    $('pg-total').textContent=totalDone;
+    $('pg-fail').textContent=totalFail;
+    // 테이블 렌더링
+    const stMap={pending:'⏳ 대기',processing:'🔄 생성중',completed:'✅ 완료',failed:'❌ 실패'};
+    const payMap={hold:'🟡 대기',confirmed:'🟢 확정',refunded:'🔵 환불'};
+    if(!_pgList.length){
+      tb.innerHTML='<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--text-lt)">PPT 생성 내역이 없습니다.</td></tr>';return;
+    }
+    tb.innerHTML=_pgList.map(j=>{
+      const title=j.formData?.ptTitle||'-';
+      const tp=j.clientType==='personal'?'👤 개인':'🏢 기업';
+      const st=stMap[j.status]||j.status;
+      const cost=j.genPrice>0?fmt(j.genPrice)+'원':'무료';
+      const pay=payMap[j.paymentStatus]||j.paymentStatus||'-';
+      let remainStr='—';
+      if(j.status==='completed'&&j.createdAt){
+        const created=j.createdAt.toDate?j.createdAt.toDate():new Date();
+        const expires=new Date(created.getTime()+7*24*60*60*1000);
+        const remain=Math.ceil((expires-now)/(1000*60*60*24));
+        remainStr=remain>0?`<span style="color:${remain<=2?'var(--danger)':'var(--success)'}">D-${remain}</span>`:'<span style="color:var(--text-lt)">만료</span>';
+      }
+      return`<tr><td style="white-space:nowrap">${fdatetime(j.createdAt)}</td><td>${esc(uc[j.userId]||j.userId)}</td><td>${tp}</td><td class="ov" title="${esc(title)}">${esc(title)}</td><td>${st}</td><td style="text-align:right">${cost}</td><td>${pay}</td><td style="text-align:center">${remainStr}</td></tr>`;
+    }).join('');
+  }catch(e){
+    tb.innerHTML=`<tr><td colspan="8" style="text-align:center;padding:20px;color:var(--danger)">로드 실패: ${e.message}</td></tr>`;
+  }
+}
+function exportPptGenCSV(){
+  if(!_pgList.length)return toast('데이터 없음','error');
+  let csv='\uFEFF생성일시,사용자ID,유형,PT제목,상태,비용,결제상태\n';
+  _pgList.forEach(j=>{
+    csv+=`${fdatetime(j.createdAt)},${j.userId},${j.clientType==='personal'?'개인':'기업'},"${(j.formData?.ptTitle||'').replace(/"/g,'""')}",${j.status},${j.genPrice||0},${j.paymentStatus||''}\n`;
+  });
+  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+  a.download='pptgen_logs_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+window.loadPptGenAdmin=loadPptGenAdmin;window.exportPptGenCSV=exportPptGenCSV;
+
+// ═══ 결제/이용로그 래퍼 (기존 + PPT) ═══
+function loadPaysAll(){loadPays();loadPaysPptGen().catch(e=>console.warn('PPT결제로드실패:',e));}
+function loadLogsAll(){loadLogs();loadLogsPptGen().catch(e=>console.warn('PPT로그로드실패:',e));}
+
+// ═══ 결제관리 - PPT 결제 내역 ═══
+async function loadPaysPptGen(){
+  const tb=$('tb-pays-pptgen');
+  tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-lt)">불러오는 중...</td></tr>';
+  try{
+    const snap=await getDocs(query(collection(db,'pptgen_jobs'),orderBy('createdAt','desc'),limit(100)));
+    if(snap.empty){tb.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-lt)">PPT 결제 내역이 없습니다.</td></tr>';return;}
+    const uc={};const payMap={hold:'🟡 대기',confirmed:'🟢 확정',refunded:'🔵 환불'};
+    const rows=[];
+    for(const d of snap.docs){
+      const j=d.data();
+      if(!j.genPrice||j.genPrice<=0)continue;
+      if(!uc[j.userId]){try{const u=await getDoc(doc(db,'users',j.userId));uc[j.userId]=u.exists()?u.data().name:j.userId;}catch(e){uc[j.userId]=j.userId;}}
+      rows.push(`<tr><td style="white-space:nowrap">${fdatetime(j.createdAt)}</td><td>${esc(uc[j.userId])}</td><td class="ov">${esc(j.formData?.ptTitle||'-')}</td><td style="text-align:right">${fmt(j.genPrice)}원</td><td>${payMap[j.paymentStatus]||j.paymentStatus||'-'}</td></tr>`);
+    }
+    tb.innerHTML=rows.length?rows.join(''):'<tr><td colspan="5" style="text-align:center;color:var(--text-lt)">유료 PPT 내역이 없습니다.</td></tr>';
+  }catch(e){tb.innerHTML=`<tr><td colspan="5" style="text-align:center;color:var(--danger)">로드 실패</td></tr>`;}
+}
+
+// ═══ 이용로그 - PPT 생성 로그 ═══
+async function loadLogsPptGen(){
+  const tb=$('tb-logs-pptgen');const sumEl=$('lg-pptgen-summary');
+  tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-lt)">불러오는 중...</td></tr>';
+  try{
+    const constraints=[orderBy('createdAt','desc')];
+    const f=$('lg-from').value,t=$('lg-to').value;
+    if(f)constraints.push(where('createdAt','>=',Timestamp.fromDate(new Date(f))));
+    if(t){const td=new Date(t);td.setHours(23,59,59,999);constraints.push(where('createdAt','<=',Timestamp.fromDate(td)));}
+    constraints.push(limit(200));
+    const snap=await getDocs(query(collection(db,'pptgen_jobs'),...constraints));
+    if(snap.empty){
+      tb.innerHTML='<tr><td colspan="6" style="text-align:center;color:var(--text-lt)">PPT 생성 내역이 없습니다.</td></tr>';
+      sumEl.innerHTML='';return;
+    }
+    const uc={};let totalCount=0,totalRev=0;const rows=[];
+    const stMap={pending:'⏳ 대기',processing:'🔄 생성중',completed:'✅ 완료',failed:'❌ 실패'};
+    for(const d of snap.docs){
+      const j=d.data();totalCount++;
+      if(j.paymentStatus==='confirmed')totalRev+=(j.genPrice||0);
+      if(!uc[j.userId]){try{const u=await getDoc(doc(db,'users',j.userId));uc[j.userId]=u.exists()?u.data().name:j.userId;}catch(e){uc[j.userId]=j.userId;}}
+      const tp=j.clientType==='personal'?'👤 개인':'🏢 기업';
+      const cost=j.genPrice>0&&j.paymentStatus==='confirmed'?fmt(j.genPrice)+'원':(j.paymentStatus==='refunded'?'환불':'무료');
+      rows.push(`<tr><td style="white-space:nowrap">${fdatetime(j.createdAt)}</td><td>${esc(uc[j.userId])}</td><td>${tp}</td><td class="ov">${esc(j.formData?.ptTitle||'-')}</td><td>${stMap[j.status]||j.status}</td><td style="text-align:right">${cost}</td></tr>`);
+    }
+    sumEl.innerHTML=`<div class="dash-c" style="border-left-color:#E65100"><span>PPT 생성수</span><strong>${totalCount}</strong></div><div class="dash-c" style="border-left-color:#E65100"><span>PPT 매출</span><strong>${fmt(totalRev)}</strong><em>원</em></div>`;
+    tb.innerHTML=rows.join('');
+  }catch(e){
+    tb.innerHTML=`<tr><td colspan="6" style="text-align:center;color:var(--danger)">로드 실패</td></tr>`;
+    sumEl.innerHTML='';
+  }
+}
+</script>
+</body>
+</html>
