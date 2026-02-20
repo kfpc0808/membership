@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>26년 연말정산 관련 세법 개정사항(2) - 소득공제와 세액공제</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700;900&display=swap');
+
+        :root {
+            --primary-color: #1a237e;
+            --secondary-color: #283593;
+            --bg-color: #f7f9fc;
+            --card-bg: #ffffff;
+            --text-color: #212121;
+            --text-light: #424242;
+            --border-color: #e8eaf6;
+            --danger-color: #d32f2f;
+            --warning-color: #f9a825;
+            --success-color: #2e7d32;
+            --hl-yellow-bg: #fff59d; --hl-yellow-text: #3e2723;
+            --hl-pink-bg: #ffcdd2; --hl-pink-text: #b71c1c;
+            --hl-green-bg: #c8e6c9; --hl-green-text: #1b5e20;
+            --shadow-soft: 0 4px 6px rgba(0,0,0,0.02);
+            --shadow-medium: 0 8px 15px rgba(0, 0, 0, 0.08);
+            --shadow-strong: 0 10px 25px rgba(26, 35, 126, 0.12);
+            --border-radius-main: 12px;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0; padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.75;
+            word-break: keep-all;
+        }
+
+        .container {
+            max-width: 840px; 
+            margin: 40px auto;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow-strong);
+            border-radius: var(--border-radius-main);
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--primary-color);
+            color: #ffffff;
+            padding: 60px 50px;
+        }
+        .header .tag {
+            display: inline-block;
+            background-color: #ffeb3b;
+            color: #1a237e;
+            padding: 6px 15px;
+            border-radius: 4px;
+            font-size: 13px; font-weight: 800; margin-bottom: 20px; letter-spacing: 1px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .header h1 {
+            font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+            font-size: 30px; margin: 0 0 15px 0; font-weight: 800; letter-spacing: -1px; line-height: 1.3;
+        }
+        .header h1 .sub-title {
+            display: block;
+            font-size: 19px;
+            font-weight: 500;
+            margin-top: 10px;
+            opacity: 0.9;
+            letter-spacing: -0.5px;
+        }
+        .header .subtitle {
+            font-size: 16px; color: #ffffff !important; opacity: 1; margin: 0; font-weight: 400; line-height: 1.6;
+        }
+
+        .download-section {
+            padding: 25px 40px; text-align: center; background-color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            display: flex; justify-content: center; align-items: center; gap: 20px;
+        }
+        .download-section p { margin: 0; font-size: 16px; font-weight: 600; color: var(--text-color); }
+        .download-btn {
+            background: var(--secondary-color); color: #ffffff; padding: 10px 25px;
+            border-radius: 50px; text-decoration: none; font-weight: 600; font-size: 15px;
+            box-shadow: var(--shadow-soft); transition: all 0.2s;
+        }
+        .download-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow-medium); background: var(--primary-color); }
+
+        .content { padding: 50px; }
+        .section { margin-bottom: 80px; }
+        .section:last-child { margin-bottom: 0; }
+
+        .section h2 {
+            font-family: 'Poppins', 'Noto Sans KR', sans-serif;
+            font-size: 26px; font-weight: 800; color: var(--primary-color);
+            margin: 0 0 30px 0; padding-bottom: 15px;
+            border-bottom: 3px solid var(--primary-color); display: flex; align-items: center;
+        }
+        .section h2 .icon { margin-right: 12px; font-size: 1.1em; }
+
+        p { margin: 0 0 1.2em; font-size: 16px; color: var(--text-light); line-height: 1.8; text-align: left; }
+        strong { font-weight: 700; color: #000; }
+
+        .hl-yellow { background-color: var(--hl-yellow-bg); color: var(--hl-yellow-text); font-weight: 700; padding: 1px 3px; border-radius: 4px; display: inline; line-height: 1.2; }
+        .hl-pink { background-color: var(--hl-pink-bg); color: var(--hl-pink-text); font-weight: 700; padding: 1px 3px; border-radius: 4px; display: inline; line-height: 1.2; }
+        .hl-green { background-color: var(--hl-green-bg); color: var(--hl-green-text); font-weight: 700; padding: 1px 3px; border-radius: 4px; display: inline; line-height: 1.2; }
+
+        .styled-list { padding-left: 0; margin: 0; list-style: none; }
+        .styled-list li {
+            position: relative; padding-left: 15px; margin-bottom: 10px; font-size: 16px; color: #424242; line-height: 1.6; text-align: left;
+        }
+        .styled-list li::before {
+            content: '•'; position: absolute; left: 0; color: var(--secondary-color); font-weight: bold;
+        }
+
+        .table-wrapper {
+            overflow-x: auto; -webkit-overflow-scrolling: touch;
+            margin: 25px 0; border-radius: 12px;
+            border: 1px solid #e0e0e0; box-shadow: var(--shadow-soft); background: #fff;
+        }
+        .comp-table { width: 100%; min-width: 500px; border-collapse: collapse; }
+        .comp-table th {
+            background: #e8eaf6; color: var(--primary-color); font-weight: 700;
+            padding: 15px; text-align: center; border-bottom: 2px solid #c5cae9; white-space: nowrap;
+        }
+        .comp-table td {
+            padding: 15px; border-bottom: 1px solid #eee; border-right: 1px solid #eee;
+            color: #424242; font-size: 15px; text-align: center; vertical-align: middle;
+        }
+        .comp-table td:first-child { background: #fafafa; font-weight: 700; color: #333; }
+        .comp-table td:last-child { border-right: none; }
+        .comp-table tr:last-child td { border-bottom: none; }
+
+        .insight-box {
+            background: #e3f2fd; border-left: 5px solid #1565c0; padding: 25px;
+            border-radius: 8px; margin: 25px 0;
+        }
+        .ib-title { font-weight: 800; color: #0d47a1; font-size: 16px; margin-bottom: 10px; display: block; }
+        .ib-desc { font-size: 15px; color: #333; line-height: 1.6; margin: 0; }
+
+        .tactical-box {
+            background: #fff3e0; border-left: 5px solid #ef6c00; padding: 25px;
+            border-radius: 8px; margin: 25px 0;
+        }
+        .tac-title { font-size: 16px; font-weight: 800; color: #e65100; margin-bottom: 10px; display: block; }
+        .tac-desc { font-size: 15px; color: #424242; line-height: 1.7; margin: 0; }
+
+        .benefit-focus-card {
+            background: #ffffff; border: 1px solid var(--primary-color); border-radius: 8px;
+            padding: 30px; margin: 20px 0; text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative;
+        }
+        .bf-title { font-size: 18px; font-weight: 700; color: var(--primary-color); margin-bottom: 15px; display: block; }
+        .bf-highlight-box { background: #f8f9fa; border: 1px solid #e9ecef; display: inline-block; padding: 10px 25px; border-radius: 6px; margin-bottom: 15px; }
+        .bf-big-num { font-size: 22px; font-weight: 800; color: #b71c1c; }
+        .bf-desc { font-size: 15px; color: #555; line-height: 1.6; word-break: keep-all; }
+
+        .conclusion-box {
+            background: linear-gradient(135deg, #37474f, #263238); padding: 35px 40px; border-radius: 12px;
+            text-align: left !important; margin-top: 30px; margin-bottom: 60px; box-shadow: 0 5px 15px rgba(0,0,0,0.15);
+        }
+        .con-text { color: #fff; font-size: 17px; line-height: 1.8; margin: 0; font-weight: 500; text-align: left !important; }
+        .check-list li { color: #fff; margin-bottom: 8px; font-size: 15px; padding-left: 20px; position: relative; }
+        .check-list li strong { color: #ffeb3b !important; font-weight: 700; }
+        .check-list li::before { content: '✔'; position: absolute; left: 0; color: #ffeb3b; }
+
+        .qa-section { margin-top: 60px; margin-bottom: 60px; }
+        .qa-header {
+            font-size: 22px; font-weight: 800; color: #333; margin-bottom: 20px;
+            padding-bottom: 15px; border-bottom: 2px solid #333; display: flex; align-items: center; gap: 8px;
+        }
+        .qa-item { background-color: #fff; border-bottom: 1px solid #e0e0e0; transition: background 0.2s; }
+        .qa-item:first-of-type { border-top: 1px solid #e0e0e0; }
+        .qa-item[open] { background-color: #fcfcfc; }
+        .qa-question {
+            padding: 20px 10px; cursor: pointer; outline: none;
+            display: flex; justify-content: space-between; align-items: flex-start; list-style: none;
+        }
+        .qa-question::-webkit-details-marker { display: none; }
+        .q-title { font-size: 16px; font-weight: 700; color: #424242; line-height: 1.5; width: 90%; text-align: left; }
+        .q-mark { color: #1a237e; margin-right: 8px; }
+        .toggle-btn { font-size: 24px; color: #9e9e9e; transition: transform 0.3s; margin-top: -2px; }
+        .qa-item[open] .toggle-btn { transform: rotate(45deg); color: #1a237e; }
+        .qa-item[open] .q-title { color: #1a237e; }
+        .qa-answer { padding: 10px 30px 35px 30px; background-color: #fcfcfc; border-top: 1px solid #f0f0f0; }
+        .qa-answer p { font-size: 15px; color: #555; line-height: 1.7; margin-bottom: 10px; text-align: left; }
+
+        .footer-slim {
+            background-color: var(--primary-color);
+            color: #ffffff !important;
+            text-align: center !important;
+            padding: 25px 30px;
+            font-size: 12px;
+            margin-top: 0 !important;
+            border-top: 4px solid var(--secondary-color);
+        }
+        .footer-slim p { 
+            margin: 5px 0; 
+            color: #ffffff !important; 
+            font-size: 12px; 
+            line-height: 1.6;
+            text-align: center !important;
+        }
+        .footer-slim strong { color: #ffffff !important; }
+
+        .law-ref {
+            background: #f5f5f5;
+            border: 1px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 10px 15px;
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .sub-section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #333;
+            margin: 30px 0 15px 0;
+            padding-left: 10px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                width: 100%;
+                margin: 0;
+                box-shadow: none;
+                border-radius: 0;
+            }
+            .header { padding: 40px 20px; }
+            .content { padding: 30px 20px; }
+            .download-section { padding: 20px; flex-direction: column; }
+            .insight-box, .tactical-box, .benefit-focus-card, .conclusion-box {
+                padding: 20px;
+                margin: 20px 0;
+            }
+            .header h1 { font-size: 24px; }
+            .section h2 { font-size: 22px; }
+            p { font-size: 15px; line-height: 1.6; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <span class="tag">NEW 이슈브리핑</span>
+            <h1>
+                26년 연말정산 관련 세법 개정사항(2)
+                <span class="sub-title">- 소득공제와 세액공제 부분</span>
+            </h1>
+            <p class="subtitle">강사: 김재상 세무사 | 소속: 리드원 세무회계<br>제작: (주)한국FP센터 부설 중소기업경영연구소</p>
+        </header>
+
+        <div class="download-section">
+            <p>강의자료 및 관련 서식 확인하기</p>
+            <a href="https://drive.google.com/drive/folders/1zDlI8eEYRkIT2ktcnmc2I2jQhrwU_xu9?usp=drive_link" target="_blank" rel="noopener noreferrer" class="download-btn">강의자료 다운로드</a>
+        </div>
+
+        <div style="max-width: 740px; margin: 20px auto; padding: 20px; background: #fff9f9; border: 1px solid #ffcdd2; border-radius: 8px;">
+            <div style="display: flex; gap: 15px; align-items: flex-start;">
+                <span style="font-size: 24px;">📢</span>
+                <div>
+                    <p style="margin: 0 0 8px 0; font-size: 15px; font-weight: 700; color: #d32f2f;">본 브리핑 자료 이용 시 유의사항</p>
+                    <p style="margin: 0; font-size: 14px; color: #555; line-height: 1.6; text-align: left;">
+                        본 문서는 <strong>김재상 세무사의 강의</strong> 내용을 바탕으로 제작된 요약 자료입니다. 2026년 연말정산(2025년 귀속) 및 이후 적용되는 내용을 포함하고 있으므로, 구체적인 적용 시점은 전문가의 자문을 거치시기 바랍니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <main class="content">
+
+            <div class="section">
+                <h2><span class="icon">📜</span>1. 서론: 세법 개정의 전략적 환경</h2>
+                <p>2026년 연말정산의 핵심은 <strong>'우수인력의 벤처기업 유입 촉진', '서민·중산층의 체육시설 이용료 부담 완화', '출산·양육부담 완화', '결혼비용 지원'</strong>입니다.</p>
+                <p>본 리포트에서는 벤처기업 스톡옵션 과세특례 연장, 수영장·체력단련장 소득공제, 자녀세액공제 확대, 혼인세액공제 신설 등 4가지 핵심 변화를 다룹니다.</p>
+            </div>
+
+            <!-- ========== 섹션 2: 벤처기업 스톡옵션 과세특례 적용기한 연장 ========== -->
+            <div class="section">
+                <h2><span class="icon">🚀</span>2. 벤처기업 스톡옵션 과세특례 적용기한 연장</h2>
+                <span class="law-ref">📖 근거: 조세특례제한법 제16조의2·제16조의3·제16조의4</span>
+                
+                <p>우수인력의 벤처기업 유입을 촉진하기 위해 스톡옵션 과세특례의 적용기한이 <strong>2024. 12. 31. → 2027. 12. 31.</strong>로 3년 연장되었습니다.</p>
+
+                <div class="table-wrapper">
+                    <table class="comp-table">
+                        <colgroup>
+                            <col style="width: 50%">
+                            <col style="width: 25%">
+                            <col style="width: 25%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>종전</th>
+                                <th>개정</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" style="background:#e8eaf6; font-weight:700; text-align:left;">❶ 행사이익 비과세 특례 (§16의2)</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left; font-weight:400;">
+                                    <strong>대상:</strong> 비상장·코넥스 상장<br>
+                                    <strong>특례내용:</strong> 벤처기업으로부터 부여 받은 주식매수선택권 행사이익<br>
+                                    (시가 - 매수가액) 연간 2억원 한도* 비과세<br>
+                                    <span style="color:#d32f2f; font-size:13px;">* 벤처기업별 총 누적한도 5억원</span>
+                                </td>
+                                <td rowspan="5">적용기한<br>2024. 12. 31.</td>
+                                <td rowspan="5" style="color:var(--primary-color); font-weight:700;"><span class="hl-yellow">2027. 12. 31.</span><br>(3년 연장)</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="background:#e8eaf6; font-weight:700; text-align:left;">❷ 행사이익 소득세 분할납부 특례 (§16의3)</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left; font-weight:400;">
+                                    <strong>대상:</strong> 비상장·상장 벤처기업<br>
+                                    <strong>특례내용:</strong> 행사이익(§16의2에 따른 비과세 이익 제외) 소득세 <strong>5년간 분할납부</strong>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" style="background:#e8eaf6; font-weight:700; text-align:left;">❸ 적격주식매수선택권* 과세특례 (§16의4)</td>
+                            </tr>
+                            <tr>
+                                <td style="text-align:left; font-weight:400;">
+                                    <span style="color:#d32f2f; font-size:13px;">* 3년간 행사가액 합계 5억원 이하, 행사 후 1년간 보유 등</span><br>
+                                    <strong>대상:</strong> 비상장 벤처기업<br>
+                                    <strong>특례내용:</strong> 행사시 행사이익에 대해 납부하지 않고 양도시 양도소득<br>
+                                    (양도 가액 - 행사가액)으로 납부 가능
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="insight-box">
+                    <span class="ib-title">💡 3가지 특례 정리</span>
+                    <p class="ib-desc">
+                        <strong>❶ 비과세 특례:</strong> 비상장·코넥스 상장 벤처기업 대상, 연간 2억원(누적 5억원) 한도 비과세<br><br>
+                        <strong>❷ 분할납부 특례:</strong> 비상장·상장 벤처기업 대상, 비과세 초과분에 대해 5년간 분할납부<br><br>
+                        <strong>❸ 과세이연 특례:</strong> 비상장 벤처기업 대상, 행사 시 과세 없이 양도 시 양도소득세로 납부 (3년간 행사가액 5억원 이하, 행사 후 1년간 보유 요건)
+                    </p>
+                </div>
+                
+                <p style="font-size:14px; color:#666; margin-top:10px;">
+                    <strong>개정이유:</strong> 우수인력의 벤처기업 유입을 촉진
+                </p>
+            </div>
+
+            <!-- ========== 섹션 3: 수영장·체력단련장 이용료 신용카드 소득공제 적용 ========== -->
+            <div class="section">
+                <h2><span class="icon">💪</span>3. 수영장·체력단련장 이용료 신용카드 소득공제 적용</h2>
+                <span class="law-ref">📖 근거: 조세특례제한법 제126조의2</span>
+                
+                <p>서민·중산층의 체육시설 이용료 부담 완화를 위해 신용카드등 사용금액 소득공제의 <strong>추가공제 항목</strong>에 수영장·체력단련장시설이용료가 추가됩니다.</p>
+
+                <h3 class="sub-section-title">신용카드등 사용금액 소득공제 구조</h3>
+                
+                <div class="table-wrapper">
+                    <table class="comp-table">
+                        <colgroup>
+                            <col style="width: 40%">
+                            <col style="width: 30%">
+                            <col style="width: 30%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="3">기본공제 (공제대상: 총급여의 25% 초과 사용금액)</th>
+                            </tr>
+                            <tr>
+                                <th>구분</th>
+                                <th>공제율</th>
+                                <th>공제한도</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>❶ 신용카드</td>
+                                <td>15%</td>
+                                <td rowspan="2">7천만원 이하: 300만원<br>7천만원 초과: 250만원</td>
+                            </tr>
+                            <tr>
+                                <td>❷ 현금영수증·체크카드 등</td>
+                                <td>30%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="table-wrapper">
+                    <table class="comp-table">
+                        <colgroup>
+                            <col style="width: 40%">
+                            <col style="width: 20%">
+                            <col style="width: 20%">
+                            <col style="width: 20%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th colspan="4">추가공제</th>
+                            </tr>
+                            <tr>
+                                <th>구분</th>
+                                <th>종전</th>
+                                <th>개정</th>
+                                <th>공제한도</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>❶ 전통시장·대중교통</td>
+                                <td>40%</td>
+                                <td>(좌 동)</td>
+                                <td rowspan="3">7천만원 이하: 300만원<br>7천만원 초과: 200만원</td>
+                            </tr>
+                            <tr>
+                                <td>❷ 도서·공연·박물관·미술관·영화관람료*</td>
+                                <td>30%</td>
+                                <td>(좌 동)</td>
+                            </tr>
+                            <tr>
+                                <td style="color:var(--primary-color); font-weight:700;">- <span class="hl-yellow">수영장·체력단련장시설이용료*</span></td>
+                                <td>-</td>
+                                <td style="color:var(--primary-color); font-weight:700;">30% <span class="hl-pink">(추가)</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p style="font-size:13px; color:#d32f2f; margin-top:10px;">
+                    * 총급여 7,000만원 이하만 적용
+                </p>
+
+                <div class="insight-box">
+                    <span class="ib-title">💡 핵심 포인트</span>
+                    <p class="ib-desc">
+                        수영장·헬스장 이용료가 기존 문화비(도서·공연 등)와 동일하게 <strong>추가공제 30%</strong> 항목에 포함됩니다.<br><br>
+                        단, <strong>총급여 7,000만원 이하</strong> 근로자만 해당되며, 추가공제 한도(7천만원 이하 300만원, 초과 200만원)가 적용됩니다.
+                    </p>
+                </div>
+                
+                <p style="font-size:14px; color:#666; margin-top:10px;">
+                    <strong>개정이유:</strong> 서민·중산층의 체육시설 이용료 부담 완화<br>
+                    <strong>적용시기:</strong> 2025. 7. 1. 이후 신용카드로 사용하는 수영장 및 체력단련장 시설이용료 분부터 적용<br>
+                    <strong>적용기한:</strong> 2025. 12. 31.
+                </p>
+            </div>
+
+            <!-- ========== 섹션 4: 자녀세액공제 금액 확대 ========== -->
+            <div class="section">
+                <h2><span class="icon">👶</span>4. 자녀세액공제 금액 확대</h2>
+                <span class="law-ref">📖 근거: 소득세법 제59조의2</span>
+                
+                <p>출산·양육부담 완화를 위해 자녀세액공제 금액이 상향되었습니다.</p>
+
+                <div class="table-wrapper">
+                    <table class="comp-table">
+                        <colgroup>
+                            <col style="width: 40%">
+                            <col style="width: 30%">
+                            <col style="width: 30%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>종전</th>
+                                <th>개정</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" style="background:#e8eaf6; font-weight:700; text-align:left;">
+                                    📌 자녀세액공제 (공제대상자녀: 기본공제 대상자인 8세 이상의 자녀 또는 손자녀)
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>첫째</td>
+                                <td>15만원</td>
+                                <td style="color:var(--danger-color); font-weight:700;">25만원 (+10만원)</td>
+                            </tr>
+                            <tr>
+                                <td>둘째</td>
+                                <td>30만원</td>
+                                <td>30만원 (동일)</td>
+                            </tr>
+                            <tr>
+                                <td>셋째 이후</td>
+                                <td>30만원/인</td>
+                                <td style="color:var(--danger-color); font-weight:700;">40만원/인 (+10만원)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="tactical-box">
+                    <span class="tac-title">💰 자녀 수에 따른 세액공제 비교</span>
+                    <p class="tac-desc">
+                        <strong>자녀 1명:</strong> 15만원 → <strong>25만원</strong> (10만원 증가)<br>
+                        <strong>자녀 2명:</strong> 45만원 → <strong>55만원</strong> (10만원 증가)<br>
+                        <strong>자녀 3명:</strong> 75만원 → <strong>95만원</strong> (20만원 증가)
+                    </p>
+                </div>
+                
+                <p style="font-size:14px; color:#666; margin-top:10px;">
+                    <strong>개정이유:</strong> 출산·양육부담 완화<br>
+                    <strong>적용시기:</strong> 2025. 1. 1. 이후 발생하는 소득분부터 적용
+                </p>
+            </div>
+
+            <!-- ========== 섹션 5: 혼인세액공제 신설 ========== -->
+            <div class="section">
+                <h2><span class="icon">💒</span>5. 혼인세액공제 신설</h2>
+                <span class="law-ref">📖 근거: 조세특례제한법 제92조</span>
+                
+                <p>결혼비용 지원을 위해 혼인세액공제가 신설되었습니다.</p>
+
+                <div class="table-wrapper">
+                    <table class="comp-table">
+                        <colgroup>
+                            <col style="width: 30%">
+                            <col style="width: 35%">
+                            <col style="width: 35%">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>종전</th>
+                                <th>개정</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="3" style="background:#e8eaf6; font-weight:700; text-align:left;">📌 혼인세액공제 (신설)</td>
+                            </tr>
+                            <tr>
+                                <td>적용대상</td>
+                                <td rowspan="4" style="text-align:center; vertical-align:middle; color:#999;">&lt;신 설&gt;</td>
+                                <td style="text-align:left;">혼인신고를 한 거주자</td>
+                            </tr>
+                            <tr>
+                                <td>적용연도</td>
+                                <td style="text-align:left;">혼인신고를 한 해 <span class="hl-yellow">(생애 1회)</span></td>
+                            </tr>
+                            <tr>
+                                <td>공제금액</td>
+                                <td style="text-align:left; color:var(--danger-color); font-weight:700;">50만원</td>
+                            </tr>
+                            <tr>
+                                <td>적용기간</td>
+                                <td style="text-align:left;"><span class="hl-pink">2024~2026년</span> 혼인신고 분</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="benefit-focus-card">
+                    <span class="bf-title">결혼 초기 비용 지원 (생애 1회)</span>
+                    <div class="bf-highlight-box">
+                        <span style="display:block; font-size:14px; color:#666; margin-bottom:5px;">부부 합산 최대 공제액</span>
+                        <span class="bf-big-num">100만 원</span>
+                    </div>
+                    <p class="bf-desc">
+                        <strong>1인당 50만 원 세액공제</strong><br>
+                        2024~2026년 사이 혼인신고를 완료한 거주자 대상<br>
+                        생애 1회 적용 (이전에 이 공제를 받은 적이 없어야 함)
+                    </p>
+                </div>
+                
+                <p style="font-size:14px; color:#666; margin-top:10px;">
+                    <strong>개정이유:</strong> 결혼비용 지원<br>
+                    <strong>적용시기:</strong> 2025. 1. 1. 이후 과세표준을 신고하거나 연말정산하는 분부터 적용
+                </p>
+            </div>
+
+            <!-- ========== 섹션 6: 결론 ========== -->
+            <div class="section">
+                <h2><span class="icon">📝</span>6. 결론 및 실무 Action Plan</h2>
+                <div class="conclusion-box">
+                    <p class="con-text" style="margin-bottom: 20px;">
+                        세법 개정은 아는 만큼 돌려받습니다.<br>
+                        핵심 체크리스트를 확인하세요.
+                    </p>
+                    <ul class="check-list" style="list-style:none; padding:0; text-align:left;">
+                        <li><strong>스톡옵션 특례:</strong> 2027년 말까지 연장, 벤처기업 임직원은 비과세(연 2억, 누적 5억), 분할납부, 과세이연 중 유리한 특례 선택</li>
+                        <li><strong>수영장·헬스장:</strong> 2025년 7월 1일 이후 결제분부터 30% 추가공제 (총급여 7천만원 이하만 해당)</li>
+                        <li><strong>자녀세액공제:</strong> 첫째 25만원, 둘째 30만원, 셋째 이후 40만원/인으로 상향</li>
+                        <li><strong>혼인세액공제:</strong> 2024~2026년 혼인신고 시 1인당 50만원, 부부합산 100만원 공제 (생애 1회)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- ========== FAQ 섹션 ========== -->
+            <div class="section qa-section">
+                <div class="qa-header">
+                    <span style="font-size:24px;">💬</span> 자주 묻는 질문 (FAQ)
+                </div>
+
+                <details class="qa-item">
+                    <summary class="qa-question">
+                        <span class="q-title"><span class="q-mark">Q1.</span> 스톡옵션 비과세 특례는 언제까지 적용되나요?</span>
+                        <span class="toggle-btn">+</span>
+                    </summary>
+                    <div class="qa-answer">
+                        <p>당초 2024년 말 종료 예정이었으나, 이번 개정으로 <strong>2027년 12월 31일까지 3년 연장</strong>되었습니다.</p>
+                        <p>3가지 특례가 있습니다:<br>
+                        ❶ 비과세 특례: 비상장·코넥스 상장 대상, 연간 2억원(누적 5억원) 한도<br>
+                        ❷ 분할납부 특례: 비상장·상장 벤처기업 대상, 5년간 분할납부<br>
+                        ❸ 과세이연 특례: 비상장 벤처기업 대상, 양도 시 양도소득세로 납부</p>
+                    </div>
+                </details>
+
+                <details class="qa-item">
+                    <summary class="qa-question">
+                        <span class="q-title"><span class="q-mark">Q2.</span> 헬스장 비용 공제는 바로 받을 수 있나요?</span>
+                        <span class="toggle-btn">+</span>
+                    </summary>
+                    <div class="qa-answer">
+                        <p>아니요, 적용 시기가 정해져 있습니다. <strong>2025년 7월 1일 이후 결제분</strong>부터 적용됩니다.</p>
+                        <p>따라서 실질적인 공제 혜택은 2026년 초에 진행하는 연말정산(2025년 귀속)부터 반영됩니다.</p>
+                        <p>또한 <strong>총급여 7,000만 원 이하</strong> 근로자만 해당되며, 기본공제가 아닌 <strong>추가공제 항목</strong>으로 30% 공제율이 적용됩니다.</p>
+                    </div>
+                </details>
+
+                <details class="qa-item">
+                    <summary class="qa-question">
+                        <span class="q-title"><span class="q-mark">Q3.</span> 자녀세액공제 금액은 얼마나 올랐나요?</span>
+                        <span class="toggle-btn">+</span>
+                    </summary>
+                    <div class="qa-answer">
+                        <p>8세 이상 자녀(손자녀 포함)에 대한 세액공제가 상향되었습니다:</p>
+                        <p>- 첫째: 15만원 → <strong>25만원</strong> (+10만원)<br>
+                        - 둘째: 30만원 (동일)<br>
+                        - 셋째 이상: 30만원/인 → <strong>40만원/인</strong> (+10만원)</p>
+                        <p>2025년 1월 1일 이후 발생하는 소득분부터 적용됩니다.</p>
+                    </div>
+                </details>
+
+                <details class="qa-item">
+                    <summary class="qa-question">
+                        <span class="q-title"><span class="q-mark">Q4.</span> 혼인세액공제는 재혼도 받을 수 있나요?</span>
+                        <span class="toggle-btn">+</span>
+                    </summary>
+                    <div class="qa-answer">
+                        <p>혼인세액공제는 <strong>"생애 1회"</strong>만 적용됩니다.</p>
+                        <p>따라서 이전에 이 공제를 받은 적이 없다면 재혼이라도 적용받을 수 있습니다. 다만, 과거 혼인 시 이미 공제를 받았다면 다시 받을 수 없습니다.</p>
+                        <p>적용기간은 2024~2026년 혼인신고 분이며, 1인당 50만원, 부부 합산 최대 100만원까지 세액공제됩니다.</p>
+                    </div>
+                </details>
+            </div>
+
+        </main>
+
+        <footer class="footer-slim">
+            <p><strong>제작_(주)한국FP센터 &nbsp;|&nbsp; Copyright © 2026 All Rights Reserved.</strong></p>
+            <p>본 자료는 원활한 영업활동을 돕기 위해 제작되었습니다.<br>
+            AI는 오류가 있을 수 있으므로 참고용으로만 사용하시고,<br>
+            실무 사용시 세법을 포함한 모든 규정, 제도들은 반드시 분야별 전문가와 충분히 상담을 하신 후 진행하시기 바랍니다.<br>
+            사용에 따라 발생되는 문제에 대하여 제작처는 책임이 없음을 알려드립니다.</p>
+        </footer>
+    </div>
+
+</body>
+</html>
