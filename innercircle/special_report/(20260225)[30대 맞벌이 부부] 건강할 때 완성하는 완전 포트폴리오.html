@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>30대 맞벌이 부부 | 건강할 때 완성하는 완전 포트폴리오</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+    <style>
+        /* ========== Reset & Base ========== */
+        :root {
+            color-scheme: light;
+            --navy-dark: #0d2137;
+            --navy-main: #1e3a5f;
+            --navy-light: #2c5282;
+            --gold: #c9a227;
+            --gold-light: #d4af37;
+            --text-primary: #1a1a1a;
+            --text-secondary: #444;
+            --text-muted: #666;
+            --bg-page: #f5f6f8;
+            --bg-card: #ffffff;
+            --border-light: #e2e8f0;
+            --border-medium: #cbd5e0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        [id] {
+            scroll-margin-top: 70px;
+        }
+
+        body {
+            font-family: "Pretendard", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            font-size: 17px;
+            line-height: 1.8;
+            letter-spacing: -0.02em;
+            color: var(--text-primary);
+            background-color: var(--bg-page);
+            padding-bottom: max(24px, env(safe-area-inset-bottom));
+            padding-left: max(20px, env(safe-area-inset-left));
+            padding-right: max(20px, env(safe-area-inset-right));
+            word-break: keep-all;
+            overflow-wrap: break-word;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        p, li, td, th {
+            word-break: keep-all;
+            overflow-wrap: break-word;
+        }
+
+        strong, em, b {
+            word-break: keep-all;
+            white-space: normal;
+        }
+
+        /* ========== Layout ========== */
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+
+        /* ========== Hero Section ========== */
+        .hero {
+            background: linear-gradient(135deg, var(--navy-dark) 0%, var(--navy-main) 100%);
+            border-radius: 12px;
+            padding: 32px 24px;
+            margin-bottom: 24px;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(13, 33, 55, 0.15);
+        }
+
+        .hero__badge {
+            display: inline-block;
+            background: var(--gold);
+            color: var(--navy-dark);
+            font-size: 14px;
+            font-weight: 600;
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            letter-spacing: 0;
+        }
+
+        .hero__title {
+            font-size: 27px;
+            font-weight: 700;
+            line-height: 1.4;
+            margin-bottom: 14px;
+            color: #fff;
+        }
+
+        .hero__subtitle {
+            font-size: 20px;
+            color: var(--gold-light);
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .hero__org {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+
+        .hero__date {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 8px;
+        }
+
+        /* ========== TOC Toggle ========== */
+        .toc-container {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: var(--bg-card);
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid var(--border-light);
+        }
+
+        .toc-toggle {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy-main);
+            min-height: 44px;
+        }
+
+        .toc-toggle:focus-visible {
+            outline: 2px solid var(--navy-main);
+            outline-offset: -2px;
+            border-radius: 8px;
+        }
+
+        .toc-toggle__icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .toc-container.is-open .toc-toggle__icon {
+            transform: rotate(180deg);
+        }
+
+        .toc-list {
+            display: none;
+            list-style: none;
+            padding: 0 20px 16px;
+            border-top: 1px solid var(--border-light);
+        }
+
+        .toc-container.is-open .toc-list {
+            display: block;
+        }
+
+        .toc-list__item {
+            margin: 0;
+        }
+
+        .toc-list__link {
+            display: block;
+            padding: 10px 0;
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 16px;
+            border-bottom: 1px solid var(--border-light);
+            transition: color 0.2s;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .toc-list__link:hover,
+        .toc-list__link:focus {
+            color: var(--navy-main);
+        }
+
+        .toc-list__item:last-child .toc-list__link {
+            border-bottom: none;
+        }
+
+        /* ========== Section Card ========== */
+        .section-card {
+            background: var(--bg-card);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+
+        .section-card summary {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 20px;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy-main);
+            cursor: pointer;
+            list-style: none;
+            min-height: 44px;
+            user-select: none;
+        }
+
+        .section-card[open] summary {
+            border-bottom: 1px solid var(--border-light);
+            margin-bottom: 20px;
+        }
+
+        .section-card summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .section-card summary::after {
+            content: '';
+            width: 10px;
+            height: 10px;
+            border-right: 2px solid var(--navy-main);
+            border-bottom: 2px solid var(--navy-main);
+            transform: rotate(45deg);
+            transition: transform 0.3s ease;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        .section-card[open] summary::after {
+            transform: rotate(-135deg);
+        }
+
+        .section-card summary:focus-visible {
+            outline: 2px solid var(--navy-main);
+            outline-offset: -2px;
+        }
+
+        .section-card__content {
+            padding: 0 20px 24px;
+        }
+
+        /* ========== Typography ========== */
+        h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--navy-main);
+            margin: 24px 0 12px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        h3:first-child {
+            margin-top: 0;
+        }
+
+        h4 {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--navy-main);
+            margin: 24px 0 12px;
+            padding: 10px 14px;
+            background: #f0f4f8;
+            border-left: 3px solid var(--navy-main);
+            border-radius: 0 4px 4px 0;
+        }
+
+        p {
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+
+        ul, ol {
+            margin: 16px 0;
+            padding-left: 24px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        li::marker {
+            color: var(--navy-light);
+        }
+
+        /* ========== Highlight ========== */
+        .hl-yellow {
+            background: #FFF9C4;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .hl-pink {
+            background: #FCE4EC;
+            color: #C62828;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        .hl-green {
+            background: #E8F5E9;
+            color: #2E7D32;
+            padding: 2px 5px;
+            border-radius: 3px;
+            font-weight: 600;
+        }
+
+        /* ========== Callout ========== */
+        .callout-warning {
+            background: #fffbf5;
+            border-left: 3px solid #e67e22;
+            border-radius: 0 6px 6px 0;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+
+        .callout-warning .callout__title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #d35400;
+            margin-bottom: 8px;
+        }
+
+        .callout-warning .callout__title svg {
+            display: none;
+        }
+
+        .callout-warning .callout__title::before {
+            content: "⚠️";
+        }
+
+        .callout-warning ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .callout-warning li {
+            color: var(--text-secondary);
+            font-size: 16px;
+        }
+
+        .callout-insight {
+            background: #f8faff;
+            border-left: 3px solid #3498db;
+            border-radius: 0 6px 6px 0;
+            padding: 16px 20px;
+            margin: 20px 0;
+        }
+
+        .callout-insight .callout__title {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            color: #2980b9;
+            margin-bottom: 8px;
+        }
+
+        .callout-insight .callout__title svg {
+            display: none;
+        }
+
+        .callout-insight .callout__title::before {
+            content: "💡";
+        }
+
+        .callout-insight p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin: 0;
+        }
+
+        /* ========== Tables ========== */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 20px 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-light);
+            vertical-align: top;
+        }
+
+        th {
+            background: #f0f4f8;
+            font-weight: 600;
+            color: var(--navy-main);
+            white-space: nowrap;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover {
+            background: #fafbfc;
+        }
+
+        td:first-child {
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        /* ========== Solution Cards ========== */
+        .solution-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+            margin: 24px 0;
+        }
+
+        .solution-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .solution-card__header {
+            background: #f8f9fa;
+            color: var(--navy-main);
+            padding: 14px 20px;
+            font-weight: 700;
+            font-size: 17px;
+            border-left: 4px solid var(--navy-main);
+        }
+
+        .solution-card--navy .solution-card__header {
+            border-left-color: var(--navy-main);
+            background: #f0f4f8;
+        }
+
+        .solution-card--slate .solution-card__header {
+            border-left-color: #6366f1;
+            background: #f5f5ff;
+        }
+        .solution-card--slate .solution-card__label {
+            color: #5558e3;
+        }
+
+        .solution-card--teal .solution-card__header {
+            border-left-color: #2a9d8f;
+            background: #f0faf8;
+        }
+        .solution-card--teal .solution-card__label {
+            color: #2a9d8f;
+        }
+
+        .solution-card__body {
+            padding: 0;
+        }
+
+        .solution-card__row {
+            display: flex;
+            padding: 16px 20px;
+            border-bottom: 1px solid var(--border-light);
+            align-items: flex-start;
+        }
+
+        .solution-card__row:last-child {
+            border-bottom: none;
+        }
+
+        .solution-card__row:nth-child(odd) {
+            background: #fafbfc;
+        }
+
+        .solution-card__label {
+            flex-shrink: 0;
+            width: 90px;
+            font-weight: 600;
+            color: var(--navy-main);
+            font-size: 16px;
+            padding-top: 2px;
+        }
+
+        .solution-card__value {
+            flex: 1;
+            color: var(--text-primary);
+            font-size: 16px;
+            line-height: 1.8;
+        }
+
+        /* ========== Note Text ========== */
+        .note {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-top: 12px;
+            padding-left: 16px;
+            border-left: 2px solid var(--border-medium);
+        }
+
+        /* ========== Intro Box ========== */
+        .intro-box {
+            background: linear-gradient(135deg, #f8f9fa 0%, #f0f4f8 100%);
+            border-radius: 10px;
+            padding: 24px;
+            margin-bottom: 24px;
+            border: 1px solid var(--border-light);
+        }
+
+        .intro-box__title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--navy-main);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .intro-box p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .intro-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* ========== Scenario Box ========== */
+        .scenario-box {
+            background: #fafbfc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 16px 0;
+            border: 1px solid var(--border-light);
+        }
+
+        .scenario-box__label {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .scenario-box__text {
+            font-size: 16px;
+            color: var(--text-primary);
+            line-height: 1.8;
+            margin: 0;
+        }
+
+        /* ========== Quote Block ========== */
+        .quote-block {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 24px 28px;
+            margin: 24px 0;
+            position: relative;
+            border: 1px solid var(--border-light);
+            border-left: 3px solid #2a9d8f;
+        }
+
+        .quote-block::before {
+            content: "\201C";
+            position: absolute;
+            top: 8px;
+            left: 16px;
+            font-size: 48px;
+            color: #2a9d8f;
+            font-family: Georgia, serif;
+            line-height: 1;
+            opacity: 0.6;
+        }
+
+        .quote-block p {
+            color: var(--text-primary);
+            font-size: 16px;
+            margin: 0;
+            padding-left: 24px;
+            font-weight: 500;
+            line-height: 1.8;
+        }
+
+        /* ========== Track List ========== */
+        .track-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .track-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: #fafbfc;
+            border-radius: 8px;
+            border: 1px solid var(--border-light);
+        }
+
+        .track-item__badge {
+            flex-shrink: 0;
+            width: 80px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--navy-main);
+            color: #fff;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 4px;
+        }
+
+        .track-item:nth-child(2) .track-item__badge {
+            background: #6366f1;
+        }
+
+        .track-item:nth-child(3) .track-item__badge {
+            background: #2a9d8f;
+        }
+
+        .track-item:nth-child(4) .track-item__badge {
+            background: #d97706;
+        }
+
+        .track-item:nth-child(5) .track-item__badge {
+            background: #dc2626;
+        }
+
+        .track-item__content {
+            flex: 1;
+        }
+
+        .track-item__title {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .track-item__desc {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        /* ========== FAQ ========== */
+        .faq-item {
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-light);
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .faq-item__q {
+            font-weight: 600;
+            color: var(--navy-main);
+            margin-bottom: 8px;
+        }
+
+        .faq-item__a {
+            color: var(--text-secondary);
+        }
+
+        /* ========== Disclaimer ========== */
+        .disclaimer {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 24px;
+            font-size: 16px;
+            color: var(--text-muted);
+            line-height: 1.7;
+            border: 1px solid var(--border-light);
+        }
+
+        /* ========== Footer ========== */
+        footer {
+            border-top: 1px solid var(--border-medium);
+            padding: 24px 0;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .footer__contact {
+            font-size: 16px;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .footer__copyright {
+            font-size: 16px;
+            color: #888;
+        }
+
+        /* ========== Print Styles ========== */
+        @media print {
+            body {
+                background: #fff;
+                padding: 0;
+                font-size: 12pt;
+            }
+
+            .toc-container {
+                display: none;
+            }
+
+            .hero {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .section-card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                break-inside: avoid;
+            }
+
+            .section-card[open] summary::after,
+            .section-card summary::after {
+                display: none;
+            }
+
+            details {
+                display: block !important;
+            }
+
+            details > summary {
+                display: block !important;
+            }
+
+            details > .section-card__content {
+                display: block !important;
+            }
+
+            .callout-warning,
+            .callout-insight {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            h3 {
+                page-break-after: avoid;
+            }
+
+            table {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <header class="hero">
+            <span class="hero__badge">컨설팅 특급보고서</span>
+            <h1 class="hero__title">고객의 안정된 미래를 위한 재무안전망 구축</h1>
+            <p class="hero__subtitle">30대 맞벌이 부부 | 건강할 때 완성하는 완전 포트폴리오</p>
+            <p class="hero__org">㈜한국FP센터 KFPC Co., Ltd.</p>
+            <p class="hero__date">2026년 2월 최신판</p>
+        </header>
+
+        <nav class="toc-container" aria-label="목차">
+            <button class="toc-toggle" aria-expanded="false" aria-controls="toc-list">
+                <span>목차 보기</span>
+                <svg class="toc-toggle__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+            <ul id="toc-list" class="toc-list" role="list">
+                <li class="toc-list__item"><a class="toc-list__link" href="#intro">★ 자료 읽기에 앞서</a></li>
+                <li class="toc-list__item"><a class="toc-list__link" href="#section1">Ⅰ. 고객 프로필 및 재무상황 분석</a></li>
+                <li class="toc-list__item"><a class="toc-list__link" href="#section2">Ⅱ. 제안서 요약 (Executive Summary)</a></li>
+                <li class="toc-list__item"><a class="toc-list__link" href="#section3">Ⅲ. 재무·보장자산 정밀 진단</a></li>
+                <li class="toc-list__item"><a class="toc-list__link" href="#section4">Ⅳ. 맞춤형 솔루션 제안</a></li>
+                <li class="toc-list__item"><a class="toc-list__link" href="#section5">Ⅴ. 기대 효과</a></li>
+                <li class="toc-list__item"><a class="toc-list__link" href="#section6">Ⅵ. 종합 제언 및 다음 단계</a></li>
+                <li class="toc-list__item"><a class="toc-list__link" href="#section7">Ⅶ. 컨설팅 시나리오</a></li>
+                <li class="toc-list__item"><a class="toc-list__link" href="#section8">Ⅷ. 부록</a></li>
+            </ul>
+        </nav>
+
+        <!-- ★ 자료 읽기에 앞서 -->
+        <section class="intro-box" id="intro">
+            <h2 class="intro-box__title">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                    <path d="M2 17l10 5 10-5"></path>
+                    <path d="M2 12l10 5 10-5"></path>
+                </svg>
+                ★ 자료 읽기에 앞서
+            </h2>
+            <p>본 보고서는 대한민국 경제의 허리이자 가장 활발한 경제활동을 수행하는 30대 맞벌이 부부를 대상으로 합니다. 30대는 상대적으로 건강 지표가 양호하여 보험의 필요성을 간과하기 쉬우나, 금융 공학적 관점에서 보면 '가장 적은 비용으로 가장 큰 보장 자산'을 확보할 수 있는 시기입니다.</p>
+            <p>현재 많은 30대가 부모님으로부터 물려받았거나 사회 초년생 시절 가입한 '갱신형 특약' 중심의 보험을 보유하고 있습니다. 이는 당장의 보험료는 저렴해 보이지만, 소득이 단절되는 은퇴 이후 보험료가 급격히 상승하여 정작 보장이 필요한 시기에 계약을 유지하지 못하는 '재무적 변동성 리스크'를 내포할 수 있습니다.</p>
+            <p>본 컨설팅은 이러한 리스크를 선제적으로 검토하고, 비갱신형과 무해지환급형 구조의 결합을 통해 '보험료 고정 및 총비용 효율화'를 달성하는 방향을 제안합니다. 단, 아래 모든 제안 내용은 고객의 개별 상황에 따라 달라질 수 있으므로, 담당 전문가와의 충분한 협의 후 실행을 권장합니다.</p>
+
+            <div class="callout-warning" style="margin-top: 16px;">
+                <p class="callout__title">중요 안내</p>
+                <ul>
+                    <li>본 보고서는 재무 컨설팅 참고용으로 제작된 자료입니다.</li>
+                    <li>보고서 내 모든 수치·시뮬레이션·법령 정보는 예시 또는 일반적 기준이며, 실제 계약·세무·법적 판단은 반드시 해당 분야 전문가(보험전문가, 세무사, 법무사 등)와 협의 후 진행하시기 바랍니다.</li>
+                    <li>특히 세액공제 적용 여부, 면책기간, 보험료 수준 등은 개인별 상황에 따라 달라질 수 있습니다.</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- I. 고객 프로필 및 재무상황 분석 -->
+        <details class="section-card" id="section1" open>
+            <summary>Ⅰ. 고객 프로필 및 재무상황 분석 (Client Discovery)</summary>
+            <div class="section-card__content">
+                <h3>1. 고객 프로필</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>남편 (A씨)</th>
+                                <th>아내 (B씨)</th>
+                                <th>비고</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>연령/직업</td>
+                                <td>34세 / IT 대기업 과장</td>
+                                <td>32세 / 외국계 기업 대리</td>
+                                <td>맞벌이 가구</td>
+                            </tr>
+                            <tr>
+                                <td>라이프스타일</td>
+                                <td>주말 등산, 건강 양호</td>
+                                <td>요가·식단 관리, 건강 관심 높음</td>
+                                <td>자녀 1명(2세)</td>
+                            </tr>
+                            <tr>
+                                <td>핵심 고민</td>
+                                <td>대출 상환 및 자녀 교육비 마련</td>
+                                <td>노후 준비 및 갑작스러운 질병 대비</td>
+                                <td>기존 보험 적정성 의문</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>2. 재무 현황 분석 (월간 기준)</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>금액 (합계)</th>
+                                <th>세부 내용</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>합산 월 소득</td>
+                                <td>9,500,000원</td>
+                                <td>세후 실수령액 기준 (가상 사례)</td>
+                            </tr>
+                            <tr>
+                                <td>고정 지출</td>
+                                <td>4,200,000원</td>
+                                <td>주담대 원리금, 생활비, 보육비</td>
+                            </tr>
+                            <tr>
+                                <td>기존 보험료</td>
+                                <td>450,000원</td>
+                                <td>갱신형 특약 다수 포함 (남 25만, 여 20만)</td>
+                            </tr>
+                            <tr>
+                                <td>저축 및 투자</td>
+                                <td>3,500,000원</td>
+                                <td>ISA, 연금저축, 적립식 펀드 등</td>
+                            </tr>
+                            <tr>
+                                <td>잉여 자금</td>
+                                <td>1,350,000원</td>
+                                <td>비상금 및 여유 자금</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="note">※ 위 재무 현황은 가상의 사례를 기반으로 작성된 것으로, 실제 고객 상담 시에는 고객의 정확한 소득·지출 현황을 바탕으로 재산출하여 적용하시기 바랍니다. 합산 월 소득 950만 원은 해당 직군 상위 수준의 예시이며, 실제 고객 소득에 따라 잉여 자금·저축 비중이 달라질 수 있습니다.</p>
+
+                <h3>3. 생애주기별 핵심 리스크 진단</h3>
+                <ul>
+                    <li><strong>30~50대 (경제활동기):</strong> 사망 및 중대 질병 발생 시 소득 단절에 따른 가계 경제 붕괴 리스크.</li>
+                    <li><strong>60대 이후 (은퇴기):</strong> 소득은 없으나 노환으로 인한 의료비 급증 및 갱신형 보험료 부담 증가 리스크.</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- II. 제안서 요약 (Executive Summary) -->
+        <details class="section-card" id="section2">
+            <summary>Ⅱ. 제안서 요약 (Executive Summary)</summary>
+            <div class="section-card__content">
+                <h3>핵심 재무과제</h3>
+                <p>60대 이후에는 갱신 조건(연령 증가, 위험률/손해율 반영 등)에 따라 보험료가 큰 폭으로 상승할 수 있습니다. 상승 폭은 회사·상품·개인 조건에 따라 달라 가입 보험사 기준으로 확인이 필요합니다.</p>
+
+                <div class="callout-warning">
+                    <p class="callout__title">갱신형 보험료 인상 안내</p>
+                    <ul>
+                        <li>갱신형 보험료 인상 수준은 보험사별 손해율, 위험률, 연령 가산율에 따라 달라집니다.</li>
+                        <li>위 내용은 일반적인 경향을 설명한 것으로, 개인의 보험 계약 내용에 따라 차이가 있을 수 있습니다.</li>
+                        <li>실제 갱신 시 예상 보험료는 가입 보험사에 직접 확인하시기 바랍니다.</li>
+                    </ul>
+                </div>
+
+                <h3>솔루션 요약</h3>
+                <ul>
+                    <li><strong>정리:</strong> 효율성이 낮은 갱신형 특약 및 중복 보장 항목 정리.</li>
+                    <li><strong>구축:</strong> 3대 진단비(암, 뇌혈관질환, 심장질환) 및 수술비를 비갱신형(20년납 100세 만기)으로 재설계.</li>
+                    <li><strong>절감:</strong> 무해지환급형(저해지형) 상품 활용으로 보험료 효율 최적화 도모.</li>
+                </ul>
+
+                <div class="callout-warning">
+                    <p class="callout__title">무해지환급형 상품 핵심 유의사항</p>
+                    <ul>
+                        <li>납입 기간 중 해지 시 환급금이 없거나 매우 적어, 중도 해지 시 납입 보험료 대비 큰 손실이 발생할 수 있습니다.</li>
+                        <li>상품에 따라 무해지(해지환급금 0%) 또는 저해지(해지환급금 50% 수준 등) 구조가 다르므로 반드시 약관 확인이 필요합니다.</li>
+                        <li>본 상품 유형은 납입 완료까지 유지 가능한 고객에게 적합하며, 재정 상황 변화로 중도 해지 가능성이 있는 경우에는 표준형 상품과 비교 검토가 필요합니다.</li>
+                        <li>(참고 근거: 보험업법 제95조의2 제3항·제4항(설명의무 관련) – 보험 계약 체결 시 중요 사항 설명 의무 규정)</li>
+                    </ul>
+                </div>
+
+                <h3>기대 변화</h3>
+                <ul>
+                    <li><strong>정량적:</strong> 비갱신형 특약의 납입 종료 후 해당 특약 보험료 부담 없음. 단, 실손보험 등 갱신형 담보는 별도 인상될 수 있음. 세부 절감 효과는 시뮬레이션 참조.</li>
+                    <li><strong>정성적:</strong> 은퇴 후 비갱신형 보장에 대한 보험료 변동 걱정 없이 100세까지 의료 서비스 혜택 유지 가능.</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- III. 재무·보장자산 정밀 진단 -->
+        <details class="section-card" id="section3">
+            <summary>Ⅲ. 재무·보장자산 정밀 진단 (In-depth Diagnosis)</summary>
+            <div class="section-card__content">
+                <h3>1. 기가입 보험 평가</h3>
+
+                <h4>▶ 긍정적 요소</h4>
+                <ul>
+                    <li>실손의료비(4세대) 가입으로 기초 의료비 안전망 확보.</li>
+                </ul>
+
+                <h4>▶ 조정 필요 요소</h4>
+                <ul>
+                    <li>암·뇌·심장 관련 핵심 진단비가 '3년/5년 갱신형'으로 구성되어 있어, 연령 가산율 상승에 따라 보험료 부담이 누적적으로 증가하는 구조.</li>
+                </ul>
+
+                <h4>▶ 부족한 요소</h4>
+                <ul>
+                    <li>뇌혈관/허혈성 심장질환 등 광범위한 보장 범위 미흡.</li>
+                    <li>질병후유장해(3%~) 담보 부재.</li>
+                </ul>
+
+                <h3>2. 보장 갭(Gap) 진단</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>보장 항목</th>
+                                <th>현 수준</th>
+                                <th>필요 수준(제안)</th>
+                                <th>보장 갭(Gap)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>암 진단비</td>
+                                <td>3,000만 원 (갱신)</td>
+                                <td>5,000만 원 (비갱신)</td>
+                                <td><span class="hl-pink">+2,000만 원 및 구조변경</span></td>
+                            </tr>
+                            <tr>
+                                <td>뇌혈관 질환</td>
+                                <td>1,000만 원 (갱신)</td>
+                                <td>3,000만 원 (비갱신)</td>
+                                <td><span class="hl-pink">+2,000만 원 및 범위확대</span></td>
+                            </tr>
+                            <tr>
+                                <td>심장 질환</td>
+                                <td>1,000만 원 (갱신)</td>
+                                <td>3,000만 원 (비갱신)</td>
+                                <td><span class="hl-pink">+2,000만 원 및 범위확대</span></td>
+                            </tr>
+                            <tr>
+                                <td>수술비</td>
+                                <td>미가입 또는 불명확</td>
+                                <td>약관상 수술 분류표 기준 설계</td>
+                                <td><span class="hl-pink">신규 확보 필요</span></td>
+                            </tr>
+                            <tr>
+                                <td>질병후유장해</td>
+                                <td>0원</td>
+                                <td>3,000만 원</td>
+                                <td><span class="hl-pink">+3,000만 원 신규 확보</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="note">※ 수술비 지급 기준 및 금액은 보험상품별 약관의 '수술 분류표'에 따라 결정됩니다. 수술 종류(1종~5종, 1종~8종 등)에 따라 지급 금액이 상이하므로, 가입 전 담당 컨설턴트를 통해 상품별 수술 분류 기준을 반드시 확인하시기 바랍니다.</p>
+                <p class="note">※ 위 '필요 수준'은 일반적인 설계 가이드라인이며, 실제 적정 보장 금액은 고객의 소득·자산·가족 상황에 따라 다를 수 있습니다.</p>
+            </div>
+        </details>
+
+        <!-- IV. 맞춤형 솔루션 제안 -->
+        <details class="section-card" id="section4">
+            <summary>Ⅳ. 맞춤형 솔루션 제안 (Customized Solution)</summary>
+            <div class="section-card__content">
+                <h3>1. 설계 방향 및 원칙</h3>
+
+                <div class="solution-cards">
+                    <div class="solution-card solution-card--navy">
+                        <div class="solution-card__header">원칙 1: 비갱신형 – 확정 비용 시스템 구축</div>
+                        <div class="solution-card__body">
+                            <div class="solution-card__row">
+                                <div class="solution-card__label">핵심</div>
+                                <div class="solution-card__value">경제활동기에 보험료 납입을 종료하고, 노후에는 보장만 받는 구조. 이는 변동금리 대출을 고정금리로 대환하는 전략과 동일한 원리로, 미래 비용을 현시점에 고정하는 재무 설계 기법입니다.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="solution-card solution-card--slate">
+                        <div class="solution-card__header">원칙 2: 무해지환급형 – 보험료 효율 극대화</div>
+                        <div class="solution-card__body">
+                            <div class="solution-card__row">
+                                <div class="solution-card__label">핵심</div>
+                                <div class="solution-card__value">납입 기간 중 해지 환급금을 포기하는 대신 보험료를 절감하는 구조. 납입 완료까지 유지 가능한 고객에게 적합합니다. 납입 중 해지 시 환급금이 없거나 매우 적을 수 있으므로, 가입 전 약관을 충분히 확인하고 유지 가능성을 신중히 검토해야 합니다.</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="solution-card solution-card--teal">
+                        <div class="solution-card__header">원칙 3: 입체적 보장 체계</div>
+                        <div class="solution-card__body">
+                            <div class="solution-card__row">
+                                <div class="solution-card__label">핵심</div>
+                                <div class="solution-card__value">'진단 → 수술 → 후유장해'로 이어지는 단계별 보장 체계 구축.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>2. 최종 제안 설계안 (부부 합산 기준)</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>항목</th>
+                                <th>상세 내용</th>
+                                <th>전문가 의견</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>납입/보장 기간</td>
+                                <td>20년납 / 100세 만기 (비갱신)</td>
+                                <td>은퇴 전 보험료 납입 완료 구조</td>
+                            </tr>
+                            <tr>
+                                <td>주요 보장 (예시 기준)</td>
+                                <td>암 5,000만 원, 뇌혈관질환 3,000만 원, 허혈성 심장질환 3,000만 원, 수술비(약관 수술 분류표 기준), 질병후유장해 3,000만 원</td>
+                                <td>실제 보장 금액은 가입 상품 및 약관에 따라 상이할 수 있으므로 담당 컨설턴트 확인 필수</td>
+                            </tr>
+                            <tr>
+                                <td>상품 유형</td>
+                                <td>무해지환급형 (표준형 대비 약 10~30% 수준 보험료 절감, 상품 및 납입 기간에 따라 상이)<br><span class="hl-pink">※ 납입 중 해지 시 환급금 없거나 매우 적음 → 가입 전 약관 확인 필수</span></td>
+                                <td>장기 유지 시 보험료 효율 우수. 중도 해지 가능성 있는 경우 표준형과 비교 검토 권장</td>
+                            </tr>
+                            <tr>
+                                <td>월 제안 보험료 (예시)</td>
+                                <td>합산 약 280,000원</td>
+                                <td><span class="hl-green">기존 45만 원 대비 약 17만 원 절감</span> (실제 보험료는 가입 상품·건강 상태에 따라 달라질 수 있음)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>3. 제안 이유 (Rationale)</h3>
+                <p>현재 고객님의 연령대(30대 초중반)는 보험사가 산출하는 위험률이 가장 낮은 시기입니다. 이는 금융 공학적으로 변동금리 대출을 고정금리로 대환하는 전략과 동일한 원리입니다. 지금 비갱신형으로 계약을 고정해두면, 향후 의료 인플레이션이나 위험률 상승과 관계없이 현재의 보험료로 보장을 유지할 수 있습니다.</p>
+
+                <div class="quote-block">
+                    <p>무해지환급형은 보험 유지 의지가 확고한 젊은 부부에게 유리한 구조이나, 납입 기간 중 해지 시 환급금이 없거나 매우 적다는 점을 충분히 이해하고 가입해야 합니다. 개별 상황에 따른 적합성 여부는 담당 컨설턴트와 충분히 상담 후 결정하시기 바랍니다.</p>
+                </div>
+            </div>
+        </details>
+
+        <!-- V. 기대 효과 -->
+        <details class="section-card" id="section5">
+            <summary>Ⅴ. 기대 효과 (Expected Effects)</summary>
+            <div class="section-card__content">
+                <h3>1. Before &amp; After 보험료 시뮬레이션 (총액 기준)</h3>
+
+                <div class="callout-warning">
+                    <p class="callout__title">시뮬레이션 전제 조건 및 필수 주의사항</p>
+                    <ul>
+                        <li>기존 유지 시: 현재 월 보험료 450,000원을 기준으로 연령 가산율 시나리오에 따라 산출한 참고용 예상치입니다.</li>
+                        <li>제안 솔루션: 월 280,000원 × 12개월 × 20년 = 67,200,000원 (비갱신형 납입분 기준 확정액).</li>
+                        <li>아래 수치는 단순 누적 보험료 명목가치 기준 비교로, 화폐의 시간가치(현재가치)를 반영하지 않았습니다.</li>
+                        <li>갱신형과 비갱신형은 납입 기간·보장 범위 구조가 다르므로 단순 수치 비교는 참고용으로만 활용하시기 바랍니다.</li>
+                        <li>실제 갱신형 보험료 인상률은 보험사 손해율·위험률에 따라 달라지므로 아래 수치는 예상치임을 반드시 인지하십시오.</li>
+                        <li>갱신형 보험료는 연평균 균등 인상이 아닌, 갱신 시점(3년 또는 5년 주기)마다 집중적으로 인상되는 비선형 구조입니다. 실제 상담 시에는 갱신 시점의 보험료 급등 효과를 고객에게 별도로 설명하는 것이 효과적입니다.</li>
+                        <li>본 시뮬레이션의 절감 효과는 특정 결과를 보장하지 않으며, 실제 계약 진행 전 보험사 및 담당 전문가와 재확인이 필요합니다.</li>
+                    </ul>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>구분</th>
+                                <th>보수적 시나리오<br>(연 3% 인상 가정)</th>
+                                <th>중립적 시나리오<br>(연 5% 인상 가정)</th>
+                                <th>적극적 시나리오<br>(연 7% 인상 가정)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>기존 유지 시<br>(갱신형, 80세까지 – 참고용 예상치)</td>
+                                <td>약 1억 1,000만 원 (예상)</td>
+                                <td>약 1억 8,000만 원 (예상)</td>
+                                <td>약 2억 7,000만 원 (예상)</td>
+                            </tr>
+                            <tr>
+                                <td>제안 솔루션<br>(비갱신, 20년 납 – 확정액)</td>
+                                <td><span class="hl-green">6,720만 원 (확정)</span></td>
+                                <td><span class="hl-green">6,720만 원 (확정)</span></td>
+                                <td><span class="hl-green">6,720만 원 (확정)</span></td>
+                            </tr>
+                            <tr>
+                                <td>단순 누적 차액<br>(명목가치 기준, 참고용)</td>
+                                <td>약 4,280만 원</td>
+                                <td>약 1억 1,280만 원</td>
+                                <td>약 2억 280만 원</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="note">※ 비갱신형 특약의 납입 종료 후 해당 특약에 한해 추가 보험료 부담이 없습니다. 단, 실손보험 등 갱신형 담보는 구조상 갱신이 불가피하므로 별도 인상될 수 있습니다.</p>
+                <p class="note">※ 보장 금액의 실질 가치 유지를 위해 5~10년 주기의 정기적 보장 리뷰를 권장합니다.</p>
+                <p class="note">※ 위 차액 수치는 단순 참고용이며, 실제 절감 효과는 개별 계약 조건에 따라 달라집니다.</p>
+
+                <h3>2. 심리적 변화</h3>
+                <ul>
+                    <li><strong>안정감:</strong> 비갱신형 전환으로 보험료 변동에 대한 재무적 예측 가능성을 확보하고, 노후 보험료 부담 없이 생활할 수 있는 기반 마련.</li>
+                    <li><strong>성취감:</strong> '건강 리스크'에 대한 선제적 관리를 완료했다는 재무적 자신감 및 가족 보호에 대한 책임감 완수.</li>
+                </ul>
+            </div>
+        </details>
+
+        <!-- VI. 종합 제언 및 다음 단계 -->
+        <details class="section-card" id="section6">
+            <summary>Ⅵ. 종합 제언 및 다음 단계 (Final Recommendation)</summary>
+            <div class="section-card__content">
+                <h3>전문가 최종 의견</h3>
+
+                <div class="quote-block">
+                    <p>보험은 미래의 불행을 사는 것이 아니라, 미래의 행복을 지키기 위한 비용을 효율적으로 설계하는 것입니다. 30대인 지금이 고객님 인생에서 가장 효율적으로 재무안전망을 구축할 수 있는 적합한 시점 중 하나입니다. 내일이면 보험료는 오를 수 있고, 건강 상태에 따라 보장 조건이 달라질 수 있습니다. 오늘의 검토와 결단이 30년 후 고객님의 노후를 지키는 현명한 선택의 출발점이 될 것입니다.</p>
+                </div>
+
+                <div class="callout-insight">
+                    <p class="callout__title">핵심 메시지</p>
+                    <p>단, 본 보고서의 모든 제안은 일반적인 가이드라인이며, 최종 실행 전 반드시 담당 전문가와 충분한 협의를 거쳐 진행하시기 바랍니다.</p>
+                </div>
+
+                <h3>실행 플랜</h3>
+                <div class="track-list">
+                    <div class="track-item">
+                        <div class="track-item__badge">Step 1</div>
+                        <div class="track-item__content">
+                            <p class="track-item__title">기존 계약 정리 (약 3~5일)</p>
+                            <p class="track-item__desc">불필요한 갱신형 특약 삭제 및 해지 여부 최종 결정. 현재 보험 포트폴리오 전수 분석 후 유지·정리 판단. ※ 해지 전 해지환급금·보장 공백 확인 필수</p>
+                        </div>
+                    </div>
+                    <div class="track-item">
+                        <div class="track-item__badge">Step 2</div>
+                        <div class="track-item__content">
+                            <p class="track-item__title">신규 청약 및 승인 (통상 1~2주, 심사 결과에 따라 연장 가능)</p>
+                            <p class="track-item__desc">건강 검진 결과 활용 또는 간편 고지를 통한 승인 진행. ※ 병력 고지 내용에 따라 추가 서류 제출 또는 승인 거절 가능성 있음. 담당 컨설턴트와 사전 협의 권장</p>
+                        </div>
+                    </div>
+                    <div class="track-item">
+                        <div class="track-item__badge">Step 3</div>
+                        <div class="track-item__content">
+                            <p class="track-item__title">사후 관리 (매년 1회)</p>
+                            <p class="track-item__desc">매년 1회 재무 현황 점검. 5~10년 주기 보장 내용 리뷰 권장. 세액공제 요건 해당 시 연말정산 활용 안내. ※ 세액공제 적용 여부는 개인 소득·계약 구조에 따라 상이. 반드시 세무사 등 전문가 확인 후 적용</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <!-- VII. 컨설팅 시나리오 -->
+        <details class="section-card" id="section7">
+            <summary>Ⅶ. 컨설팅 시나리오 (Consulting Scenarios)</summary>
+            <div class="section-card__content">
+                <h3>▶ 상담주제: 30대, 갱신형 보험의 재무적 변동성 리스크를 선제적으로 제거하라</h3>
+
+                <h4>실무상담 스크립트</h4>
+
+                <p class="note">※ 아래 스크립트는 참고용 예시입니다. 실제 상담 시에는 고객의 상황에 맞게 내용을 조정하여 활용하시기 바랍니다.</p>
+
+                <div class="scenario-box">
+                    <p class="scenario-box__label">(1) 시작</p>
+                    <p class="scenario-box__text">두 분, 최근 물가상승률 체감하시죠? 그런데 소득보다 더 빠르게 늘어날 수 있는 비용이 하나 있습니다. 바로 나이가 들수록 커지는 갱신형 보험료의 재무적 부담입니다.</p>
+                </div>
+
+                <div class="scenario-box">
+                    <p class="scenario-box__label">(2) 문제 인식</p>
+                    <p class="scenario-box__text">지금 내시는 보험료가 45만 원인데, 20년 뒤에도 같은 금액일까요? 갱신형 특약은 연령 가산율과 손해율에 따라 보험료가 오르는 구조입니다. 업계 통계 및 연령별 위험률 추이를 바탕으로 보면, 60대 이후에는 현재 대비 수배 이상의 보험료 인상 가능성이 상존할 수 있습니다. 실제 인상 수준은 보험사별로 다를 수 있으며, 가입 보험사에 직접 확인하시는 것이 정확합니다. 정작 보장이 가장 필요한 시기에 비용 예측이 어려운 구조로 인해 계약 유지에 부담이 생길 수 있습니다. 이것이 갱신형 보험 구조가 가진 '재무적 변동성 리스크'입니다.</p>
+                </div>
+
+                <div class="scenario-box">
+                    <p class="scenario-box__label">(3) 솔루션 제시</p>
+                    <p class="scenario-box__text">방법은 명확합니다. 지금 가장 건강하고 젊을 때, 비갱신형으로 전환하여 '확정 비용 시스템'을 구축하는 것입니다. 이는 변동금리 대출을 고정금리로 대환하는 전략과 동일한 원리로, 미래의 불확실한 비용을 현시점에 고정하는 재무 설계입니다. 비갱신형으로 전환하면 20년 납입 후 보험료가 종료됩니다. 여기에 무해지환급형 상품을 활용하면 표준형 대비 약 10~30% 수준의 보험료 절감 효과를 기대할 수 있습니다. 단, 납입 기간 중 해지 시 환급금이 없거나 매우 적으므로, 납입 완료까지 유지 가능한 분들에게 적합합니다. 실제 절감율과 보험료는 가입 상품 및 개인 조건에 따라 다를 수 있으니 담당 컨설턴트를 통해 정확한 내용을 확인하시기 바랍니다.</p>
+                </div>
+
+                <div class="scenario-box">
+                    <p class="scenario-box__label">(4) 동의 유도</p>
+                    <p class="scenario-box__text">두 분의 잉여 자금 135만 원 중 일부를 활용하셔도, 미래의 잠재적인 보험료 급등 리스크를 선제적으로 검토하고 대비할 수 있습니다. 건강하실 때 이 '재무적 안전망'의 방향을 설계해두는 것이 현명한 선택입니다. 실제 보험료와 보장 내용은 상품에 따라 다를 수 있으니, 담당 컨설턴트와 함께 고객님 상황에 맞는 맞춤 설계를 검토해 보시는 것은 어떨까요?</p>
+                </div>
+            </div>
+        </details>
+
+        <!-- VIII. 부록 -->
+        <details class="section-card" id="section8">
+            <summary>Ⅷ. 부록 (Appendix)</summary>
+            <div class="section-card__content">
+                <h3>1. 전문용어 설명</h3>
+                <ul>
+                    <li><strong>비갱신형:</strong> 가입 시 정해진 보험료를 납입 기간 내내 동일하게 납부하는 방식. 납입 기간 종료 후 보험료 추가 납입 없이 만기까지 보장 유지.</li>
+                    <li><strong>무해지환급형:</strong> 납입 기간 중 해지 시 환급금이 없거나 매우 적은(0% 또는 50% 수준 등 상품마다 상이) 대신 보험료가 표준형보다 저렴한 상품. 납입 완료 후에는 표준형과 유사하거나 높은 환급률을 보이는 경우도 있으나, 상품별로 차이가 있으므로 약관 확인이 필요합니다.</li>
+                    <li><strong>3대 진단비:</strong> 한국인 사망 원인 상위권인 암, 뇌혈관질환, 심장질환 진단 시 지급되는 보험금.</li>
+                    <li><strong>수술비:</strong> 보험상품별 약관의 수술 분류표에 따라 지급 금액이 다름. 수술 종류(1종~5종, 또는 1종~8종 등)에 따라 보험금이 상이하므로, 반드시 해당 상품 약관의 수술 분류표 확인 필요.</li>
+                </ul>
+
+                <h3>2. 주요 유의사항 – 면책 및 지급제한</h3>
+                <div class="callout-warning">
+                    <p class="callout__title">면책기간 및 감액 지급 안내 (반드시 확인 후 활용)</p>
+                    <ul>
+                        <li>암의 경우 일반적으로 가입 후 90일의 면책기간이 적용되는 경우가 많으며, 일정 기간 이내 진단 시 보험금의 일부만 지급(감액 지급)하는 경우도 있습니다.</li>
+                        <li>뇌혈관질환·심장질환의 경우 면책기간 없이 보장하는 상품도 있으나, 상품에 따라 다를 수 있습니다.</li>
+                        <li>면책기간, 감액기간, 지급제한 사유는 보험회사 및 상품별로 상이합니다.</li>
+                        <li>반드시 해당 상품 약관의 '보험금을 지급하지 않는 사유' 및 '보험금 삭감 지급 조항'을 확인하시기 바랍니다.</li>
+                    </ul>
+                </div>
+                <p class="note">※ 위 내용은 일반적인 사례를 안내한 것이며, 정확한 내용은 해당 보험사 및 약관을 통해 반드시 재확인하십시오. (참고 근거: 보험업법 제95조의2 제3항·제4항(설명의무 관련) – 지급 제한 조건 및 면책 사항 설명 의무)</p>
+
+                <h3>3. FAQ</h3>
+                <div class="faq-item">
+                    <p class="faq-item__q">Q1. 무해지환급형은 나중에 돈을 하나도 못 받나요?</p>
+                    <p class="faq-item__a">A: '납입 기간 중'에는 해지 환급금이 없거나 매우 적습니다(상품에 따라 0% 또는 50% 수준). 납입이 완료된 후에는 표준형과 유사하거나 높은 환급률을 보이는 경우도 있어 장기 유지 시 유리할 수 있습니다. 그러나 상품마다 구조가 상이하므로 가입 전 약관을 반드시 확인하고, 담당 컨설턴트와 비교 검토하시기 바랍니다.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-item__q">Q2. 갱신형 보험이 무조건 나쁜가요?</p>
+                    <p class="faq-item__a">A: 아닙니다. 단기적으로 큰 보장이 필요한 경우(예: 자녀가 성인이 될 때까지의 가장 유고 시 대비)에는 갱신형이 효율적일 수 있습니다. 평생 의료비 대비를 목적으로 한다면 비갱신형 구조가 원칙적으로 유리하나, 개인의 재정 상황과 목적에 따라 최적 구조가 달라질 수 있습니다. 담당 컨설턴트와 비교 분석 후 결정하시기 바랍니다.</p>
+                </div>
+                <div class="faq-item">
+                    <p class="faq-item__q">Q3. 보험료 세액공제는 어떻게 받나요?</p>
+                    <p class="faq-item__a">A: 보장성 보험료 납입액은 연 100만 원 한도 내에서 납입액의 12%를 세액공제 받을 수 있습니다. 단, 아래 요건과 주의사항을 반드시 확인하셔야 하며, 개인별 상황에 따라 적용 여부가 달라질 수 있으므로 세무사 등 전문가와 반드시 상담 후 적용하시기 바랍니다.</p>
+                </div>
+
+                <div class="callout-insight">
+                    <p class="callout__title">세액공제 법적 근거 및 주의사항</p>
+                    <p><strong>【적용 법령】</strong> 소득세법 제59조의4 제1항 제2호 (일반 보장성보험료 – 12% 공제율 적용) ※ 제1항 제1호는 장애인전용보험(15% 공제율)으로 본 보고서 대상과 다른 조항입니다. (출처: 법제처 www.law.go.kr, 2025.01 기준 – 적용 전 최신 개정 여부 확인 필수)</p>
+                </div>
+
+                <div class="callout-warning">
+                    <p class="callout__title">세액공제 공제 요건 및 맞벌이 부부 주의사항</p>
+                    <ul>
+                        <li>근로소득이 있는 거주자가 기본공제대상자를 피보험자로 하는 보장성 보험의 보험료를 납입한 경우에 한합니다.</li>
+                        <li>기본공제대상자 요건: 연간 소득금액 100만 원 이하 (근로소득만 있는 경우 총급여 500만 원 이하인 자에 한함)</li>
+                        <li>계약자와 피보험자는 근로자이거나 근로자의 기본공제대상자여야 합니다.</li>
+                        <li>소득이 없는 기본공제대상자가 계약자인 경우에도 근로자가 실질적으로 보험료를 부담하면 공제 가능합니다.</li>
+                        <li><strong>맞벌이 부부 핵심:</strong> 맞벌이 부부는 배우자의 연간 소득이 100만 원을 초과하는 경우, 상호 간 기본공제대상자 요건을 충족하지 못합니다. 따라서 배우자를 피보험자로 하는 보험계약의 보험료는 원칙적으로 세액공제 대상에서 제외됩니다.</li>
+                        <li>단, 계약자·피보험자 구조 및 실질 납부자 요건에 따라 공제 가능 여부가 달라질 수 있으므로, 반드시 개별 계약 구조를 세무사 등 전문가와 확인하시기 바랍니다.</li>
+                        <li>세액공제 가능한 경우: 본인 명의 계약, 또는 소득 요건을 충족하는 부양가족(자녀 등 기본공제대상자)을 피보험자로 하는 계약에 한합니다.</li>
+                        <li>맞벌이 부부의 경우, 배우자가 기본공제대상자가 아니라면 배우자를 피보험자로 한 보장성보험료는 원칙적으로 공제 대상에서 제외될 수 있습니다. 다만 자녀 등 기본공제대상자를 피보험자로 한 보장성보험료는 계약 구조(계약자/피보험자) 및 실질 납부자 요건에 따라 공제 가능하므로, 최종 적용 여부는 회사·상품 약관 및 연말정산 기준으로 확인하시기 바랍니다.</li>
+                    </ul>
+                </div>
+                <p class="note">⚠️ 법적·세무적 해석 필요: 개인별 소득, 계약 구조, 부양가족 상황에 따라 세액공제 적용 여부가 달라질 수 있습니다. 반드시 세무사 등 전문가와 상담 후 적용하시기 바랍니다. 위 법령 조항은 2025년 1월 기준이며, 실무 적용 전 최신 개정 여부를 확인하십시오.</p>
+
+                <h3>4. 관련 법규 및 근거 조항</h3>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>법규</th>
+                                <th>조항</th>
+                                <th>주요 내용</th>
+                                <th>실무 주의사항</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>소득세법</td>
+                                <td>제59조의4 제1항 제2호 (2025.01 기준) ※ 제1호는 장애인전용보험(15%), 제2호가 일반 보장성보험(12%)</td>
+                                <td>근로소득자가 기본공제대상자를 피보험자로 하는 일반 보장성 보험료 납입 시 연 100만 원 한도, 12% 세액공제. (장애인전용보험은 제1호, 15% 공제율 별도 적용)</td>
+                                <td>맞벌이 배우자는 소득 요건 미충족 시 기본공제대상자 해당 안 됨. 계약자·피보험자 구조 확인 및 세무사 상담 필수</td>
+                            </tr>
+                            <tr>
+                                <td>보험업법</td>
+                                <td>제95조의2 (설명의무 관련) (제3항·제4항)</td>
+                                <td>보험계약 체결 시 보험금 지급 제한 조건, 면책사항 등 중요 사항을 계약자에게 설명할 의무</td>
+                                <td>면책·감액 조항 반드시 설명 및 약관 전달 필요</td>
+                            </tr>
+                            <tr>
+                                <td>보험업법</td>
+                                <td>제95조 (보험안내자료)</td>
+                                <td>모집에 사용하는 보험안내자료의 기재사항(보험회사명, 보장내용, 권리·의무 주요사항 등) 및 정확성 의무 규정</td>
+                                <td>본 보고서는 공식 보험안내자료가 아닌 참고용임을 명시</td>
+                            </tr>
+                            <tr>
+                                <td>보험업법</td>
+                                <td>제96조 (통신수단을 이용한 모집·철회·해지 관련 준수사항)</td>
+                                <td>전화·우편·컴퓨터통신 등 통신수단을 이용한 보험모집 시 준수사항 규정</td>
+                                <td>통신 모집 시 해당 조항 준수 필수</td>
+                            </tr>
+                            <tr>
+                                <td>금융소비자보호법</td>
+                                <td>제19조(설명의무) 제20조(불공정영업행위 금지) 제21조(부당권유행위 금지)</td>
+                                <td>보험 모집 시 금소법과 보험업법 중첩 적용. 자극적·단정적 허위 과장 표현 금지, 소비자 오인 방지 의무. ※ 부당권유 금지는 제21조(제20조는 불공정영업행위 금지)</td>
+                                <td>보험료 인상 수치 단정 표현, 절감 효과 보장 표현 금지. 금소법·보험업법 중첩 적용 유의</td>
+                            </tr>
+                            <tr>
+                                <td>보험 표준약관</td>
+                                <td>면책·감액 조항</td>
+                                <td>보험금 지급 제한 사유, 면책기간, 감액 지급 기준은 상품별 약관에 따름</td>
+                                <td>상품마다 다를 수 있으므로 반드시 약관 직접 확인 필요</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="note">※ 위 법령 조항은 2025년 1월 기준이며, 법령 개정 시 내용이 변경될 수 있습니다. 실무 적용 전 법제처(www.law.go.kr) 및 금융감독원(www.fss.or.kr)을 통해 최신 규정을 반드시 확인하시기 바랍니다.</p>
+                <p class="note">※ 본 보고서에 기재된 법령 내용은 일반적인 참고 목적이며, 구체적인 법적 판단이 필요한 경우 반드시 법무사, 변호사, 세무사 등 해당 전문가와 협의하시기 바랍니다.</p>
+
+                <div class="disclaimer">
+                    <p><strong>【면책 고지】</strong></p>
+                    <p>본 보고서는 '이너서클 멤버십'과 '컨설턴트 홈페이지' 이용회원의 원활한 영업활동 지원을 목적으로, 가상의 사례(회사·개인 등의 정보)를 설정하여 인공지능을 통해 제작된 참고용 자료입니다. AI는 오류를 포함할 수 있으므로, 실무 사용 시 세법을 포함한 모든 규정·제도는 반드시 분야별 전문가(보험전문가·세무사·법무사 등)와 충분히 상담하신 후 진행하시기 바랍니다. 본 자료의 사용에 따라 발생하는 문제에 대하여 제작처는 책임을 지지 않습니다.</p>
+                </div>
+            </div>
+        </details>
+
+        <footer>
+            <p class="footer__contact">이용문의_박신제 본부장 010-5244-1467</p>
+            <p class="footer__copyright">제작_(주)한국FP센터 All Rights Reserved</p>
+        </footer>
+    </main>
+
+    <script>
+        // TOC Toggle
+        const tocContainer = document.querySelector('.toc-container');
+        const tocToggle = document.querySelector('.toc-toggle');
+        
+        tocToggle.addEventListener('click', () => {
+            const isOpen = tocContainer.classList.toggle('is-open');
+            tocToggle.setAttribute('aria-expanded', isOpen);
+        });
+
+        // Close TOC when clicking a link
+        document.querySelectorAll('.toc-list__link').forEach(link => {
+            link.addEventListener('click', () => {
+                tocContainer.classList.remove('is-open');
+                tocToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    </script>
+</body>
+</html>
