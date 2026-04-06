@@ -98,12 +98,12 @@
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <button onclick="showArchive()" class="hidden sm:flex items-center gap-2 bg-slate-800 border border-slate-700 text-amber-500 hover:text-white hover:border-amber-500 px-5 py-2 rounded-full transition-all text-sm font-bold shadow-sm">
-                        <i class="fas fa-folder-open"></i> 나만의 자료실
-                    </button>
-                    <button onclick="showArchive()" class="sm:hidden bg-slate-800 text-amber-500 border border-slate-700 w-10 h-10 rounded-full flex items-center justify-center">
-                        <i class="fas fa-folder-open"></i>
-                    </button>
+                    <a href="https://jarvia.co.kr/" target="_blank" class="hidden sm:flex items-center gap-2 bg-slate-800 border border-slate-700 text-amber-500 hover:text-white hover:border-amber-500 px-5 py-2 rounded-full transition-all text-sm font-bold shadow-sm">
+                        <i class="fas fa-external-link-alt"></i> JARVIA 사이트 바로가기
+                    </a>
+                    <a href="https://jarvia.co.kr/" target="_blank" class="sm:hidden bg-slate-800 text-amber-500 border border-slate-700 w-10 h-10 rounded-full flex items-center justify-center">
+                        <i class="fas fa-external-link-alt"></i>
+                    </a>
 <button onclick="openPwModal()" class="hidden sm:flex items-center gap-2 text-slate-500 hover:text-white transition-colors text-sm font-bold px-3">
                          <i class="fas fa-key"></i> 비번변경
                     </button>
@@ -161,30 +161,8 @@
                 </div>
             </div>
 
-            <!-- [NEW] 특급보고서 최신 링크 섹션 -->
-            <div id="special-report-box" class="hidden bg-gradient-to-r from-purple-950/80 to-slate-900/80 rounded-xl border border-purple-500/30 overflow-hidden relative transition-all duration-300 mb-6">
-                <div class="p-5">
-                    <div class="flex items-center justify-between gap-4">
-                        <div class="flex items-center gap-3">
-                            <div class="p-2 bg-purple-500/20 rounded-lg shrink-0">
-                                <i class="fas fa-file-signature text-purple-400 text-xl"></i>
-                            </div>
-                            <div>
-                                <div class="flex items-center gap-2 mb-1">
-                                    <span class="text-purple-400 text-xs font-bold uppercase tracking-wider">특급보고서</span>
-                                    <span class="bg-purple-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full animate-pulse">NEW</span>
-                                </div>
-                                <a id="special-report-link" href="#" target="_blank" class="text-white text-sm sm:text-base font-bold hover:text-purple-300 transition-colors cursor-pointer">
-                                    <span id="special-report-title">로딩 중...</span>
-                                </a>
-                            </div>
-                        </div>
-                        <a id="special-report-btn" href="#" target="_blank" class="shrink-0 bg-purple-600 hover:bg-purple-500 text-white text-xs font-bold px-4 py-2.5 rounded-lg shadow-md transition-all hover:scale-105 flex items-center gap-2">
-                            <span>바로가기</span> <i class="fas fa-external-link-alt"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
+
+
 
             <!-- [NEW] 이슈브리핑 최신 링크 섹션 -->
             <div id="issue-briefing-box" class="hidden bg-gradient-to-r from-blue-950/80 to-slate-900/80 rounded-xl border border-blue-500/30 overflow-hidden relative transition-all duration-300 mb-6">
@@ -254,9 +232,6 @@
                             <span>홈페이지 접속</span> <i class="fas fa-external-link-alt"></i>
                         </a>
 
-                        <a href="https://youtu.be/b3pPujI6YZU" target="_blank" class="w-full bg-gradient-to-r from-rose-700 to-pink-800 hover:from-rose-600 hover:to-pink-700 text-white border border-rose-900 px-8 py-3.5 rounded-xl shadow-lg hover:scale-105 transition-transform flex items-center justify-center gap-2 text-base font-bold">
-                            <span>활용안내 영상</span> <i class="fab fa-youtube text-lg"></i>
-                        </a>
                     </div>
                 </div>
             </section>
